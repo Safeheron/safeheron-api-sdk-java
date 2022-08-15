@@ -30,7 +30,7 @@ public class AccountApiServiceTest {
     @BeforeClass
     public static void beforeClass(){
         SafeheronConfig config = SafeheronConfig.builder()
-                .baseUrl("https://api.91aql.com")
+                .baseUrl("https://api.safeheron.vip")
                 .apiKey("d1ad6a9*******1ba572e7")
                 .safeheronRsaPublicKey("MIICIjANBgkqhkiG********+yvFR3Eh7OjkCAwEAAQ==")
                 .rsaPrivateKey("MIIJQwIBADANBgkqhk**********8Hgkhc7T5yQ2Texc+3t6qNfhT6qvSw41k=")
