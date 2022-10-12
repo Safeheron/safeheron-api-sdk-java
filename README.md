@@ -54,6 +54,7 @@ $ mvn install -Dmaven.test.skip=true
 
 * Call `createAccount` api which defined above
     ```java
+    // You can get `ApiKey` and `SafeheronRsaPublicKey` from Safeheron Web Console: https://www.safeheron.com/console.
     SafeheronConfig config = SafeheronConfig.builder()
             .baseUrl("https://api.safeheron.vip")
             .apiKey("d1ad6******72e7")
@@ -70,41 +71,83 @@ $ mvn install -Dmaven.test.skip=true
     ...
     ```
 
-# MPC Demo
+# Test
 
-## How to run `EthTransactionTest`
-* Replace with your private key and address
-```java
-// Replace with your private key
-private static String privetKey = "6b493b4*****ad01d357";
-// Replace with your address
-private static String toAddress = "0x53B11df*****7321789";
-```
-
-* Execute
-```
-testTransaction
-OR
-testTransactionERC20
-```
-
-## How to run `TronTransactionTest`
-* Replace with your private key and address
-```java
-// Replace with your private key
-private static String privateKey = "b5b2581c3*******d05ee775";
-// Replace with your address
-private static String toAddress = "TDBrZQN******8Ld2FV";
-```
-
-* Download Tron wallet-cli lib，and add to your classpath
-  * [Tron Wallet-cli](https://github.com/tronprotocol/wallet-cli)
+## Test Create Wallet Account
+* Before run the test code, modify `src/test/resources/demo/api/account/config.yaml.example` according to the comments
+    ```yaml
+    # Your api key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+    apiKey: 080d****e06e60
+    # Your private key
+    privateKey: MIIJRQIBA*******DtGRBdennqu8g95jcrMxCUhsifVgzP6vUyg==
+    # Safeheron API public key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+    safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
+    # Safeheron API url
+    baseUrl: https://api.safeheron.vip
+    ```
+* Copy config to `config.yaml` file.
+    ```bash
+    $ cd src/test/resources/demo/api/account
+    $ cp config.yaml.example config.yaml
+    ```
+* JUnit 
   
-* Execute
-```
-testTransaction
-OR
-testTRC20Transaction
-```
+  Execute `testCreateAccountAndAddCoin` unit in `/src/test/java/com/safeheron/demo/api/account/CreateAccountTest.java` Java file.
+
+## Test Send A Transaction
+* Before run the test code, modify `src/test/resources/demo/api/transaction/config.yaml.example` according to the comments
+    ```yaml
+    # Your api key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+    apiKey: 080d****e06e60
+    # Your private key
+    privateKey: MIIJRQIBA*******DtGRBdennqu8g95jcrMxCUhsifVgzP6vUyg==
+    # Safeheron API public key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+    safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
+    # Safeheron API url
+    baseUrl: https://api.safeheron.vip
+    # Wallet Account key
+    accountKey: account****5ecad40
+    # To address
+    destinationAddress: "0x943****0BF95f5"
+    ```
+* Copy config to `config.yaml` file.
+    ```bash
+    $ cd src/test/resources/demo/api/transaction
+    $ cp config.yaml.example config.yaml
+    ```
+* JUnit
+
+  Execute `testSendTransaction` unit in `/src/test/java/com/safeheron/demo/api/transaction/TransactionTest.java` Java file.
 
 
+## Test MPC Sign
+* Before run the test code, modify `src/test/resources/demo/api/mpcsign/config.yaml.example` according to the comments
+    ```yaml
+    # Your api key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+    apiKey: 080d****e06e60
+    # Your private key
+    privateKey: MIIJRQIBA*******DtGRBdennqu8g95jcrMxCUhsifVgzP6vUyg==
+    # Safeheron API public key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+    safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
+    # Safeheron API url
+    baseUrl: https://api.safeheron.vip
+    # Wallet Account key
+    accountKey: account****5ecad40
+    # Goerli testnet token address in wallet account
+    accountTokenAddress: "0x970****4ffD59"
+    # erc20 token contract address
+    erc20ContractAddress: "0x078****Eaa37F"
+    # address to receive token
+    toAddress: "0x53B****321789"
+    # Ethereum RPC API
+    ethereumRpcApi: https://goerli.infura.io/v3/802******bc2fcb
+    ```
+  
+* Copy config to `config.yaml` file.
+    ```bash
+    $ cd src/test/resources/demo/api/mpcsign
+    $ cp config.yaml.example config.yaml
+    ```
+* JUnit
+
+  Execute `testSendToken` unit in `/src/test/java/com/safeheron/demo/api/mpcsign/MpcSignTest.java` Java file.
