@@ -1,0 +1,8 @@
+# Your api key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+apiKey: 080d****e06e60
+# Your private key
+privateKey: MIIJRQIBA*******DtGRBdennqu8g95jcrMxCUhsifVgzP6vUyg==
+# Safeheron API public key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
+# Safeheron API url
+baseUrl: https://api.safeheron.vip

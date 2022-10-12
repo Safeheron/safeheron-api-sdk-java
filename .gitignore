@@ -36,3 +36,4 @@ build/
 .vscode/
 /log.path_IS_UNDEFINED/
 /src/test/java/com/safeheron/client/api/AccountApiServiceInternalTest.java
+*.yaml
