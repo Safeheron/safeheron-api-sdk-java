@@ -50,7 +50,7 @@ public class CreateAccountTest {
     @Test
     public void testCreateAccountAndAddCoin(){
         CreateAccountRequest createAccountRequest = new CreateAccountRequest();
-        createAccountRequest.setAccountName("java-wallet-account4");
+        createAccountRequest.setAccountName("first-wallet-account4");
         createAccountRequest.setHiddenOnUI(false);
         CreateAccountResponse createAccountResponse = ServiceExecutor.execute(accountApi.createAccount(createAccountRequest));
         System.out.println(String.format("wallet account created, account key: %s", createAccountResponse.getAccountKey()));
