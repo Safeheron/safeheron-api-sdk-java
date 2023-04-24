@@ -7,6 +7,8 @@ import com.safeheron.client.utils.AesUtil;
 import com.safeheron.client.utils.JsonUtil;
 import com.safeheron.client.utils.RsaUtil;
 import okhttp3.*;
+import okio.Buffer;
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -44,12 +46,13 @@ public class RequestInterceptor implements Interceptor {
         if ("POST".equals(request.method())) {
             try {
                 // Use AES to encrypt request data
-                RequestBody body = request.body();
-                final String requestJson = JsonUtil.toJson(body);
+                Buffer buffer = new Buffer();
+                request.body().writeTo(buffer);
+                final String requestJson = buffer.readUtf8();
                 byte[] aesKey = AesUtil.generateAESKey();
                 byte[] ivKey = AesUtil.generateIvKey();
                 String aesEncryptResult = "";
-                if (requestJson != null) {
+                if (StringUtils.isNotBlank(requestJson)) {
                     aesEncryptResult = AesUtil.encrypt(requestJson, aesKey, ivKey);
                 }
 
@@ -63,7 +66,7 @@ public class RequestInterceptor implements Interceptor {
                 Map<String, String> requestData = new TreeMap<>();
                 requestData.put("apiKey", apiKey);
                 requestData.put("timestamp", timestamp + "");
-                if (requestJson != null) {
+                if (StringUtils.isNotBlank(requestJson)) {
                     requestData.put("bizContent", aesEncryptResult);
                 }
                 requestData.put("key", rsaEncryptResult);
