@@ -2,7 +2,6 @@ package com.safeheron.client.utils;
 
 import com.safeheron.client.config.SafeheronConfig;
 import com.safeheron.client.converter.ConverterFactory;
-import com.safeheron.client.converter.RequestInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import retrofit2.Retrofit;
@@ -20,7 +19,6 @@ public class ServiceCreator {
 
     public static <S> S create(Class<S> serviceClass, SafeheronConfig config) {
         builder.baseUrl(config.getBaseUrl());
-        httpClient.addInterceptor(RequestInterceptor.create(config));
         builder.client(httpClient.build());
         builder.addConverterFactory(ConverterFactory.create(config));
         retrofit = builder.build();
