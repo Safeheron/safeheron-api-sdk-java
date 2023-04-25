@@ -3,7 +3,6 @@ package com.safeheron.client.converter;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.safeheron.client.config.SafeheronConfig;
 import com.safeheron.client.utils.JsonUtil;
 import okhttp3.RequestBody;
@@ -13,7 +12,6 @@ import retrofit2.Retrofit;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.Map;
 
 /**
  * @author safeheron
@@ -43,10 +41,6 @@ public class ConverterFactory extends Converter.Factory {
     @Override
     public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations,
                                                           Annotation[] methodAnnotations, Retrofit retrofit) {
-        ObjectWriter writer = mapper.writerFor(Map.class);
-        return new RequestBodyConverter<>(writer, config.getApiKey(),
-                config.getSafeheronRsaPublicKey(), config.getRsaPrivateKey());
+        return new RequestBodyConverter<>();
     }
-
-
 }
