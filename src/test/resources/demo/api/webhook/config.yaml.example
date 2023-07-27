@@ -1,0 +1,4 @@
+# Your WebHook Rsa Private Key
+webHookRsaPrivateKey: MIIJRQIBA*******DtGRBdennqu8g95jcrMxCUhsifVgzP6vUyg==
+# Safeheron WebHook Platform Public Key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+safeheronWebHookRsaPublicKey: MIICI****QuTOTECAwEAAQ==

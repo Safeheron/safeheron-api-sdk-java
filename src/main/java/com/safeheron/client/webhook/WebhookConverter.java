@@ -12,12 +12,39 @@ import java.util.stream.Collectors;
 /**
  * @author safeheron
  */
-public class WebhookController {
+public class WebhookConverter {
+    /**
+     * safeheronWebHookRsaPublicKey
+     * WebHook platform public key obtained from the web console
+     */
+    private final String safeheronWebHookRsaPublicKey;
 
-    private String safeheronWebHookRsaPublicKey;
-    private String webHookRsaPrivateKey;
+    /**
+     * webHookRsaPrivateKey
+     * Own webHookRsaPrivateKey(Pair with RSA Public Key submitted to the web console)
+     */
+    private final String webHookRsaPrivateKey;
 
-    public WebHookResponse ReceiveWebHook(WebHook webHook) throws Exception {
+    /**
+     * WebhookConverter
+     *
+     * @param safeheronWebHookRsaPublicKey
+     * @param webHookRsaPrivateKey
+     */
+    public WebhookConverter(String safeheronWebHookRsaPublicKey, String webHookRsaPrivateKey) {
+        this.safeheronWebHookRsaPublicKey = safeheronWebHookRsaPublicKey;
+        this.webHookRsaPrivateKey = webHookRsaPrivateKey;
+    }
+
+    /**
+     * convert
+     *
+     * @param webHook
+     * @return String
+     * @see WebHook
+     * @see WebHookResponse
+     */
+    public String convert(WebHook webHook) throws Exception {
         // Verify sign
         Map<String, String> sigMap = new TreeMap<>();
         sigMap.put("key", webHook.getKey());
@@ -38,11 +65,6 @@ public class WebhookController {
         byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
         // Use AES to decrypt bizContent
-        String dataDecrypt = AesUtil.decrypt(webHook.getBizContent(), aesKey, iv);
-        //todo Merchants deal with their own business logic
-        WebHookResponse webHookResponse = new WebHookResponse();
-        webHookResponse.setCode("200");
-        webHookResponse.setMessage("SUCCESS");
-        return webHookResponse;
+        return AesUtil.decrypt(webHook.getBizContent(), aesKey, iv);
     }
 }
