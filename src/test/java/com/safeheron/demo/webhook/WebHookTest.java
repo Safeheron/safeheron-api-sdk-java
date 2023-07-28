@@ -1,8 +1,6 @@
 package com.safeheron.demo.webhook;
 
-import com.safeheron.client.webhook.WebHook;
-import com.safeheron.client.webhook.WebHookResponse;
-import com.safeheron.client.webhook.WebhookConverter;
+import com.safeheron.client.webhook.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,15 +31,23 @@ public class WebHookTest {
         InputStream inputStream = new FileInputStream(file);
         config = yaml.load(inputStream);
         webhookConverter = new WebhookConverter(config.get("safeheronWebHookRsaPublicKey"), config.get("webHookRsaPrivateKey"));
-
     }
 
     @Test
     public void testWebHook() throws Exception {
         //The webHook received by the controller
         WebHook webHook = new WebHook();
-        String convert = webhookConverter.convert(webHook);
-        System.out.println(String.format("Decrypt bizContent: %s", convert));
+        WebHookBizContent webHookBizContent = webhookConverter.convert(webHook);
+        System.out.println(String.format("Decrypt webHookBizContent: %s", webHookBizContent));
+
+        //According to different types of network hook, the customer handles the corresponding type of business logic.
+        if (webHookBizContent.getEventDetail() instanceof TransactionParam) {
+            //todo the customer handles the business logic whose callback type is the transaction
+        } else if (webHookBizContent.getEventDetail() instanceof MPCSignParam) {
+            //todo the customer handles the business logic whose callback type is the MPCSign
+        } else if (webHookBizContent.getEventDetail() instanceof Web3SignParam) {
+            //todo the customer handles the business logic whose callback type is the Web3Sign
+        }
 
         WebHookResponse webHookResponse = new WebHookResponse();
         webHookResponse.setMessage("SUCCESS");

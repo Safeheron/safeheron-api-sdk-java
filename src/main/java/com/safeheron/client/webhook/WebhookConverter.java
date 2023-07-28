@@ -1,7 +1,9 @@
 package com.safeheron.client.webhook;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safeheron.client.exception.SafeheronException;
 import com.safeheron.client.utils.AesUtil;
+import com.safeheron.client.utils.JsonUtil;
 import com.safeheron.client.utils.RsaUtil;
 
 import java.util.Arrays;
@@ -10,6 +12,8 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
+ * Webhook decryption and data conversion converter
+ *
  * @author safeheron
  */
 public class WebhookConverter {
@@ -44,7 +48,7 @@ public class WebhookConverter {
      * @see WebHook
      * @see WebHookResponse
      */
-    public String convert(WebHook webHook) throws Exception {
+    public WebHookBizContent convert(WebHook webHook) throws Exception {
         // Verify sign
         Map<String, String> sigMap = new TreeMap<>();
         sigMap.put("key", webHook.getKey());
@@ -65,6 +69,22 @@ public class WebhookConverter {
         byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
         // Use AES to decrypt bizContent
-        return AesUtil.decrypt(webHook.getBizContent(), aesKey, iv);
+        String decrypt = AesUtil.decrypt(webHook.getBizContent(), aesKey, iv);
+        ObjectMapper mapper = JsonUtil.getObjectMapper();
+
+        //Data conversion
+        WebHookBizContent webHookBizContent = mapper.readValue(decrypt, WebHookBizContent.class);
+        String webHookBizContentJsonString = JsonUtil.toJson(webHookBizContent.getEventDetail());
+        if (WebhookEventTypeEnum.TRANSACTION.getEventTypeList().contains(webHookBizContent.getEventType())) {
+            TransactionParam transactionParam = mapper.readValue(webHookBizContentJsonString, TransactionParam.class);
+            webHookBizContent.setEventDetail(transactionParam);
+        } else if (WebhookEventTypeEnum.MPC_SIGN.getEventTypeList().contains(webHookBizContent.getEventType())) {
+            MPCSignParam mpcSignParam = mapper.readValue(webHookBizContentJsonString, MPCSignParam.class);
+            webHookBizContent.setEventDetail(mpcSignParam);
+        } else if (WebhookEventTypeEnum.WEB3_SIGN.getEventTypeList().contains(webHookBizContent.getEventType())) {
+            Web3SignParam web3SignParam = mapper.readValue(webHookBizContentJsonString, Web3SignParam.class);
+            webHookBizContent.setEventDetail(web3SignParam);
+        }
+        return webHookBizContent;
     }
 }
