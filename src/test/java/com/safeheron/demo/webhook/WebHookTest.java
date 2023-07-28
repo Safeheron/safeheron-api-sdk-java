@@ -27,7 +27,7 @@ public class WebHookTest {
     @BeforeClass
     public static void beforeClass() throws FileNotFoundException {
         Yaml yaml = new Yaml();
-        File file = new File("src/test/resources/demo/webhook/config.yaml");
+        File file = new File("src/test/resources/demo/api/webhook/config.yaml");
         InputStream inputStream = new FileInputStream(file);
         config = yaml.load(inputStream);
         webhookConverter = new WebhookConverter(config.get("safeheronWebHookRsaPublicKey"), config.get("webHookRsaPrivateKey"));
