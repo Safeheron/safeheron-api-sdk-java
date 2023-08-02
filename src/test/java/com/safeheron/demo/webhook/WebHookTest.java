@@ -40,7 +40,7 @@ public class WebHookTest {
         WebHookBizContent webHookBizContent = webhookConverter.convert(webHook);
         System.out.println(String.format("Decrypt webHookBizContent: %s", webHookBizContent));
 
-        //According to different types of network hook, the customer handles the corresponding type of business logic.
+        //According to different types of WebHook, the customer handles the corresponding type of business logic.
         if (webHookBizContent.getEventDetail() instanceof TransactionParam) {
             //todo the customer handles the business logic whose callback type is the transaction
         } else if (webHookBizContent.getEventDetail() instanceof MPCSignParam) {

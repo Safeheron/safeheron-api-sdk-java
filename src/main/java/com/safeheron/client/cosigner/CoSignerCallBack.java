@@ -1,0 +1,29 @@
+package com.safeheron.client.cosigner;
+
+import lombok.Data;
+
+/**
+ * @author safeheron
+ */
+@Data
+public class CoSignerCallBack {
+    /**
+     * Response timestamp, UNIX millisecond-format string
+     */
+    private Long timestamp;
+
+    /**
+     * Signature data after signing response parameters by Safeheron API RSA Private Key
+     */
+    private String sig;
+
+    /**
+     * Encrypted data of random AES key by your API RSA Public Key
+     */
+    private String key;
+
+    /**
+     * AES-encrypted data of response parameters
+     */
+    private String bizContent;
+}
