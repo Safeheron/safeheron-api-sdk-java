@@ -44,7 +44,7 @@ public class WebhookConverter {
      * convert
      *
      * @param webHook
-     * @return String
+     * @return WebHookResponse
      * @see WebHook
      * @see WebHookResponse
      */
