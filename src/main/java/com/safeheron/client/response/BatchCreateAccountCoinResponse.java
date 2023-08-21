@@ -22,7 +22,7 @@ public class BatchCreateAccountCoinResponse {
 
     @Data
     @NoArgsConstructor
-    static class Address{
+    public static class Address{
         /**
          * Coin receiving address
          */

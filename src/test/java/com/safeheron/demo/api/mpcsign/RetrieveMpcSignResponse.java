@@ -20,7 +20,7 @@ public class RetrieveMpcSignResponse {
     private List<SigResult> hashs;
 
     @Data
-    static class SigResult {
+    public static class SigResult {
         private String hash;
         private String sig;
         private String note;

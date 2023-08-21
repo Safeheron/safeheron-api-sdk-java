@@ -119,7 +119,7 @@ public class Web3SignResponse {
      */
     @Data
     @NoArgsConstructor
-    static class Transaction {
+    public static class Transaction {
         /**
          * To
          */
@@ -180,7 +180,7 @@ public class Web3SignResponse {
 
         @Data
         @NoArgsConstructor
-        static class Sig {
+        public static class Sig {
             /**
              * Hash
              */
@@ -204,7 +204,7 @@ public class Web3SignResponse {
      */
     @Data
     @NoArgsConstructor
-    static class Message {
+    public static class Message {
         /**
          * Chain ID
          */
@@ -222,7 +222,7 @@ public class Web3SignResponse {
 
         @Data
         @NoArgsConstructor
-        static class Sig {
+        public static class Sig {
             /**
              * Hash
              */
@@ -246,7 +246,7 @@ public class Web3SignResponse {
      */
     @Data
     @NoArgsConstructor
-    static class MessageHash {
+    public static class MessageHash {
         /**
          * Chain ID
          */
@@ -259,7 +259,7 @@ public class Web3SignResponse {
 
         @Data
         @NoArgsConstructor
-        static class Sig {
+        public static class Sig {
             /**
              * Hash
              */

@@ -1,0 +1,18 @@
+# Your api key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+apiKey: 080d****e06e60
+# Your private key
+privateKey: MIIJRQIBA*******DtGRBdennqu8g95jcrMxCUhsifVgzP6vUyg==
+# Safeheron API public key, you can get it from Safeheron Web Console: https://www.safeheron.com/console.
+safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
+# Safeheron API url
+baseUrl: https://api.safeheron.vip
+# Wallet Account key
+accountKey: account****5ecad40
+# Goerli testnet token address in wallet account
+accountTokenAddress: "0x970****4ffD59"
+# erc20 token contract address
+erc20ContractAddress: "0x078****Eaa37F"
+# address to receive token
+toAddress: "0x53B****321789"
+# Ethereum RPC API
+ethereumRpcApi: https://goerli.infura.io/v3/802******bc2fcb

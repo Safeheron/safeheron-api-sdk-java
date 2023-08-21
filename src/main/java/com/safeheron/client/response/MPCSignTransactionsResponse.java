@@ -87,7 +87,7 @@ public class MPCSignTransactionsResponse {
      */
     @Data
     @NoArgsConstructor
-    static class Date {
+    public static class Date {
         /**
          * Transaction note (180 characters max)
          */
