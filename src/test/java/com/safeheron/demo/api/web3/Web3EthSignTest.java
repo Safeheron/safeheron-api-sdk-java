@@ -2,7 +2,7 @@ package com.safeheron.demo.api.web3;
 
 import com.safeheron.client.api.Web3ApiService;
 import com.safeheron.client.config.SafeheronConfig;
-import com.safeheron.client.request.CreateWeb3EthSignTransactionRequest;
+import com.safeheron.client.request.CreateWeb3EthSignRequest;
 import com.safeheron.client.request.OneWeb3SignRequest;
 import com.safeheron.client.response.TxKeyResult;
 import com.safeheron.client.response.Web3SignResponse;
@@ -18,6 +18,7 @@ import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Function;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Uint256;
+import org.web3j.crypto.Hash;
 import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.Sign;
 import org.web3j.crypto.TransactionEncoder;
@@ -33,21 +34,18 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author safeheron
- * @date 2023/8/21
+ * @date 2023/8/23
  */
-public class Web3EthSignTransactionTest {
+public class Web3EthSignTest {
 
     static Web3j web3;
     private static final String READ_ONLY_FROM_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-    static com.safeheron.client.api.Web3ApiService web3ApiService;
+    static Web3ApiService web3ApiService;
     static Map<String, String> config;
 
     @BeforeClass
@@ -82,22 +80,32 @@ public class Web3EthSignTransactionTest {
         Function function = createERC20Function(contractAddress, "1", toAddress);
 
         // Create transaction object
-        CreateWeb3EthSignTransactionRequest.Transaction transaction = createRawTransaction(fromAddress, "0", contractAddress, function);
+        RawTransaction rawTransaction = createRawTransaction(fromAddress, "0", contractAddress, function);
 
-        // Sign with safeheron ethSignTransaction
+
+        // Encode the transaction and compute the hash value
+        byte[] encodedRawTransaction = TransactionEncoder.encode(rawTransaction);
+        String hash = Numeric.toHexString(Hash.sha3(encodedRawTransaction));
+        List<String> hashList = new ArrayList<>();
+        hashList.add(hash);
+        CreateWeb3EthSignRequest.MessageHash messageHash = new CreateWeb3EthSignRequest.MessageHash();
+        messageHash.setChainId(web3.ethChainId().send().getChainId().longValue());
+        messageHash.setHash(hashList);
+
+        // Sign with safeheron ethSign
         String customerRefId = UUID.randomUUID().toString();
-        String txKey = requestWeb3EthSignTransaction(customerRefId, accountKey, transaction);
+        String txKey = requestWeb3EthSign(customerRefId, accountKey, messageHash);
         System.out.println(String.format("transaction created, txKey: %s", txKey));
 
         // Get sig
         String sig = retrieveSig(customerRefId);
-        System.out.println(String.format("got ethSignTransaction result, sig: %s", sig));
+        System.out.println(String.format("got ethSign result, sig: %s", sig));
 
         // Encode with sig and send transaction
-        encodeWithSigAndSendTransaction(transaction, contractAddress, sig);
+        encodeWithSigAndSendTransaction(rawTransaction, sig);
     }
 
-    private CreateWeb3EthSignTransactionRequest.Transaction createRawTransaction(String fromAddress, String value, String contractAddress, Function contractFunction) throws Exception {
+    private RawTransaction createRawTransaction(String fromAddress, String value, String contractAddress, Function contractFunction) throws Exception {
         // Get data from block chain: nonce, chainId, gasLimit and latestBlock's baseFeePerGas
         EthGetTransactionCount ethGetTransactionCount = web3
                 .ethGetTransactionCount(fromAddress, DefaultBlockParameterName.LATEST).send();
@@ -110,7 +118,6 @@ public class Web3EthSignTransactionTest {
         // Estimate gas
         Transaction transaction = Transaction.createEthCallTransaction(fromAddress, contractAddress, data);
         EthEstimateGas gasLimit = web3.ethEstimateGas(transaction).send();
-        BigInteger gasPrice = web3.ethGasPrice().send().getGasPrice();
         if (gasLimit.hasError()) {
             throw new Exception(String.format("error estimate gas:%s-%s", gasLimit.getError().getCode(), gasLimit.getError().getMessage()));
         }
@@ -124,18 +131,18 @@ public class Web3EthSignTransactionTest {
                 .multiply(new BigDecimal("2"))
                 .add(new BigDecimal(maxPriorityFeePerGas));
 
-        CreateWeb3EthSignTransactionRequest.Transaction web3EthSignTransaction = new CreateWeb3EthSignTransactionRequest.Transaction();
-        web3EthSignTransaction.setTo(contractAddress);
-        web3EthSignTransaction.setValue(value);
-        web3EthSignTransaction.setChainId(ethChainId.getChainId().longValue());
-        web3EthSignTransaction.setGasPrice(gasPrice.toString());
-        web3EthSignTransaction.setGasLimit(gasLimit.getAmountUsed().longValue());
-        web3EthSignTransaction.setMaxPriorityFeePerGas(maxPriorityFeePerGas.toString());
-        web3EthSignTransaction.setMaxFeePerGas(maxFeePerGas.toString());
-        web3EthSignTransaction.setNonce(nonce.longValue());
-        web3EthSignTransaction.setData(data);
+        // Create raw transaction
+        RawTransaction rawTransaction = RawTransaction.createTransaction(
+                ethChainId.getChainId().longValue(),
+                nonce,
+                gasLimit.getAmountUsed(),
+                contractAddress,
+                Convert.toWei(value, Convert.Unit.ETHER).toBigInteger(),
+                data,
+                maxPriorityFeePerGas,
+                maxFeePerGas.toBigInteger());
 
-        return web3EthSignTransaction;
+        return rawTransaction;
     }
 
     private Function createERC20Function(String contractAddress, String tokenAmount, String toAddress) throws IOException {
@@ -150,12 +157,12 @@ public class Web3EthSignTransactionTest {
         return function;
     }
 
-    private String requestWeb3EthSignTransaction(String customerRefId, String accountKey, CreateWeb3EthSignTransactionRequest.Transaction transaction) {
-        CreateWeb3EthSignTransactionRequest request = new CreateWeb3EthSignTransactionRequest();
+    private String requestWeb3EthSign(String customerRefId, String accountKey, CreateWeb3EthSignRequest.MessageHash messageHash) {
+        CreateWeb3EthSignRequest request = new CreateWeb3EthSignRequest();
         request.setCustomerRefId(customerRefId);
         request.setAccountKey(accountKey);
-        request.setTransaction(transaction);
-        TxKeyResult response = ServiceExecutor.execute(web3ApiService.createWeb3EthSignTransaction(request));
+        request.setMessageHash(messageHash);
+        TxKeyResult response = ServiceExecutor.execute(web3ApiService.createWeb3EthSign(request));
         return response.getTxKey();
     }
 
@@ -166,15 +173,15 @@ public class Web3EthSignTransactionTest {
 
         for (int i = 0; i < 100; i++) {
             Web3SignResponse response = ServiceExecutor.execute(web3ApiService.oneWeb3Sign(request));
-            System.out.println(String.format("ethSignTransaction status: %s, sub status: %s", response.getTransactionStatus(), response.getTransactionSubStatus()));
+            System.out.println(String.format("ethSign status: %s, sub status: %s", response.getTransactionStatus(), response.getTransactionSubStatus()));
 
             if ("FAILED".equalsIgnoreCase(response.getTransactionStatus()) || "REJECTED".equalsIgnoreCase(response.getTransactionStatus())) {
-                System.out.println("ethSignTransaction transaction was FAILED or REJECTED");
+                System.out.println("ethSign transaction was FAILED or REJECTED");
                 System.exit(1);
             }
 
             if ("SIGN_COMPLETED".equalsIgnoreCase(response.getTransactionStatus())) {
-                return response.getTransaction().getSig().getSig();
+                return response.getMessageHash().getSigList().get(0).getSig();
             }
 
             System.out.println("wait 5000ms");
@@ -184,18 +191,7 @@ public class Web3EthSignTransactionTest {
         throw new Exception("can't get sig.");
     }
 
-    private void encodeWithSigAndSendTransaction(CreateWeb3EthSignTransactionRequest.Transaction transaction, String contractAddress, String sig) throws IOException {
-        // Create raw transaction
-        RawTransaction rawTransaction = RawTransaction.createTransaction(
-                transaction.getChainId(),
-                BigInteger.valueOf(transaction.getNonce()),
-                BigInteger.valueOf(transaction.getGasLimit()),
-                contractAddress,
-                new BigInteger(transaction.getValue()),
-                transaction.getData(),
-                new BigInteger(transaction.getMaxPriorityFeePerGas()),
-                new BigInteger(transaction.getMaxFeePerGas()));
-
+    private void encodeWithSigAndSendTransaction(RawTransaction rawTransaction, String sig) throws IOException {
         // Encode transaction with signature
         byte[] signedMessage = TransactionEncoder.encode(rawTransaction, convertSig(sig));
         String hexValue = Numeric.toHexString(signedMessage);
