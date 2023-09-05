@@ -3,6 +3,8 @@ package com.safeheron.client.request;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Web3 Sign Transaction List
  *
@@ -18,7 +20,7 @@ public class ListWeb3SignRequest extends LimitSearch {
     /**
      * Transaction status
      */
-    private String transactionStatus;
+    private List<String> transactionStatus;
 
     /**
      * Source account key

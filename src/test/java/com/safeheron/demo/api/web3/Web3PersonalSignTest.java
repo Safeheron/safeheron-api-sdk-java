@@ -50,7 +50,7 @@ public class Web3PersonalSignTest {
     }
 
     @Test
-    public void testSendToken() throws Exception {
+    public void testWeb3PersonalSignTest() throws Exception {
         String accountKey = config.get("accountKey");
 
         CreateWeb3PersonalSignRequest.Message message = new CreateWeb3PersonalSignRequest.Message();

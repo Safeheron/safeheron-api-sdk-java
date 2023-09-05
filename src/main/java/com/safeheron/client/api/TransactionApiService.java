@@ -93,7 +93,7 @@ public interface TransactionApiService {
      * @see ResultResponse
      */
     @POST("/v1/transactions/cancel")
-    Call<ResultResponse> CancelTransactions(@Body CancelTransactionRequest cancelTransactionRequest);
+    Call<ResultResponse> cancelTransactions(@Body CancelTransactionRequest cancelTransactionRequest);
 
     /**
      * UTXO-Based Coin Sweeping
