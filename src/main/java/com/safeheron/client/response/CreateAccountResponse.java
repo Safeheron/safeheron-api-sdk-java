@@ -28,7 +28,7 @@ public class CreateAccountResponse {
      */
     @Data
     @NoArgsConstructor
-    static class PubKey{
+    public static class PubKey{
         /**
          * Signature algorithm, currently supports secp256k1
          */

@@ -15,7 +15,7 @@ public class CreateMpcSignRequest {
     private List<Hash> hashs;
 
     @Data
-    static class Hash{
+    public static class Hash {
         private String hash;
         private String note;
     }

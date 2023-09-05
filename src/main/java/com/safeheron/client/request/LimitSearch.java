@@ -10,7 +10,7 @@ public class LimitSearch {
     /**
      * Query page direction, NEXT by default
      */
-    private Long direct;
+    private String direct;
 
     /**
      * The number of items to retrieve at a time, default max value is 500
@@ -20,5 +20,5 @@ public class LimitSearch {
     /**
      * txkey of the first transaction record. If the first page has no value, provide the txKey of the last transaction record from the previous result
      */
-    private Long fromId;
+    private String fromId;
 }

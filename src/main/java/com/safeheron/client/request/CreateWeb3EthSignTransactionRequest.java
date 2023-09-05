@@ -49,7 +49,7 @@ public class CreateWeb3EthSignTransactionRequest {
      */
     @Data
     @NoArgsConstructor
-    static class Transaction {
+    public static class Transaction {
         /**
          * To
          */

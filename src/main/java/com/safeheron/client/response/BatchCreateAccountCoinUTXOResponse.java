@@ -22,7 +22,7 @@ public class BatchCreateAccountCoinUTXOResponse {
 
     @Data
     @NoArgsConstructor
-    static class Address{
+    public static class Address{
         /**
          * Coin receiving address
          */
@@ -32,6 +32,11 @@ public class BatchCreateAccountCoinUTXOResponse {
          * addressType
          */
         private String addressType;
+
+        /**
+         * amlLock
+         */
+        private String amlLock;
     }
 }
 

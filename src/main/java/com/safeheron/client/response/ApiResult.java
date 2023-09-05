@@ -24,7 +24,7 @@ public class ApiResult<T> implements Serializable {
     /**
      * Response timestamp, UNIX millisecond-format string
      */
-    private Long timestamp;
+    private String timestamp;
 
     /**
      * Signature data after signing response parameters by Safeheron API RSA Private Key
@@ -52,7 +52,7 @@ public class ApiResult<T> implements Serializable {
     public ApiResult(Integer code, String message) {
         this.code = code;
         this.message = message;
-        this.timestamp = System.currentTimeMillis();
+        this.timestamp = System.currentTimeMillis()+"";
     }
 
     public ApiResult(T rawData) {

@@ -46,5 +46,5 @@ public interface MPCSignApiService {
      * @see MPCSignTransactionsResponse
      */
     @POST("/v1/transactions/list")
-    Call<MPCSignTransactionsResponse> ListMPCSignTransactions(@Body ListMPCSignTransactionsRequest listMPCSignTransactionsRequest);
+    Call<List<MPCSignTransactionsResponse>> listMPCSignTransactions(@Body ListMPCSignTransactionsRequest listMPCSignTransactionsRequest);
 }

@@ -10,7 +10,7 @@ public class WebHook {
     /**
      * Response timestamp, UNIX millisecond-format string
      */
-    private Long timestamp;
+    private String timestamp;
 
     /**
      * Signature data after signing response parameters by Safeheron API RSA Private Key

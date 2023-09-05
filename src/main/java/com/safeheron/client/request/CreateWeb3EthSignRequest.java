@@ -48,7 +48,7 @@ public class CreateWeb3EthSignRequest {
      */
     @Data
     @NoArgsConstructor
-    static class MessageHash {
+    public static class MessageHash {
         /**
          * Chain ID (does not participate in signing, only the hash is used for signing)
          */

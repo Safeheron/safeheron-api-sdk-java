@@ -34,7 +34,7 @@ $ mvn install -Dmaven.test.skip=true
         private List<PubKey> pubKeys;
         @Data
         @NoArgsConstructor
-        static class PubKey{
+        public static class PubKey{
             private String signAlg;
             private String pubKey;
         }
