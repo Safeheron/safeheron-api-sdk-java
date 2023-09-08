@@ -25,17 +25,17 @@ public class FeeRateDto {
     private String maxFee;
 
     /**
-     * No	Filecoin gas premium, similar to EIP-1559 max priority fee
+     * Filecoin gas premium, similar to EIP-1559 max priority fee
      */
     private String gasPremium;
 
     /**
-     * No	Filecoin gas fee cap, similar to EIP-1559 max fee
+     * Filecoin gas fee cap, similar to EIP-1559 max fee
      */
     private String gasFeeCap;
 
     /**
-     * No	SUI gas budget, similar to EIP-1559 max fee
+     * SUI gas budget, similar to EIP-1559 max fee
      */
     private String gasBudget;
 }

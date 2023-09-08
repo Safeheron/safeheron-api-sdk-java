@@ -18,7 +18,7 @@ public class LimitSearch {
     private Long limit;
     
     /**
-     * txkey of the first transaction record. If the first page has no value, provide the txKey of the last transaction record from the previous result
+     * Txkey of the first transaction record. If the first page has no value, provide the txKey of the last transaction record from the previous result
      */
     private String fromId;
 }

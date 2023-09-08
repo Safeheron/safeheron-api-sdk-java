@@ -42,7 +42,7 @@ public class CollectionTransactionsUTXORequest {
 
     /**
      * Transaction Fee Rate Grade
-     * Choose between transaction fees. If the transaction fee rate is preset, it will take priority
+     * Choose between the transaction fee rate. If the transaction fee rate is preset, it will take priority
      */
     private String txFeeLevel;
 

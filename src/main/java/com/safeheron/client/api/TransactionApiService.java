@@ -69,7 +69,7 @@ public interface TransactionApiService {
      * @see TransactionsResponse
      */
     @POST("/v1/transactions/one")
-    Call<TransactionsResponse> oneTransactions(@Body OneTransactionsRequest oneTransactionsRequest);
+    Call<OneTransactionsResponse> oneTransactions(@Body OneTransactionsRequest oneTransactionsRequest);
 
     /**
      * Estimate Transaction Fee

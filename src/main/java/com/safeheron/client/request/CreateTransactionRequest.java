@@ -57,6 +57,13 @@ public class CreateTransactionRequest {
     private String txAmount;
 
     /**
+     * Deduct transaction fee from the transfer amount
+     * False by default. If set to true, transaction fee will be deducted from the transfer amount
+     * Note: This parameter can only be considered if a transaction’s asset is a base asset, such as ETH or MATIC. If the asset can’t be used for transaction fees, like USDC, this parameter is ignored
+     */
+    private Boolean treatAsGrossAmount;
+
+    /**
      * Source account key
      */
     private String sourceAccountKey;
