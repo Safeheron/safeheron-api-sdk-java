@@ -81,7 +81,7 @@ public interface TransactionApiService {
      * @see TransactionsFeeRateResponse
      */
     @POST("/v2/transactions/getFeeRate")
-    Call<List<TransactionsFeeRateResponse>> transactionFeeRate(@Body TransactionsFeeRateRequest transactionsFeeRateRequest);
+    Call<TransactionsFeeRateResponse> transactionFeeRate(@Body TransactionsFeeRateRequest transactionsFeeRateRequest);
 
     /**
      * Cancel Transaction

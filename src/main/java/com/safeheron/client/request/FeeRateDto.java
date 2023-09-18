@@ -1,8 +1,11 @@
 package com.safeheron.client.request;
 
+import lombok.Data;
+
 /**
  * @author safeheron
  */
+@Data
 public class FeeRateDto {
     /**
      * Fee rate: fee per byte for UTXO, gas price for EVM chains, free limit for TRON (optional) and gas price for SUI
