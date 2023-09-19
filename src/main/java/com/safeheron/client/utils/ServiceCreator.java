@@ -19,12 +19,12 @@ public class ServiceCreator {
     private static volatile Retrofit retrofit;
 
     public static <S> S create(Class<S> serviceClass, SafeheronConfig config) {
-        Retrofit instance = getInstance(config);
+        Retrofit instance = getRetrofit(config);
         return instance.create(serviceClass);
     }
 
 
-    public static Retrofit getInstance(SafeheronConfig config) {
+    private static Retrofit getRetrofit(SafeheronConfig config) {
         if (retrofit == null) {
             synchronized (Retrofit.class) {
                 if (retrofit == null) {
