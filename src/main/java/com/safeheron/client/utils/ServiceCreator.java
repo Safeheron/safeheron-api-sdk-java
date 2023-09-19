@@ -19,11 +19,13 @@ public class ServiceCreator {
     private static Retrofit retrofit;
 
     public static <S> S create(Class<S> serviceClass, SafeheronConfig config) {
-        builder.baseUrl(config.getBaseUrl());
-        httpClient.addInterceptor(RequestInterceptor.create(config));
-        builder.client(httpClient.build());
-        builder.addConverterFactory(ConverterFactory.create(config));
-        retrofit = builder.build();
+        if (retrofit == null) {
+            builder.baseUrl(config.getBaseUrl());
+            httpClient.addInterceptor(RequestInterceptor.create(config));
+            builder.client(httpClient.build());
+            builder.addConverterFactory(ConverterFactory.create(config));
+            retrofit = builder.build();
+        }
         return retrofit.create(serviceClass);
     }
 }
