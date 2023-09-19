@@ -16,16 +16,26 @@ import java.util.Arrays;
 public class ServiceCreator {
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder().protocols(Arrays.asList(Protocol.HTTP_1_1));
     private static Retrofit.Builder builder = new Retrofit.Builder();
-    private static Retrofit retrofit;
+    private static volatile Retrofit retrofit;
 
     public static <S> S create(Class<S> serviceClass, SafeheronConfig config) {
+        Retrofit instance = getInstance(config);
+        return instance.create(serviceClass);
+    }
+
+
+    public static Retrofit getInstance(SafeheronConfig config) {
         if (retrofit == null) {
-            builder.baseUrl(config.getBaseUrl());
-            httpClient.addInterceptor(RequestInterceptor.create(config));
-            builder.client(httpClient.build());
-            builder.addConverterFactory(ConverterFactory.create(config));
-            retrofit = builder.build();
+            synchronized (Retrofit.class) {
+                if (retrofit == null) {
+                    builder.baseUrl(config.getBaseUrl());
+                    httpClient.addInterceptor(RequestInterceptor.create(config));
+                    builder.client(httpClient.build());
+                    builder.addConverterFactory(ConverterFactory.create(config));
+                    retrofit = builder.build();
+                }
+            }
         }
-        return retrofit.create(serviceClass);
+        return retrofit;
     }
 }
