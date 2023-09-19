@@ -69,7 +69,7 @@ public interface TransactionApiService {
      * @see TransactionsResponse
      */
     @POST("/v1/transactions/one")
-    Call<TransactionsResponse> oneTransactions(@Body OneTransactionsRequest oneTransactionsRequest);
+    Call<OneTransactionsResponse> oneTransactions(@Body OneTransactionsRequest oneTransactionsRequest);
 
     /**
      * Estimate Transaction Fee
@@ -81,7 +81,7 @@ public interface TransactionApiService {
      * @see TransactionsFeeRateResponse
      */
     @POST("/v2/transactions/getFeeRate")
-    Call<List<TransactionsFeeRateResponse>> transactionFeeRate(@Body TransactionsFeeRateRequest transactionsFeeRateRequest);
+    Call<TransactionsFeeRateResponse> transactionFeeRate(@Body TransactionsFeeRateRequest transactionsFeeRateRequest);
 
     /**
      * Cancel Transaction

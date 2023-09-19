@@ -19,7 +19,7 @@ public class BatchCreateAccountCoinRequest {
     /**
      * Account key, max is 100
      */
-    private List<String> accountKey;
+    private List<String> accountKeyList;
 
     /**
      * Address group name, 30 characters max

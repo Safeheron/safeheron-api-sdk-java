@@ -1,8 +1,11 @@
 package com.safeheron.client.request;
 
+import lombok.Data;
+
 /**
  * @author safeheron
  */
+@Data
 public class FeeRate {
     /**
      * Fee rate, UTXO fee per byte, EVM gas price, TRON fee limit and SUI gas price

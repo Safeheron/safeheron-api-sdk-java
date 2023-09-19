@@ -69,7 +69,7 @@ public interface AccountApiService {
      * @see ResultResponse
      */
     @POST("/v1/account/update/show/state")
-    Call<ResultResponse> UpdateAccountShowState(@Body UpdateAccountShowStateRequest updateAccountShowStateRequest);
+    Call<ResultResponse> updateAccountShowState(@Body UpdateAccountShowStateRequest updateAccountShowStateRequest);
 
     /**
      * Add Coins to a Wallet Account

@@ -33,7 +33,7 @@ public interface MPCSignApiService {
      * @see OneMPCSignTransactionsRequest
      * @see MPCSignTransactionsResponse
      */
-    @POST("/v1/transactions/one")
+    @POST("/v1/transactions/mpcsign/one")
     Call<MPCSignTransactionsResponse> oneMPCSignTransactions(@Body OneMPCSignTransactionsRequest oneMPCSignTransactionsRequest);
 
     /**
@@ -45,6 +45,6 @@ public interface MPCSignApiService {
      * @see ListMPCSignTransactionsRequest
      * @see MPCSignTransactionsResponse
      */
-    @POST("/v1/transactions/list")
+    @POST("/v1/transactions/mpcsign/list")
     Call<List<MPCSignTransactionsResponse>> listMPCSignTransactions(@Body ListMPCSignTransactionsRequest listMPCSignTransactionsRequest);
 }

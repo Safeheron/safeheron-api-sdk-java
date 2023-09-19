@@ -15,14 +15,6 @@ public class CreateAccountRequest {
     private String accountName;
 
     /**
-     * Whether auto fuel (the Gas Station service)
-     * True: auto fuel
-     * False: no auto fuel
-     * Default: true
-     */
-    private Boolean autoFuel;
-
-    /**
      * 	Whether display in Safeheron Console
      * True: not display
      * False: display

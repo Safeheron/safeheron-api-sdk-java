@@ -71,7 +71,7 @@ public class CreateWeb3EthSignTransactionRequest {
         private String gasPrice;
 
         /**
-         * Gas limit¬
+         * Gas limit
          */
         private Long gasLimit;
 

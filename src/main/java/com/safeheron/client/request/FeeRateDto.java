@@ -1,8 +1,11 @@
 package com.safeheron.client.request;
 
+import lombok.Data;
+
 /**
  * @author safeheron
  */
+@Data
 public class FeeRateDto {
     /**
      * Fee rate: fee per byte for UTXO, gas price for EVM chains, free limit for TRON (optional) and gas price for SUI
@@ -25,17 +28,17 @@ public class FeeRateDto {
     private String maxFee;
 
     /**
-     * No	Filecoin gas premium, similar to EIP-1559 max priority fee
+     * Filecoin gas premium, similar to EIP-1559 max priority fee
      */
     private String gasPremium;
 
     /**
-     * No	Filecoin gas fee cap, similar to EIP-1559 max fee
+     * Filecoin gas fee cap, similar to EIP-1559 max fee
      */
     private String gasFeeCap;
 
     /**
-     * No	SUI gas budget, similar to EIP-1559 max fee
+     * SUI gas budget, similar to EIP-1559 max fee
      */
     private String gasBudget;
 }
