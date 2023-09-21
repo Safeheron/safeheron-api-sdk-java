@@ -5,8 +5,6 @@ package com.safeheron.client.webhook;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  *
  */

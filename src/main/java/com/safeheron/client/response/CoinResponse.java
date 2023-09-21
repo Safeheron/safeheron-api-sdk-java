@@ -1,10 +1,6 @@
 package com.safeheron.client.response;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.io.Console;
-import java.util.List;
 
 /**
  * @author safeheron

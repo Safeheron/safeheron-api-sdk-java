@@ -1,6 +1,8 @@
 package com.safeheron.client.api;
 
-import com.safeheron.client.request.*;
+import com.safeheron.client.request.CheckCoinAddressRequest;
+import com.safeheron.client.request.CoinBalanceSnapshotRequest;
+import com.safeheron.client.request.CoinBlockHeightRequest;
 import com.safeheron.client.response.*;
 import retrofit2.Call;
 import retrofit2.http.Body;
