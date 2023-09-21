@@ -1,7 +1,5 @@
 package com.safeheron.client.response;
 
-import com.safeheron.client.request.CreateWeb3EthSignRequest;
-import com.safeheron.client.request.CreateWeb3EthSignTransactionRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

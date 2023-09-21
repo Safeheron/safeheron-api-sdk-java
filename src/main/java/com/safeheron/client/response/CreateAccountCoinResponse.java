@@ -2,8 +2,6 @@ package com.safeheron.client.response;
 
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * @author safeheron
  */
