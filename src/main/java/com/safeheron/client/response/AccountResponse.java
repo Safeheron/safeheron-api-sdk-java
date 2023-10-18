@@ -33,6 +33,11 @@ public class AccountResponse {
     private String accountType;
 
     /**
+     * Account tag
+     */
+    private String accountTag;
+
+    /**
      * Whether display in Safeheron Console
      * True: not display
      * False: display

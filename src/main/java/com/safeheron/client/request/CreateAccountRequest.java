@@ -21,4 +21,9 @@ public class CreateAccountRequest {
      * Default: false
      */
     private Boolean hiddenOnUI;
+
+    /**
+     * Account tag
+     */
+    private String accountTag;
 }
