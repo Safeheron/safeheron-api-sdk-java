@@ -65,6 +65,11 @@ public class TransactionsResponse {
     private String destinationTag;
 
     /**
+     * Transaction type
+     */
+    private String transactionType;
+
+    /**
      * Transaction status
      */
     private String transactionStatus;

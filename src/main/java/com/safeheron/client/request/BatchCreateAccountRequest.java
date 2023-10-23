@@ -18,4 +18,9 @@ public class BatchCreateAccountRequest {
      * Number of wallets to be created, greater than 0, less than 100
      */
     private Integer count;
+
+    /**
+     * Account tag
+     */
+    private String accountTag;
 }

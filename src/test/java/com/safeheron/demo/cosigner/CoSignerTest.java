@@ -34,7 +34,7 @@ public class CoSignerTest {
     }
 
     @Test
-    public void testWebHook() throws Exception {
+    public void testCoSigner() throws Exception {
         //The CoSignerCallBack received by the controller
         CoSignerCallBack coSignerCallBack = new CoSignerCallBack();
         CoSignerBizContent coSignerBizContent = coSignerConverter.requestConvert(coSignerCallBack);

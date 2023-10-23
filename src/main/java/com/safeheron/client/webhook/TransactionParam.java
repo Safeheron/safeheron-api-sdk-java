@@ -31,4 +31,5 @@ public class TransactionParam {
     private Long blockHeight;
     private Long completedTime;
     private String realDestinationAccountType;
+    private String transactionType;
 }

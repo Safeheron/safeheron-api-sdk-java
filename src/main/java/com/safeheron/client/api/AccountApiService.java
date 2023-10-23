@@ -72,6 +72,20 @@ public interface AccountApiService {
     Call<ResultResponse> updateAccountShowState(@Body UpdateAccountShowStateRequest updateAccountShowStateRequest);
 
     /**
+     * Batch Label Wallet Accounts
+     * Relabel a batch of wallet accounts.
+     * Please note that it only supports to label wallets which are created by API. And, the wallets have been used to sweep the target account cannot be relabelled.
+     *
+     * @param batchUpdateAccountTagRequest
+     * @return ResultResponse
+     * @see UpdateAccountShowStateRequest
+     * @see ResultResponse
+     */
+    @POST("/v1/account/batch/update/tag")
+    Call<ResultResponse> batchUpdateAccountTag(@Body BatchUpdateAccountTagRequest batchUpdateAccountTagRequest);
+
+
+    /**
      * Add Coins to a Wallet Account
      * Add a new coin to your wallet account, while generating the default address group for the added coin. Once successfully completed, it will return the address information of the newly created default address group. In case the added currency already exists within the account, it will promptly return the existing default address group information for that coin.
      * In a wallet account, UTXO-based cryptocurrencies can have multiple address groups, while other types of cryptocurrencies usually have only one. To check whether a particular cryptocurrency supports the addition of multiple address groups, simply check the 'isMultipleAddress' parameter through the Coin List.
