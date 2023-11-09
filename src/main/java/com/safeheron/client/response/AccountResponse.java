@@ -50,16 +50,6 @@ public class AccountResponse {
     private String usdBalance;
 
     /**
-     * Frozen amount of this account, in USD when retrieve
-     */
-    private String frozenUsdBalance;
-
-    /**
-     * Frozen amount by AML of this account, in USD when retrieve
-     */
-    private String amlLockUsdBalance;
-
-    /**
      * Account public key info
      */
     private List<PubKey> pubKeys;

@@ -21,9 +21,4 @@ public class AddressResult {
      * The balance of this coin address
      */
     private String addressBalance;
-
-    /**
-     * amlLock
-     */
-    private String amlLock;
 }

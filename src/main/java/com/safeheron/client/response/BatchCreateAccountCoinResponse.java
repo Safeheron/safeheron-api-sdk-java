@@ -32,10 +32,5 @@ public class BatchCreateAccountCoinResponse {
          * addressType
          */
         private String addressType;
-
-        /**
-         * amlLock
-         */
-        private String amlLock;
     }
 }

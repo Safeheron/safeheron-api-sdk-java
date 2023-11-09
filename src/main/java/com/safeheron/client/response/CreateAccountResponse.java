@@ -22,11 +22,16 @@ public class CreateAccountResponse {
     private List<PubKey> pubKeys;
 
     /**
+     * Coin address list
+     */
+    private List<CoinAddressInfoDto> coinAddressList;
+
+    /**
      * Account public key info
      */
     @Data
     @NoArgsConstructor
-    public static class PubKey{
+    public static class PubKey {
         /**
          * Signature algorithm, currently supports secp256k1
          */
@@ -36,6 +41,36 @@ public class CreateAccountResponse {
          * Account compressed public key
          */
         private String pubKey;
+    }
+
+    /**
+     * Coin address list
+     */
+    @Data
+    @NoArgsConstructor
+    public static class CoinAddressInfoDto {
+        /**
+         * Coin key
+         */
+        private String coinKey;
+        /**
+         * Address list
+         */
+        private List<CoinAddressResponse> addressList;
+
+        @Data
+        @NoArgsConstructor
+        public static class CoinAddressResponse {
+            /**
+             * Coin receiving address
+             */
+            private String address;
+            /**
+             * Address type
+             */
+            private String addressType;
+        }
+
     }
 
 }
