@@ -26,12 +26,5 @@ public class InfoAccountCoinAddressResponse {
      * Account key
      */
     private String accountKey;
-
-    /**
-     * The account is frozen by AML
-     * YES: frozen
-     * NO: unfrozen
-     */
-    private String amlLock;
 }
 

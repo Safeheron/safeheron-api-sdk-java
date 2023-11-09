@@ -2,6 +2,8 @@ package com.safeheron.client.request;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Create a new wallet account request
  *
@@ -21,6 +23,11 @@ public class CreateAccountRequest {
      * Default: false
      */
     private Boolean hiddenOnUI;
+
+    /**
+     * 	Coin key list, 20 array elements max
+     */
+    private List<String> coinKeyList;
 
     /**
      * Account tag

@@ -16,10 +16,5 @@ public class CreateAccountCoinAddressResponse {
      * addressType
      */
     private String addressType;
-
-    /**
-     * amlLock
-     */
-    private String amlLock;
 }
 
