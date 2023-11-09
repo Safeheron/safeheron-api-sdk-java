@@ -132,6 +132,13 @@ public class OneTransactionsResponse {
     private String customerExt2;
 
     /**
+     * Whether the source address contains AML address(es)
+     *     YES: contain
+     *     NO: not contain
+     */
+    private String amlLock;
+
+    /**
      * Block height (for confirming transaction and succeeded transaction)
      */
     private Long blockHeight;

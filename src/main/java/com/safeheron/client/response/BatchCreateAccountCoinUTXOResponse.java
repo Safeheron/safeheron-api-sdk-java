@@ -32,11 +32,6 @@ public class BatchCreateAccountCoinUTXOResponse {
          * addressType
          */
         private String addressType;
-
-        /**
-         * amlLock
-         */
-        private String amlLock;
     }
 }
 
