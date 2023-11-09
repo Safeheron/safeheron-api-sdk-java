@@ -24,7 +24,7 @@ public class CreateAccountResponse {
     /**
      * Coin address list
      */
-    private List<CoinAddressInfoDto> coinAddressList;
+    private List<CoinAddress> coinAddressList;
 
     /**
      * Account public key info
@@ -48,7 +48,7 @@ public class CreateAccountResponse {
      */
     @Data
     @NoArgsConstructor
-    public static class CoinAddressInfoDto {
+    public static class CoinAddress {
         /**
          * Coin key
          */
