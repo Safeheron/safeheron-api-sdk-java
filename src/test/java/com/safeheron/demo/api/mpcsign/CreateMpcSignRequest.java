@@ -12,11 +12,11 @@ public class CreateMpcSignRequest {
     private String customerRefId;
     private String sourceAccountKey;
     private String signAlg;
-    private List<Hash> hashs;
+    private List<Entry> dataList;
 
     @Data
-    public static class Hash {
-        private String hash;
+    public static class Entry {
+        private String data;
         private String note;
     }
 

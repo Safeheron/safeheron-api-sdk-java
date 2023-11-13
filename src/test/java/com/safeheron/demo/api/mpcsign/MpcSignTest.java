@@ -155,9 +155,9 @@ public class MpcSignTest {
         request.setSourceAccountKey(accountKey);
         request.setSignAlg("Secp256k1");
 
-        CreateMpcSignRequest.Hash hashItem = new CreateMpcSignRequest.Hash();
-        hashItem.setHash(hash);
-        request.setHashs(Arrays.asList(hashItem));
+        CreateMpcSignRequest.Entry hashItem = new CreateMpcSignRequest.Entry();
+        hashItem.setData(hash);
+        request.setDataList(Arrays.asList(hashItem));
 
         CreateMpcSignResponse response = ServiceExecutor.execute(mpcSignApi.createMpcSign(request));
 
