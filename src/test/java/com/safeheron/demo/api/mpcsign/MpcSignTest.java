@@ -1,6 +1,11 @@
 package com.safeheron.demo.api.mpcsign;
 
+import com.safeheron.client.api.MPCSignApiService;
 import com.safeheron.client.config.SafeheronConfig;
+import com.safeheron.client.request.CreateMPCSignTransactionRequest;
+import com.safeheron.client.request.OneMPCSignTransactionsRequest;
+import com.safeheron.client.response.MPCSignTransactionsResponse;
+import com.safeheron.client.response.TxKeyResult;
 import com.safeheron.client.utils.ServiceCreator;
 import com.safeheron.client.utils.ServiceExecutor;
 import okhttp3.OkHttpClient;
@@ -43,7 +48,7 @@ public class MpcSignTest {
     static Web3j web3;
     private static final String READ_ONLY_FROM_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-    static MpcSignApi mpcSignApi;
+    static MPCSignApiService mpcSignApi;
     static Map<String, String> config;
 
     @BeforeClass
@@ -54,7 +59,7 @@ public class MpcSignTest {
         InputStream inputStream = new FileInputStream(file);
         config = yaml.load(inputStream);
 
-        mpcSignApi = ServiceCreator.create(MpcSignApi.class, SafeheronConfig.builder()
+        mpcSignApi = ServiceCreator.create(MPCSignApiService.class, SafeheronConfig.builder()
                 .baseUrl(config.get("baseUrl"))
                 .apiKey(config.get("apiKey"))
                 .safeheronRsaPublicKey(config.get("safeheronPublicKey"))
@@ -150,26 +155,26 @@ public class MpcSignTest {
     }
 
     private String requestMpcSig(String customerRefId, String accountKey, String hash){
-        CreateMpcSignRequest request = new CreateMpcSignRequest();
+        CreateMPCSignTransactionRequest request = new CreateMPCSignTransactionRequest();
         request.setCustomerRefId(customerRefId);
         request.setSourceAccountKey(accountKey);
         request.setSignAlg("Secp256k1");
 
-        CreateMpcSignRequest.Entry hashItem = new CreateMpcSignRequest.Entry();
+        CreateMPCSignTransactionRequest.Date hashItem = new CreateMPCSignTransactionRequest.Date();
         hashItem.setData(hash);
         request.setDataList(Arrays.asList(hashItem));
 
-        CreateMpcSignResponse response = ServiceExecutor.execute(mpcSignApi.createMpcSign(request));
+        TxKeyResult response = ServiceExecutor.execute(mpcSignApi.createMPCSignTransactions(request));
 
         return response.getTxKey();
     }
 
     private String retrieveSig(String customerRefId) throws Exception {
-        RetrieveMpcSignRequest request = new RetrieveMpcSignRequest();
+        OneMPCSignTransactionsRequest request = new OneMPCSignTransactionsRequest();
         request.setCustomerRefId(customerRefId);
 
         for(int i = 0; i < 100 ; i++){
-            RetrieveMpcSignResponse response = ServiceExecutor.execute(mpcSignApi.retrieveSig(request));
+            MPCSignTransactionsResponse response = ServiceExecutor.execute(mpcSignApi.oneMPCSignTransactions(request));
             System.out.println(String.format("mpc sign transaction status: %s, sub status: %s", response.getTransactionStatus(), response.getTransactionSubStatus()));
 
             if ("FAILED".equalsIgnoreCase(response.getTransactionStatus()) || "REJECTED".equalsIgnoreCase(response.getTransactionStatus())){
@@ -178,7 +183,7 @@ public class MpcSignTest {
             }
 
             if ("COMPLETED".equalsIgnoreCase(response.getTransactionStatus()) && "CONFIRMED".equalsIgnoreCase(response.getTransactionSubStatus())){
-                return response.getHashs().get(0).getSig();
+                return response.getDataList().get(0).getSig();
             }
 
             System.out.println("wait 5000ms");
