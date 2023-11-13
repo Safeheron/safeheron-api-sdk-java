@@ -1,6 +1,9 @@
 package com.safeheron.demo.api.transaction;
 
+import com.safeheron.client.api.TransactionApiService;
 import com.safeheron.client.config.SafeheronConfig;
+import com.safeheron.client.request.CreateTransactionRequest;
+import com.safeheron.client.response.TxKeyResult;
 import com.safeheron.client.utils.ServiceCreator;
 import com.safeheron.client.utils.ServiceExecutor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +26,7 @@ import java.util.UUID;
 @Slf4j
 public class TransactionTest {
 
-    static TransactionApi transactionApi;
+    static TransactionApiService transactionApi;
 
     static Map<String, String> config;
 
@@ -34,7 +37,7 @@ public class TransactionTest {
         InputStream inputStream = new FileInputStream(file);
         config = yaml.load(inputStream);
 
-        transactionApi = ServiceCreator.create(TransactionApi.class, SafeheronConfig.builder()
+        transactionApi = ServiceCreator.create(TransactionApiService.class, SafeheronConfig.builder()
                 .baseUrl(config.get("baseUrl"))
                 .apiKey(config.get("apiKey"))
                 .safeheronRsaPublicKey(config.get("safeheronPublicKey"))
@@ -44,7 +47,7 @@ public class TransactionTest {
 
     @Test
     public void testSendTransaction(){
-        CreateTransactionRequest createTransactionRequest = new CreateTransactionRequest();
+        CreateTransactionRequest createTransactionRequest = new com.safeheron.client.request.CreateTransactionRequest();
         createTransactionRequest.setSourceAccountKey(config.get("accountKey"));
         createTransactionRequest.setSourceAccountType("VAULT_ACCOUNT");
         createTransactionRequest.setDestinationAccountType("ONE_TIME_ADDRESS");
@@ -53,7 +56,7 @@ public class TransactionTest {
         createTransactionRequest.setTxAmount("0.001");
         createTransactionRequest.setTxFeeLevel("MIDDLE");
         createTransactionRequest.setCustomerRefId(UUID.randomUUID().toString());
-        CreateTransactionResponse createTransactionResponse = ServiceExecutor.execute(transactionApi.createTransaction(createTransactionRequest));
+        TxKeyResult createTransactionResponse = ServiceExecutor.execute(transactionApi.createTransactions(createTransactionRequest));
         System.out.println(String.format("transaction has been created, txKey: %s", createTransactionResponse.getTxKey()));
     }
 
