@@ -1,9 +1,12 @@
 package com.safeheron.demo.api.account;
 
+import com.safeheron.client.api.AccountApiService;
 import com.safeheron.client.config.SafeheronConfig;
+import com.safeheron.client.request.CreateAccountCoinRequest;
 import com.safeheron.client.request.CreateAccountRequest;
 import com.safeheron.client.request.ListAccountRequest;
 import com.safeheron.client.response.AccountResponse;
+import com.safeheron.client.response.CreateAccountCoinResponse;
 import com.safeheron.client.response.CreateAccountResponse;
 import com.safeheron.client.response.PageResult;
 import com.safeheron.client.utils.ServiceCreator;
@@ -29,7 +32,7 @@ import java.util.Map;
 @Slf4j
 public class CreateAccountTest {
 
-    static AccountApi accountApi;
+    static AccountApiService accountApi;
 
     static Map<String, String> config;
 
@@ -40,7 +43,7 @@ public class CreateAccountTest {
         InputStream inputStream = new FileInputStream(file);
         config = yaml.load(inputStream);
 
-        accountApi = ServiceCreator.create(AccountApi.class, SafeheronConfig.builder()
+        accountApi = ServiceCreator.create(AccountApiService.class, SafeheronConfig.builder()
                 .baseUrl(config.get("baseUrl"))
                 .apiKey(config.get("apiKey"))
                 .safeheronRsaPublicKey(config.get("safeheronPublicKey"))
@@ -56,10 +59,10 @@ public class CreateAccountTest {
         CreateAccountResponse createAccountResponse = ServiceExecutor.execute(accountApi.createAccount(createAccountRequest));
         System.out.println(String.format("wallet account created, account key: %s", createAccountResponse.getAccountKey()));
 
-        AddCoinRequest addCoinRequest = new AddCoinRequest();
+        CreateAccountCoinRequest addCoinRequest = new CreateAccountCoinRequest();
         addCoinRequest.setAccountKey(createAccountResponse.getAccountKey());
         addCoinRequest.setCoinKey("ETH_GOERLI");
-        List<AddCoinResponse> addCoinResponseList = ServiceExecutor.execute(accountApi.addCoin(addCoinRequest));
+        List<CreateAccountCoinResponse> addCoinResponseList = ServiceExecutor.execute(accountApi.createAccountCoin(addCoinRequest));
 
         System.out.println(String.format("Token[ETH_GOERLI] address: %s", addCoinResponseList.get(0).getAddress()));
 
