@@ -112,6 +112,11 @@ public class CreateTransactionRequest {
     private Long nonce;
 
     /**
+     * Customizable sequence number on Aptos, similar to the nonce in the EVM.
+     */
+    private Long sequenceNumber;
+
+    /**
      * Balance verification, BALANCE_CHECK by default
      */
     private String balanceVerifyType;

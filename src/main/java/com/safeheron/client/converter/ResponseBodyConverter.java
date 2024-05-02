@@ -2,12 +2,15 @@ package com.safeheron.client.converter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.safeheron.client.config.AESTypeEnum;
+import com.safeheron.client.config.RSATypeEnum;
 import com.safeheron.client.exception.SafeheronException;
 import com.safeheron.client.response.ApiResult;
 import com.safeheron.client.utils.AesUtil;
 import com.safeheron.client.utils.JsonUtil;
 import com.safeheron.client.utils.RsaUtil;
 import okhttp3.ResponseBody;
+import org.apache.commons.lang.StringUtils;
 import retrofit2.Converter;
 
 import java.io.IOException;
@@ -63,12 +66,14 @@ public class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
             }
 
             // Use your RSA private key to decrypt response's aesKey and aesIv
-            byte[] aesSaltDecrypt = RsaUtil.decrypt(apiResult.getKey(), rsaPrivateKey);
+            RSATypeEnum RSAType = StringUtils.isNotEmpty(apiResult.getRSAType()) && RSATypeEnum.valueByCode(apiResult.getRSAType()) != null ? RSATypeEnum.valueByCode(apiResult.getRSAType()) : RSATypeEnum.RSA;
+            byte[] aesSaltDecrypt = RsaUtil.decrypt(apiResult.getKey(), rsaPrivateKey,RSAType);
             byte[] aesKey = Arrays.copyOfRange(aesSaltDecrypt, 0, 32);
             byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
             // Use AES to decrypt bizContent
-            String dataDecrypt = AesUtil.decrypt(apiResult.getBizContent(), aesKey, iv);
+            AESTypeEnum AESType = StringUtils.isNotEmpty(apiResult.getAESType()) && AESTypeEnum.valueByCode(apiResult.getAESType()) != null ? AESTypeEnum.valueByCode(apiResult.getAESType()) : AESTypeEnum.CBC;
+            String dataDecrypt = AesUtil.decrypt(apiResult.getBizContent(), aesKey, iv, AESType);
             return reader.readValue(dataDecrypt);
         }catch(Exception e){
             throw new RuntimeException(e);

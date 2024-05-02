@@ -41,4 +41,14 @@ public class FeeRateDto {
      * SUI gas budget, similar to EIP-1559 max fee
      */
     private String gasBudget;
+
+    /**
+     * The gas price the transaction sender is willing to pay, similar to EVM gasPrice
+     */
+    private String gasUnitPrice;
+
+    /**
+     * The maximum number of gas units that the transaction sender is willing to spend to execute the transaction, similar to EVM gasLimit
+     */
+    private String maxGasAmount;
 }
