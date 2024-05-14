@@ -41,9 +41,9 @@ public class ApiResult<T> implements Serializable {
      */
     private String bizContent;
 
-    private String AESType;
+    private String rsaType;
 
-    private String RSAType;
+    private String aesType;
 
     /**
      * AES-decrypted data of response parameters
@@ -56,7 +56,7 @@ public class ApiResult<T> implements Serializable {
     public ApiResult(Integer code, String message) {
         this.code = code;
         this.message = message;
-        this.timestamp = System.currentTimeMillis()+"";
+        this.timestamp = System.currentTimeMillis() + "";
     }
 
     public ApiResult(T rawData) {

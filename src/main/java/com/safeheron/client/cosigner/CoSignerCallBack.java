@@ -27,7 +27,7 @@ public class CoSignerCallBack {
      */
     private String bizContent;
 
-    private String RSAType;
+    private String rsaType;
 
-    private String AESType;
+    private String aesType;
 }

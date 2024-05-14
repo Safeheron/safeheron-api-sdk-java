@@ -67,13 +67,13 @@ public class CoSignerConverter {
         }
 
         // Use your RSA private key to decrypt request's aesKey and aesIv
-        RSATypeEnum RSAType = StringUtils.isNotEmpty(coSignerCallBack.getRSAType()) && RSATypeEnum.valueByCode(coSignerCallBack.getRSAType()) != null ? RSATypeEnum.valueByCode(coSignerCallBack.getRSAType()) : RSATypeEnum.RSA;
+        RSATypeEnum RSAType = StringUtils.isNotEmpty(coSignerCallBack.getRsaType()) && RSATypeEnum.valueByCode(coSignerCallBack.getRsaType()) != null ? RSATypeEnum.valueByCode(coSignerCallBack.getRsaType()) : RSATypeEnum.RSA;
         byte[] aesSaltDecrypt = RsaUtil.decrypt(coSignerCallBack.getKey(), bizPrivKey,RSAType);
         byte[] aesKey = Arrays.copyOfRange(aesSaltDecrypt, 0, 32);
         byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
         // Use AES to decrypt bizContent
-        AESTypeEnum AESType = StringUtils.isNotEmpty(coSignerCallBack.getAESType()) && AESTypeEnum.valueByCode(coSignerCallBack.getAESType()) != null ? AESTypeEnum.valueByCode(coSignerCallBack.getAESType()) : AESTypeEnum.CBC;
+        AESTypeEnum AESType = StringUtils.isNotEmpty(coSignerCallBack.getAesType()) && AESTypeEnum.valueByCode(coSignerCallBack.getAesType()) != null ? AESTypeEnum.valueByCode(coSignerCallBack.getAesType()) : AESTypeEnum.CBC;
         String decrypt = AesUtil.decrypt(coSignerCallBack.getBizContent(), aesKey, iv,AESType);
         ObjectMapper mapper = JsonUtil.getObjectMapper();
 
