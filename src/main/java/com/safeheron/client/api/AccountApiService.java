@@ -25,6 +25,17 @@ public interface AccountApiService {
     Call<PageResult<AccountResponse>> listAccounts(@Body ListAccountRequest listAccountRequest);
 
     /**
+     * One Wallet Accounts
+     *
+     * @param oneAccountRequest
+     * @return AccountResponse
+     * @see ListAccountRequest
+     * @see AccountResponse
+     */
+    @POST("/v1/account/one")
+    Call<AccountResponse> oneAccounts(@Body OneAccountRequest oneAccountRequest);
+
+    /**
      * Create a new wallet account.
      *
      * @param createAccountRequest

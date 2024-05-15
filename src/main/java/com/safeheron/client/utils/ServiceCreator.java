@@ -8,6 +8,7 @@ import okhttp3.Protocol;
 import retrofit2.Retrofit;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author safeheron
@@ -30,6 +31,9 @@ public class ServiceCreator {
                 if (retrofit == null) {
                     builder.baseUrl(config.getBaseUrl());
                     httpClient.addInterceptor(RequestInterceptor.create(config));
+                    if (config.getRequestTimeout() != null) {
+                        httpClient.callTimeout(config.getRequestTimeout(), TimeUnit.MILLISECONDS);
+                    }
                     builder.client(httpClient.build());
                     builder.addConverterFactory(ConverterFactory.create(config));
                     retrofit = builder.build();

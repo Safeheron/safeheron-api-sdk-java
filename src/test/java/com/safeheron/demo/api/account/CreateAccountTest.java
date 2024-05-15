@@ -34,7 +34,7 @@ public class CreateAccountTest {
 
     static AccountApiService accountApi;
 
-    static Map<String, String> config;
+    static Map<String, Object> config;
 
     @BeforeClass
     public static void beforeClass() throws FileNotFoundException {
@@ -44,10 +44,11 @@ public class CreateAccountTest {
         config = yaml.load(inputStream);
 
         accountApi = ServiceCreator.create(AccountApiService.class, SafeheronConfig.builder()
-                .baseUrl(config.get("baseUrl"))
-                .apiKey(config.get("apiKey"))
-                .safeheronRsaPublicKey(config.get("safeheronPublicKey"))
-                .rsaPrivateKey(config.get("privateKey"))
+                .baseUrl(config.get("baseUrl").toString())
+                .apiKey(config.get("apiKey").toString())
+                .safeheronRsaPublicKey(config.get("safeheronPublicKey").toString())
+                .rsaPrivateKey(config.get("privateKey").toString())
+                .requestTimeout(Long.valueOf(config.get("requestTimeout").toString()))
                 .build());
     }
 

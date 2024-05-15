@@ -31,7 +31,7 @@ public class Web3PersonalSignTest {
     static Web3j web3;
 
     static Web3ApiService web3ApiService;
-    static Map<String, String> config;
+    static Map<String, Object> config;
 
     @BeforeClass
     public static void beforeClass() throws FileNotFoundException {
@@ -42,20 +42,21 @@ public class Web3PersonalSignTest {
         config = yaml.load(inputStream);
 
         web3ApiService = ServiceCreator.create(Web3ApiService.class, SafeheronConfig.builder()
-                .baseUrl(config.get("baseUrl"))
-                .apiKey(config.get("apiKey"))
-                .safeheronRsaPublicKey(config.get("safeheronPublicKey"))
-                .rsaPrivateKey(config.get("privateKey"))
+                .baseUrl(config.get("baseUrl").toString())
+                .apiKey(config.get("apiKey").toString())
+                .safeheronRsaPublicKey(config.get("safeheronPublicKey").toString())
+                .rsaPrivateKey(config.get("privateKey").toString())
+                .requestTimeout(Long.valueOf(config.get("requestTimeout").toString()))
                 .build());
 
-        web3 = Web3j.build(new HttpService(config.get("ethereumRpcApi"),
+        web3 = Web3j.build(new HttpService(config.get("ethereumRpcApi").toString(),
                 new OkHttpClient.Builder().build()));
 
     }
 
     @Test
     public void testWeb3PersonalSignTest() throws Exception {
-        String accountKey = config.get("accountKey");
+        String accountKey = config.get("accountKey").toString();
 
         CreateWeb3PersonalSignRequest.Message message = new CreateWeb3PersonalSignRequest.Message();
         message.setChainId(web3.ethChainId().send().getChainId().longValue());

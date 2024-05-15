@@ -48,7 +48,7 @@ public class Web3EthSignTransactionTest {
     private static final String READ_ONLY_FROM_ADDRESS = "0x0000000000000000000000000000000000000000";
 
     static com.safeheron.client.api.Web3ApiService web3ApiService;
-    static Map<String, String> config;
+    static Map<String, Object> config;
 
     @BeforeClass
     public static void beforeClass() throws FileNotFoundException {
@@ -59,23 +59,24 @@ public class Web3EthSignTransactionTest {
         config = yaml.load(inputStream);
 
         web3ApiService = ServiceCreator.create(Web3ApiService.class, SafeheronConfig.builder()
-                .baseUrl(config.get("baseUrl"))
-                .apiKey(config.get("apiKey"))
-                .safeheronRsaPublicKey(config.get("safeheronPublicKey"))
-                .rsaPrivateKey(config.get("privateKey"))
+                .baseUrl(config.get("baseUrl").toString())
+                .apiKey(config.get("apiKey").toString())
+                .safeheronRsaPublicKey(config.get("safeheronPublicKey").toString())
+                .rsaPrivateKey(config.get("privateKey").toString())
+                .requestTimeout(Long.valueOf(config.get("requestTimeout").toString()))
                 .build());
 
-        web3 = Web3j.build(new HttpService(config.get("ethereumRpcApi"),
+        web3 = Web3j.build(new HttpService(config.get("ethereumRpcApi").toString(),
                 new OkHttpClient.Builder().build()));
 
     }
 
     @Test
     public void testSendToken() throws Exception {
-        String accountKey = config.get("accountKey");
-        String fromAddress = config.get("accountTokenAddress");
-        String contractAddress = config.get("erc20ContractAddress");
-        String toAddress = config.get("toAddress");
+        String accountKey = config.get("accountKey").toString();
+        String fromAddress = config.get("accountTokenAddress").toString();
+        String contractAddress = config.get("erc20ContractAddress").toString();
+        String toAddress = config.get("toAddress").toString();
         System.out.println(String.format("Attempting to send contract transaction from %s to %s, EIP-1559: %s",
                 fromAddress, toAddress, true));
         // Create function

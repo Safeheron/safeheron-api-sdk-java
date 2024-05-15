@@ -3,7 +3,7 @@ package com.safeheron.client.config;
 public enum AESTypeEnum {
 
     CBC("CBC_PKCS7Padding"),
-    GCM("GCM_NoPadding");
+    GCM("GCM_NOPADDING");
 
     AESTypeEnum(String code) {
         this.code = code;

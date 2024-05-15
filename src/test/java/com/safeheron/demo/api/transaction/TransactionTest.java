@@ -28,7 +28,7 @@ public class TransactionTest {
 
     static TransactionApiService transactionApi;
 
-    static Map<String, String> config;
+    static Map<String, Object> config;
 
     @BeforeClass
     public static void beforeClass() throws FileNotFoundException {
@@ -38,20 +38,21 @@ public class TransactionTest {
         config = yaml.load(inputStream);
 
         transactionApi = ServiceCreator.create(TransactionApiService.class, SafeheronConfig.builder()
-                .baseUrl(config.get("baseUrl"))
-                .apiKey(config.get("apiKey"))
-                .safeheronRsaPublicKey(config.get("safeheronPublicKey"))
-                .rsaPrivateKey(config.get("privateKey"))
+                .baseUrl(config.get("baseUrl").toString())
+                .apiKey(config.get("apiKey").toString())
+                .safeheronRsaPublicKey(config.get("safeheronPublicKey").toString())
+                .rsaPrivateKey(config.get("privateKey").toString())
+                .requestTimeout(Long.valueOf(config.get("requestTimeout").toString()))
                 .build());
     }
 
     @Test
     public void testSendTransaction(){
         CreateTransactionRequest createTransactionRequest = new com.safeheron.client.request.CreateTransactionRequest();
-        createTransactionRequest.setSourceAccountKey(config.get("accountKey"));
+        createTransactionRequest.setSourceAccountKey(config.get("accountKey").toString());
         createTransactionRequest.setSourceAccountType("VAULT_ACCOUNT");
         createTransactionRequest.setDestinationAccountType("ONE_TIME_ADDRESS");
-        createTransactionRequest.setDestinationAddress(config.get("destinationAddress"));
+        createTransactionRequest.setDestinationAddress(config.get("destinationAddress").toString());
         createTransactionRequest.setCoinKey("ETH_GOERLI");
         createTransactionRequest.setTxAmount("0.001");
         createTransactionRequest.setTxFeeLevel("MIDDLE");
