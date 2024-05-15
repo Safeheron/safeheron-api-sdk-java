@@ -25,7 +25,8 @@ public interface AccountApiService {
     Call<PageResult<AccountResponse>> listAccounts(@Body ListAccountRequest listAccountRequest);
 
     /**
-     * One Wallet Accounts
+     * Retrieve a Single Wallet Account
+     * Retrieve a single wallet account in the team by providing accountKey.
      *
      * @param oneAccountRequest
      * @return AccountResponse

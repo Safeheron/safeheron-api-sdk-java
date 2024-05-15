@@ -4,7 +4,7 @@ package com.safeheron.client.request;
 import lombok.Data;
 
 /**
- * One Wallet Accounts
+ * Retrieve a Single Wallet Account
  * @author safeheron
  */
 @Data
