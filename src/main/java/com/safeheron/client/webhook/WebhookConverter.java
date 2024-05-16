@@ -67,14 +67,14 @@ public class WebhookConverter {
         }
 
         // Use your RSA private key to decrypt response's aesKey and aesIv
-        RSATypeEnum RSAType = StringUtils.isNotEmpty(webHook.getRsaType()) && RSATypeEnum.valueByCode(webHook.getRsaType()) != null ? RSATypeEnum.valueByCode(webHook.getRsaType()) : RSATypeEnum.RSA;
-        byte[] aesSaltDecrypt = RsaUtil.decrypt(webHook.getKey(), webHookRsaPrivateKey,RSAType);
+        RSATypeEnum rsaType = StringUtils.isNotEmpty(webHook.getRsaType()) && RSATypeEnum.valueByCode(webHook.getRsaType()) != null ? RSATypeEnum.valueByCode(webHook.getRsaType()) : RSATypeEnum.RSA;
+        byte[] aesSaltDecrypt = RsaUtil.decrypt(webHook.getKey(), webHookRsaPrivateKey,rsaType);
         byte[] aesKey = Arrays.copyOfRange(aesSaltDecrypt, 0, 32);
         byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
         // Use AES to decrypt bizContent
-        AESTypeEnum AESType = StringUtils.isNotEmpty(webHook.getAesType()) && AESTypeEnum.valueByCode(webHook.getAesType()) != null ? AESTypeEnum.valueByCode(webHook.getAesType()) : AESTypeEnum.CBC;
-        String decrypt = AesUtil.decrypt(webHook.getBizContent(), aesKey, iv,AESType);
+        AESTypeEnum aesType = StringUtils.isNotEmpty(webHook.getAesType()) && AESTypeEnum.valueByCode(webHook.getAesType()) != null ? AESTypeEnum.valueByCode(webHook.getAesType()) : AESTypeEnum.CBC;
+        String decrypt = AesUtil.decrypt(webHook.getBizContent(), aesKey, iv,aesType);
         ObjectMapper mapper = JsonUtil.getObjectMapper();
 
         //Data conversion

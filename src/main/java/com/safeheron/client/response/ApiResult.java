@@ -41,8 +41,14 @@ public class ApiResult<T> implements Serializable {
      */
     private String bizContent;
 
+    /**
+     * RSA-encrypted type
+     */
     private String rsaType;
 
+    /**
+     * AES-encrypted type
+     */
     private String aesType;
 
     /**

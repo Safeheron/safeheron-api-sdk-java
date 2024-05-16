@@ -66,14 +66,14 @@ public class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
             }
 
             // Use your RSA private key to decrypt response's aesKey and aesIv
-            RSATypeEnum RSAType = StringUtils.isNotEmpty(apiResult.getRsaType()) && RSATypeEnum.valueByCode(apiResult.getRsaType()) != null ? RSATypeEnum.valueByCode(apiResult.getRsaType()) : RSATypeEnum.RSA;
-            byte[] aesSaltDecrypt = RsaUtil.decrypt(apiResult.getKey(), rsaPrivateKey,RSAType);
+            RSATypeEnum rsaType = StringUtils.isNotEmpty(apiResult.getRsaType()) && RSATypeEnum.valueByCode(apiResult.getRsaType()) != null ? RSATypeEnum.valueByCode(apiResult.getRsaType()) : RSATypeEnum.RSA;
+            byte[] aesSaltDecrypt = RsaUtil.decrypt(apiResult.getKey(), rsaPrivateKey,rsaType);
             byte[] aesKey = Arrays.copyOfRange(aesSaltDecrypt, 0, 32);
             byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
             // Use AES to decrypt bizContent
-            AESTypeEnum AESType = StringUtils.isNotEmpty(apiResult.getAesType()) && AESTypeEnum.valueByCode(apiResult.getAesType()) != null ? AESTypeEnum.valueByCode(apiResult.getAesType()) : AESTypeEnum.CBC;
-            String dataDecrypt = AesUtil.decrypt(apiResult.getBizContent(), aesKey, iv, AESType);
+            AESTypeEnum aesType = StringUtils.isNotEmpty(apiResult.getAesType()) && AESTypeEnum.valueByCode(apiResult.getAesType()) != null ? AESTypeEnum.valueByCode(apiResult.getAesType()) : AESTypeEnum.CBC;
+            String dataDecrypt = AesUtil.decrypt(apiResult.getBizContent(), aesKey, iv, aesType);
             return reader.readValue(dataDecrypt);
         }catch(Exception e){
             throw new RuntimeException(e);
