@@ -14,62 +14,6 @@ $ git clone https://github.com/Safeheron/safeheron-api-sdk-java.git
 $ cd safeheron-api-sdk-java
 $ mvn install -Dmaven.test.skip=true
 ```
-  
-## Develop
-> Take `/v1/account/create` as an example to explain
-* Define request parameter data object
-    ```java
-    @Data
-    public class CreateAccountRequest {
-        private String accountName;
-        private Boolean autoFuel;
-        private Boolean hiddenOnUI;
-    }
-    ```
-* Define response data object
-    ```java
-    @Data
-    public class CreateAccountResponse {
-        private String accountKey;
-        private List<PubKey> pubKeys;
-        @Data
-        @NoArgsConstructor
-        public static class PubKey{
-            private String signAlg;
-            private String pubKey;
-        }
-    }
-    ```
-* Define the interface to use
-    ```java
-    public interface AccountApiService {
-        @POST("/v1/account/create")
-        Call<CreateAccountResponse> createAccount(@Body CreateAccountRequest createAccountRequest);
-  
-        // Other interfaces
-        ...
-        ...
-    }
-    ```
-
-* Call `createAccount` api which defined above
-    ```java
-    // You can get `ApiKey` and `SafeheronRsaPublicKey` from Safeheron Web Console: https://www.safeheron.com/console.
-    SafeheronConfig config = SafeheronConfig.builder()
-            .baseUrl("https://api.safeheron.vip")
-            .apiKey("d1ad6******72e7")
-            .safeheronRsaPublicKey("MIICIjANBgkqhk******h7OjkCAwEAAQ==")
-            .rsaPrivateKey("MIIJQwIBADANBgkqhki********NUt6qNfhT6qvSw41k=")
-            .build();
-    AccountApiService apiService = ServiceCreator.create(AccountApiService.class, config)
-    CreateAccountRequest request = new CreateAccountRequest();
-    request.setHiddenOnUI(true);
-    Call<CreateAccountResponse> call = apiService.createAccount(request);
-    CreateAccountResponse response = ServiceExecutor.execute(call);
-    // Your code to process response
-    ...
-    ...
-    ```
 
 # Test
 
@@ -84,6 +28,8 @@ $ mvn install -Dmaven.test.skip=true
     safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
     # Safeheron API url
     baseUrl: https://api.safeheron.vip
+    # RequestTimeout
+    requestTimeout: 10000
     ```
 * Copy config to `config.yaml` file.
     ```bash
@@ -105,6 +51,8 @@ $ mvn install -Dmaven.test.skip=true
     safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
     # Safeheron API url
     baseUrl: https://api.safeheron.vip
+    # RequestTimeout
+    requestTimeout: 10000
     # Wallet Account key
     accountKey: account****5ecad40
     # To address
@@ -131,6 +79,8 @@ $ mvn install -Dmaven.test.skip=true
     safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
     # Safeheron API url
     baseUrl: https://api.safeheron.vip
+    # RequestTimeout
+    requestTimeout: 10000
     # Wallet Account key
     accountKey: account****5ecad40
     # Goerli testnet token address in wallet account
