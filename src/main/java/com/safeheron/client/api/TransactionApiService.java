@@ -48,6 +48,17 @@ public interface TransactionApiService {
     Call<TxKeyResult> createTransactions(@Body CreateTransactionRequest createTransactionRequest);
 
     /**
+     * For UTXOs that natively support multiple OUTPUTs, this interface allows a single transaction to transfer funds to multiple destination addresses simultaneously.(To use the Co-Signer, please use version 1.5.9 or higher)
+     *
+     * @param createTransactionsUTXOMultidestRequest
+     * @return TxKeyResult
+     * @see CreateTransactionRequest
+     * @see TxKeyResult
+     */
+    @POST("/v1/transactions/utxo/multidest/create")
+    Call<TxKeyResult> createTransactionsUTXOMultidest(@Body CreateTransactionsUTXOMultidestRequest createTransactionsUTXOMultidestRequest);
+
+    /**
      * Speed up EVM and UTXO-based Transactions
      * Transactions with low transaction fees and those that have been pending for a long time can be sped up. EVM-based and BTC transactions can be sped up through RBF(If 'isRbf' is set to true during transaction creation, the transaction will be accelerated using RBF acceleration. Otherwise, CPFP acceleration will be used.) For other UTXO-based transactions, CPFP will be used.
      *

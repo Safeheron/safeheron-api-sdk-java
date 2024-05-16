@@ -1,10 +1,12 @@
 package com.safeheron.client.utils;
 
+import com.safeheron.client.config.AESTypeEnum;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -22,6 +24,7 @@ public class AesUtil {
     private static final int AES_KEY_SIZE_256 = 256;
     private static final String AES_ALG = "AES";
     private static final String AES_CBC_PKC_ALG = "AES/CBC/PKCS7Padding";
+    private static final String AES_GCM_PKC_ALG = "AES/GCM/NoPadding";
 
     static {
         Security.addProvider(new BouncyCastleProvider());
@@ -42,20 +45,35 @@ public class AesUtil {
     }
 
 
-    public static String encrypt(String content, byte[] aesKey, byte[] iv) throws Exception {
-        Cipher cipher = Cipher.getInstance(AES_CBC_PKC_ALG, "BC");
+    public static String encrypt(String content, byte[] aesKey, byte[] iv, AESTypeEnum AESType) throws Exception {
+        Cipher cipher;
         SecretKeySpec secretKeySpec = new SecretKeySpec(aesKey, AES_ALG);
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
-        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+        if (AESTypeEnum.GCM.equals(AESType)) {
+            cipher = Cipher.getInstance(AES_GCM_PKC_ALG, "BC");
+            GCMParameterSpec parameterSpec = new GCMParameterSpec(128, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, parameterSpec);
+        } else {
+            cipher = Cipher.getInstance(AES_CBC_PKC_ALG, "BC");
+            IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+        }
+
         byte[] encryptBytes = cipher.doFinal(content.getBytes(StandardCharsets.UTF_8));
         return Base64.getEncoder().encodeToString(encryptBytes);
     }
 
-    public static String decrypt(String content, byte[] aesKey, byte[] iv) throws Exception {
-        Cipher cipher = Cipher.getInstance(AES_CBC_PKC_ALG, "BC");
+    public static String decrypt(String content, byte[] aesKey, byte[] iv, AESTypeEnum AESType) throws Exception {
+        Cipher cipher;
         SecretKeySpec secretKeySpec = new SecretKeySpec(aesKey, AES_ALG);
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+        if (AESTypeEnum.GCM.equals(AESType)) {
+            cipher = Cipher.getInstance(AES_GCM_PKC_ALG, "BC");
+            GCMParameterSpec parameterSpec = new GCMParameterSpec(128, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, parameterSpec);
+        } else {
+            cipher = Cipher.getInstance(AES_CBC_PKC_ALG, "BC");
+            IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+        }
         byte[] decryptBytes = cipher.doFinal(Base64.getDecoder().decode(content));
         return new String(decryptBytes, StandardCharsets.UTF_8);
     }

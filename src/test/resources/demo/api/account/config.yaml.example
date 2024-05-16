@@ -6,3 +6,5 @@ privateKey: MIIJRQIBA*******DtGRBdennqu8g95jcrMxCUhsifVgzP6vUyg==
 safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
 # Safeheron API url
 baseUrl: https://api.safeheron.vip
+# RequestTimeout (Millisecond)
+requestTimeout: 10000

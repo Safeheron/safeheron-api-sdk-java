@@ -1,12 +1,17 @@
 package com.safeheron.client.utils;
 
+import com.safeheron.client.config.RSATypeEnum;
+
 import javax.crypto.Cipher;
+import javax.crypto.spec.OAEPParameterSpec;
+import javax.crypto.spec.PSource;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
+import java.security.spec.MGF1ParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
@@ -18,16 +23,25 @@ import java.util.Base64;
 public class RsaUtil {
 
     private static final String SIGN_TYPE_RSA = "RSA";
+
+    public static final String SIGN_TYPE_RSA_OAEP = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding";
     private static final String SIGN_ALGORITHMS_SHA256RSA = "SHA256WithRSA";
     private static final int MAX_ENCRYPT_BLOCK = 501;
     private static final int MAX_DECRYPT_BLOCK = 512;
 
-    public static String encrypt(byte[] plainText, String publicKey) throws Exception {
+    public static String encrypt(byte[] plainText, String publicKey, RSATypeEnum RSAType) throws Exception {
         ByteArrayOutputStream out = null;
         try {
             PublicKey pubKey = getPublicKey(SIGN_TYPE_RSA, publicKey);
-            Cipher cipher = Cipher.getInstance(SIGN_TYPE_RSA);
-            cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+            Cipher cipher;
+            if (RSATypeEnum.ECB_OAEP.equals(RSAType)) {
+                cipher = Cipher.getInstance(SIGN_TYPE_RSA_OAEP);
+                OAEPParameterSpec oaepParams = new OAEPParameterSpec("SHA-256", "MGF1", new MGF1ParameterSpec("SHA-256"), PSource.PSpecified.DEFAULT);
+                cipher.init(Cipher.ENCRYPT_MODE, pubKey,oaepParams);
+            } else {
+                cipher = Cipher.getInstance(SIGN_TYPE_RSA);
+                cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+            }
             int inputLen = plainText.length;
             out = new ByteArrayOutputStream();
             int i = 0, offSet = 0;
@@ -51,12 +65,19 @@ public class RsaUtil {
         }
     }
 
-    public static byte[] decrypt(String content, String privateKey) throws Exception {
+    public static byte[] decrypt(String content, String privateKey,RSATypeEnum RSAType) throws Exception {
         ByteArrayOutputStream out = null;
         try {
             PrivateKey priKey = getPrivateKey(SIGN_TYPE_RSA, privateKey);
-            Cipher cipher = Cipher.getInstance(SIGN_TYPE_RSA);
-            cipher.init(Cipher.DECRYPT_MODE, priKey);
+            Cipher cipher;
+            if (RSATypeEnum.ECB_OAEP.equals(RSAType)) {
+                cipher = Cipher.getInstance(SIGN_TYPE_RSA_OAEP);
+                OAEPParameterSpec oaepParams = new OAEPParameterSpec("SHA-256", "MGF1", new MGF1ParameterSpec("SHA-256"), PSource.PSpecified.DEFAULT);
+                cipher.init(Cipher.DECRYPT_MODE, priKey, oaepParams);
+            } else {
+                cipher = Cipher.getInstance(SIGN_TYPE_RSA);
+                cipher.init(Cipher.DECRYPT_MODE, priKey);
+            }
             byte[] encryptedData =  Base64.getDecoder().decode(content);
             int inputLen = encryptedData.length;
             out = new ByteArrayOutputStream();

@@ -1,10 +1,13 @@
 package com.safeheron.client.webhook;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.safeheron.client.config.AESTypeEnum;
+import com.safeheron.client.config.RSATypeEnum;
 import com.safeheron.client.exception.SafeheronException;
 import com.safeheron.client.utils.AesUtil;
 import com.safeheron.client.utils.JsonUtil;
 import com.safeheron.client.utils.RsaUtil;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -64,12 +67,14 @@ public class WebhookConverter {
         }
 
         // Use your RSA private key to decrypt response's aesKey and aesIv
-        byte[] aesSaltDecrypt = RsaUtil.decrypt(webHook.getKey(), webHookRsaPrivateKey);
+        RSATypeEnum rsaType = StringUtils.isNotEmpty(webHook.getRsaType()) && RSATypeEnum.valueByCode(webHook.getRsaType()) != null ? RSATypeEnum.valueByCode(webHook.getRsaType()) : RSATypeEnum.RSA;
+        byte[] aesSaltDecrypt = RsaUtil.decrypt(webHook.getKey(), webHookRsaPrivateKey,rsaType);
         byte[] aesKey = Arrays.copyOfRange(aesSaltDecrypt, 0, 32);
         byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
         // Use AES to decrypt bizContent
-        String decrypt = AesUtil.decrypt(webHook.getBizContent(), aesKey, iv);
+        AESTypeEnum aesType = StringUtils.isNotEmpty(webHook.getAesType()) && AESTypeEnum.valueByCode(webHook.getAesType()) != null ? AESTypeEnum.valueByCode(webHook.getAesType()) : AESTypeEnum.CBC;
+        String decrypt = AesUtil.decrypt(webHook.getBizContent(), aesKey, iv,aesType);
         ObjectMapper mapper = JsonUtil.getObjectMapper();
 
         //Data conversion

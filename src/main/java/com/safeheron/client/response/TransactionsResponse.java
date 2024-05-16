@@ -1,6 +1,10 @@
 package com.safeheron.client.response;
 
+import com.safeheron.client.request.DestinationAddress;
+import com.safeheron.client.request.SourceAddress;
 import lombok.Data;
+
+import java.util.List;
 
 
 /**
@@ -45,6 +49,11 @@ public class TransactionsResponse {
     private String sourceAddress;
 
     /**
+     * Source address list
+     */
+    private List<SourceAddress> sourceAddressList;
+
+    /**
      * Destination account key
      */
     private String destinationAccountKey;
@@ -58,6 +67,11 @@ public class TransactionsResponse {
      * Destination address
      */
     private String destinationAddress;
+
+    /**
+     * Destination address list
+     */
+    private List<DestinationAddress> destinationAddressList;
 
     /**
      * If the destination is tag or memo type, then this value is empty

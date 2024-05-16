@@ -42,6 +42,16 @@ public class ApiResult<T> implements Serializable {
     private String bizContent;
 
     /**
+     * RSA-encrypted type
+     */
+    private String rsaType;
+
+    /**
+     * AES-encrypted type
+     */
+    private String aesType;
+
+    /**
      * AES-decrypted data of response parameters
      */
     private T rawData;
@@ -52,7 +62,7 @@ public class ApiResult<T> implements Serializable {
     public ApiResult(Integer code, String message) {
         this.code = code;
         this.message = message;
-        this.timestamp = System.currentTimeMillis()+"";
+        this.timestamp = System.currentTimeMillis() + "";
     }
 
     public ApiResult(T rawData) {

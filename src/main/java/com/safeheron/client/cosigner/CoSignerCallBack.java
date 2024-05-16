@@ -26,4 +26,14 @@ public class CoSignerCallBack {
      * AES-encrypted data of response parameters
      */
     private String bizContent;
+
+    /**
+     * RSA-encrypted type
+     */
+    private String rsaType;
+
+    /**
+     * AES-encrypted type
+     */
+    private String aesType;
 }

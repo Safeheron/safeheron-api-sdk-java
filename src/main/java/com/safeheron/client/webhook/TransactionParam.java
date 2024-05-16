@@ -1,6 +1,10 @@
 package com.safeheron.client.webhook;
 
+import com.safeheron.client.request.DestinationAddress;
+import com.safeheron.client.request.SourceAddress;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class TransactionParam {
@@ -11,9 +15,11 @@ public class TransactionParam {
     private String sourceAccountKey;
     private String sourceAccountType;
     private String sourceAddress;
+    private List<SourceAddress> sourceAddressList;
     private String destinationAccountKey;
     private String destinationAccountType;
     private String destinationAddress;
+    private List<DestinationAddress> destinationAddressList;
     private String destinationTag;
     private String transactionStatus;
     private String transactionSubStatus;

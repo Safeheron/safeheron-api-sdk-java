@@ -2,6 +2,8 @@ package com.safeheron.client.converter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.safeheron.client.config.AESTypeEnum;
+import com.safeheron.client.config.RSATypeEnum;
 import com.safeheron.client.config.SafeheronConfig;
 import com.safeheron.client.utils.AesUtil;
 import com.safeheron.client.utils.JsonUtil;
@@ -53,13 +55,13 @@ public class RequestInterceptor implements Interceptor {
                 byte[] ivKey = AesUtil.generateIvKey();
                 String aesEncryptResult = "";
                 if (StringUtils.isNotBlank(requestJson)) {
-                    aesEncryptResult = AesUtil.encrypt(requestJson, aesKey, ivKey);
+                    aesEncryptResult = AesUtil.encrypt(requestJson, aesKey, ivKey, AESTypeEnum.GCM);
                 }
 
                 // Use Safeheron RSA public key to encrypt request's aesKey and aesIv
                 byte[] sourceKey = Arrays.copyOf(aesKey, aesKey.length + ivKey.length);
                 System.arraycopy(ivKey, 0, sourceKey, aesKey.length, ivKey.length);
-                String rsaEncryptResult = RsaUtil.encrypt(sourceKey, safeheronRsaPublicKey);
+                String rsaEncryptResult = RsaUtil.encrypt(sourceKey, safeheronRsaPublicKey,RSATypeEnum.ECB_OAEP);
 
                 // Create params map
                 long timestamp = System.currentTimeMillis();
@@ -77,6 +79,8 @@ public class RequestInterceptor implements Interceptor {
                         .collect(Collectors.joining("&"));
                 String rsaSig = RsaUtil.sign(signContent, rsaPrivateKey);
                 requestData.put("sig", rsaSig);
+                requestData.put("rsaType", RSATypeEnum.ECB_OAEP.getCode());
+                requestData.put("aesType", AESTypeEnum.GCM.getCode());
 
                 byte[] bytes = this.objectWriter.writeValueAsBytes(requestData);
                 return chain.proceed(request.newBuilder().post(RequestBody.create(bytes, MEDIA_TYPE)).build());

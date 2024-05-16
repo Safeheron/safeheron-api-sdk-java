@@ -29,4 +29,9 @@ public class SafeheronConfig {
      * Api key's platform public key, you can get from safeheron web console
      */
     private String safeheronRsaPublicKey = "";
+
+    /**
+     * requestTimeout
+     */
+    private Long requestTimeout = 10000L;
 }

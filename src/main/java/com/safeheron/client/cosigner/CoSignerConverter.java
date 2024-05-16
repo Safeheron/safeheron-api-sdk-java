@@ -1,6 +1,8 @@
 package com.safeheron.client.cosigner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.safeheron.client.config.AESTypeEnum;
+import com.safeheron.client.config.RSATypeEnum;
 import com.safeheron.client.exception.SafeheronException;
 import com.safeheron.client.utils.AesUtil;
 import com.safeheron.client.utils.JsonUtil;
@@ -65,12 +67,14 @@ public class CoSignerConverter {
         }
 
         // Use your RSA private key to decrypt request's aesKey and aesIv
-        byte[] aesSaltDecrypt = RsaUtil.decrypt(coSignerCallBack.getKey(), bizPrivKey);
+        RSATypeEnum rsaType = StringUtils.isNotEmpty(coSignerCallBack.getRsaType()) && RSATypeEnum.valueByCode(coSignerCallBack.getRsaType()) != null ? RSATypeEnum.valueByCode(coSignerCallBack.getRsaType()) : RSATypeEnum.RSA;
+        byte[] aesSaltDecrypt = RsaUtil.decrypt(coSignerCallBack.getKey(), bizPrivKey,rsaType);
         byte[] aesKey = Arrays.copyOfRange(aesSaltDecrypt, 0, 32);
         byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
         // Use AES to decrypt bizContent
-        String decrypt = AesUtil.decrypt(coSignerCallBack.getBizContent(), aesKey, iv);
+        AESTypeEnum aesType = StringUtils.isNotEmpty(coSignerCallBack.getAesType()) && AESTypeEnum.valueByCode(coSignerCallBack.getAesType()) != null ? AESTypeEnum.valueByCode(coSignerCallBack.getAesType()) : AESTypeEnum.CBC;
+        String decrypt = AesUtil.decrypt(coSignerCallBack.getBizContent(), aesKey, iv,aesType);
         ObjectMapper mapper = JsonUtil.getObjectMapper();
 
         //Data conversion
@@ -105,13 +109,13 @@ public class CoSignerConverter {
         byte[] ivKey = AesUtil.generateIvKey();
         String aesEncryptResult = "";
         if (StringUtils.isNotBlank(responseJson)) {
-            aesEncryptResult = AesUtil.encrypt(responseJson, aesKey, ivKey);
+            aesEncryptResult = AesUtil.encrypt(responseJson, aesKey, ivKey, AESTypeEnum.CBC);
         }
 
         // Use Safeheron apiPubKey to encrypt response's aesKey and aesIv
         byte[] sourceKey = Arrays.copyOf(aesKey, aesKey.length + ivKey.length);
         System.arraycopy(ivKey, 0, sourceKey, aesKey.length, ivKey.length);
-        String rsaEncryptResult = RsaUtil.encrypt(sourceKey, apiPubKey);
+        String rsaEncryptResult = RsaUtil.encrypt(sourceKey, apiPubKey, RSATypeEnum.RSA);
 
         // Create params map
         long timestamp = System.currentTimeMillis();

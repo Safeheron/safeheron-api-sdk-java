@@ -15,6 +15,14 @@ public class BatchCreateAccountRequest {
     private String accountName;
 
     /**
+     * Display status in Safeheron App
+     * True: not display
+     * False: display
+     * Default: true
+     */
+    private Boolean hiddenOnUI;
+
+    /**
      * Number of wallets to be created, greater than 0, less than 100
      */
     private Integer count;
