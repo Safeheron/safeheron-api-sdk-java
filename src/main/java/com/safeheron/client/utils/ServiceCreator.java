@@ -32,7 +32,9 @@ public class ServiceCreator {
                     builder.baseUrl(config.getBaseUrl());
                     httpClient.addInterceptor(RequestInterceptor.create(config));
                     if (config.getRequestTimeout() != null) {
-                        httpClient.callTimeout(config.getRequestTimeout(), TimeUnit.MILLISECONDS);
+                        httpClient.connectTimeout(config.getRequestTimeout(), TimeUnit.MILLISECONDS);
+                        httpClient.readTimeout(config.getRequestTimeout(), TimeUnit.MILLISECONDS);
+                        httpClient.writeTimeout(config.getRequestTimeout(), TimeUnit.MILLISECONDS);
                     }
                     builder.client(httpClient.build());
                     builder.addConverterFactory(ConverterFactory.create(config));
