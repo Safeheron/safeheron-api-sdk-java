@@ -95,12 +95,14 @@ public class CoSignerConverter {
 
     /**
      * responseConverter
+     * It has been Deprecated,Please use {@link #responseConverterWithNewCryptoType}
      *
      * @param coSignerResponse
      * @return Map<String, Object>
      * @see CoSignerResponse
      * @see Map<String, Object>
      */
+    @Deprecated
     public Map<String, String> responseConverter(CoSignerResponse coSignerResponse) throws Exception {
 
 
@@ -134,6 +136,48 @@ public class CoSignerConverter {
                 .collect(Collectors.joining("&"));
         String rsaSig = RsaUtil.sign(signContent, bizPrivKey);
         responseData.put("sig", rsaSig);
+        return responseData;
+    }
+
+    /**
+     * responseConverterWithNewCryptoType
+     *
+     * @param coSignerResponse
+     * @return Map<String, Object>
+     * @see CoSignerResponse
+     * @see Map<String, Object>
+     */
+    public Map<String, String> responseConverterWithNewCryptoType(CoSignerResponse coSignerResponse) throws Exception {
+        final String responseJson = JsonUtil.toJson(coSignerResponse);
+        byte[] aesKey = AesUtil.generateAESKey();
+        byte[] ivKey = AesUtil.generateIvKey();
+        String aesEncryptResult = "";
+        if (StringUtils.isNotBlank(responseJson)) {
+            aesEncryptResult = AesUtil.encrypt(responseJson, aesKey, ivKey, AESTypeEnum.GCM);
+        }
+
+        // Use Safeheron apiPubKey to encrypt response's aesKey and aesIv
+        byte[] sourceKey = Arrays.copyOf(aesKey, aesKey.length + ivKey.length);
+        System.arraycopy(ivKey, 0, sourceKey, aesKey.length, ivKey.length);
+        String rsaEncryptResult = RsaUtil.encrypt(sourceKey, apiPubKey, RSATypeEnum.ECB_OAEP);
+        // Create params map
+        long timestamp = System.currentTimeMillis();
+        Map<String, String> responseData = new TreeMap<>();
+        responseData.put("code", "200");
+        responseData.put("message", "SUCCESS");
+        responseData.put("timestamp", timestamp + "");
+        if (StringUtils.isNotBlank(responseJson)) {
+            responseData.put("bizContent", aesEncryptResult);
+        }
+        responseData.put("key", rsaEncryptResult);
+        // Sign the response data with your bizPrivKey
+        String signContent = responseData.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&"));
+        String rsaSig = RsaUtil.sign(signContent, bizPrivKey);
+        responseData.put("sig", rsaSig);
+        responseData.put("rsaType", RSATypeEnum.ECB_OAEP.getCode());
+        responseData.put("aesType", AESTypeEnum.GCM.getCode());
         return responseData;
     }
 }

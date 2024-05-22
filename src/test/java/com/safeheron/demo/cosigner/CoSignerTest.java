@@ -52,7 +52,7 @@ public class CoSignerTest {
         CoSignerResponse coSignerResponse = new CoSignerResponse();
         coSignerResponse.setApprove(true);
         coSignerResponse.setTxKey("TxKey that needs to be approved");
-        Map<String, String> encryptResponse = coSignerConverter.responseConverter(coSignerResponse);
+        Map<String, String> encryptResponse = coSignerConverter.responseConverterWithNewCryptoType(coSignerResponse);
         //The customer returns encryptResponse after processing the business logic.
     }
 }

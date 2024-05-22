@@ -7,4 +7,4 @@ safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
 # Safeheron API url
 baseUrl: https://api.safeheron.vip
 # RequestTimeout (Millisecond)
-requestTimeout: 10000
+requestTimeout: 20000

@@ -11,4 +11,4 @@ accountKey: account****5ecad40
 # To address
 destinationAddress: "0x943****0BF95f5"
 # RequestTimeout (Millisecond)
-requestTimeout: 10000
+requestTimeout: 20000

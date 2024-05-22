@@ -17,4 +17,4 @@ toAddress: "0x53B****321789"
 # Ethereum RPC API
 ethereumRpcApi: https://goerli.infura.io/v3/802******bc2fcb
 # RequestTimeout (Millisecond)
-requestTimeout: 10000
+requestTimeout: 20000

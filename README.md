@@ -28,8 +28,8 @@ $ mvn install -Dmaven.test.skip=true
     safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
     # Safeheron API url
     baseUrl: https://api.safeheron.vip
-    # RequestTimeout (Millisecond), Default: 10000
-    requestTimeout: 10000
+    # RequestTimeout (Millisecond), Default: 20000
+    requestTimeout: 20000
     ```
 * Copy config to `config.yaml` file.
     ```bash
@@ -51,8 +51,8 @@ $ mvn install -Dmaven.test.skip=true
     safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
     # Safeheron API url
     baseUrl: https://api.safeheron.vip
-    # RequestTimeout (Millisecond), Default: 10000
-    requestTimeout: 10000
+    # RequestTimeout (Millisecond), Default: 20000
+    requestTimeout: 20000
     # Wallet Account key
     accountKey: account****5ecad40
     # To address
@@ -79,8 +79,8 @@ $ mvn install -Dmaven.test.skip=true
     safeheronPublicKey: MIICI****QuTOTECAwEAAQ==
     # Safeheron API url
     baseUrl: https://api.safeheron.vip
-    # RequestTimeout (Millisecond), Default: 10000
-    requestTimeout: 10000
+    # RequestTimeout (Millisecond), Default: 20000
+    requestTimeout: 20000
     # Wallet Account key
     accountKey: account****5ecad40
     # Goerli testnet token address in wallet account
