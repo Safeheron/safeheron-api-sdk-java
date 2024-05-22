@@ -31,11 +31,15 @@ public class ServiceCreator {
                 if (retrofit == null) {
                     builder.baseUrl(config.getBaseUrl());
                     httpClient.addInterceptor(RequestInterceptor.create(config));
+                    Long requestTimeout;
                     if (config.getRequestTimeout() != null) {
-                        httpClient.connectTimeout(config.getRequestTimeout(), TimeUnit.MILLISECONDS);
-                        httpClient.readTimeout(config.getRequestTimeout(), TimeUnit.MILLISECONDS);
-                        httpClient.writeTimeout(config.getRequestTimeout(), TimeUnit.MILLISECONDS);
+                        requestTimeout = config.getRequestTimeout();
+                    } else {
+                        requestTimeout = 20000L;
                     }
+                    httpClient.connectTimeout(requestTimeout, TimeUnit.MILLISECONDS);
+                    httpClient.readTimeout(requestTimeout, TimeUnit.MILLISECONDS);
+                    httpClient.writeTimeout(requestTimeout, TimeUnit.MILLISECONDS);
                     builder.client(httpClient.build());
                     builder.addConverterFactory(ConverterFactory.create(config));
                     retrofit = builder.build();

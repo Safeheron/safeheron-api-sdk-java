@@ -33,5 +33,5 @@ public class SafeheronConfig {
     /**
      * requestTimeout
      */
-    private Long requestTimeout = 10000L;
+    private Long requestTimeout = 20000L;
 }
