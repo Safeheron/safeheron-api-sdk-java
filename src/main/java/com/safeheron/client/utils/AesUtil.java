@@ -68,7 +68,7 @@ public class AesUtil {
         if (AESTypeEnum.GCM.equals(AESType)) {
             cipher = Cipher.getInstance(AES_GCM_PKC_ALG, "BC");
             GCMParameterSpec parameterSpec = new GCMParameterSpec(128, iv);
-            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, parameterSpec);
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, parameterSpec);
         } else {
             cipher = Cipher.getInstance(AES_CBC_PKC_ALG, "BC");
             IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
