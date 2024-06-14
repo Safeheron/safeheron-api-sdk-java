@@ -2,6 +2,8 @@ package com.safeheron.client.request;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Batch Label Wallet Accounts
  *
@@ -12,7 +14,7 @@ public class BatchUpdateAccountTagRequest {
     /**
      * Wallet account key
      */
-    private String accountKey;
+    private List<String> accountKeyList;
 
     /**
      * Account tag
