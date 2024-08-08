@@ -32,6 +32,11 @@ public class BatchCreateAccountCoinUTXOResponse {
          * addressType
          */
         private String addressType;
+
+        /**
+         * BIP44 derivation path
+         */
+        private String derivePath;
     }
 }
 

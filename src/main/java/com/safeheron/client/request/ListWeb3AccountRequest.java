@@ -13,4 +13,9 @@ public class ListWeb3AccountRequest extends LimitSearch {
      * Filter the response based on this account name prefix
      */
     private String namePrefix;
+
+    /**
+     * Merchant unique business ID (100 characters max)
+     */
+    private String customerRefId;
 }
