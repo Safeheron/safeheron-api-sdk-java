@@ -26,4 +26,9 @@ public class ListAccountRequest extends PageSearch {
      * Filter the response based on this account name suffix
      */
     private String nameSuffix;
+
+    /**
+     * Merchant unique business ID (100 characters max)
+     */
+    private String customerRefId;
 }

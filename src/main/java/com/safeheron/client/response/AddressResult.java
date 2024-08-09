@@ -21,4 +21,9 @@ public class AddressResult {
      * The balance of this coin address
      */
     private String addressBalance;
+
+    /**
+     * BIP44 derivation path
+     */
+    private String derivePath;
 }

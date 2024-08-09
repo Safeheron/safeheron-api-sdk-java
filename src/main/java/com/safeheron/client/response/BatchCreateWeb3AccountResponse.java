@@ -58,5 +58,10 @@ public class BatchCreateWeb3AccountResponse {
          * Coin receiving address
          */
         private String address;
+
+        /**
+         * BIP44 derivation path
+         */
+        private String derivePath;
     }
 }

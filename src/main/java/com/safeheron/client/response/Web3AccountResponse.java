@@ -22,6 +22,11 @@ public class Web3AccountResponse {
     private String accountName;
 
     /**
+     * Merchant unique business ID
+     */
+    private String customerRefId;
+
+    /**
      * Display status in Safeheron App
      * True: not display
      * False: display
@@ -70,5 +75,10 @@ public class Web3AccountResponse {
          * Coin receiving address
          */
         private String address;
+
+        /**
+         * BIP44 derivation path
+         */
+        private String derivePath;
     }
 }

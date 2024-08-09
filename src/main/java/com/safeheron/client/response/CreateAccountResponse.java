@@ -69,6 +69,11 @@ public class CreateAccountResponse {
              * Address type
              */
             private String addressType;
+
+            /**
+             * BIP44 derivation path
+             */
+            private String derivePath;
         }
 
     }

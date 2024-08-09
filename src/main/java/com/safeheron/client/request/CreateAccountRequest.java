@@ -17,6 +17,12 @@ public class CreateAccountRequest {
     private String accountName;
 
     /**
+     * Merchant unique business ID (100 characters max)
+     * The customerRefId uniquely represents a wallet. In the case of duplicate customerRefId values (for example, when resubmitting due to request timeouts or other errors), the data returned by the interface will remain consistent
+     */
+    private String customerRefId;
+
+    /**
      * 	Whether display in Safeheron Console
      * True: not display
      * False: display

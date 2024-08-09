@@ -22,6 +22,11 @@ public class AccountResponse {
     private String accountName;
 
     /**
+     * Merchant unique business ID
+     */
+    private String customerRefId;
+
+    /**
      * Account index
      */
     private Long accountIndex;

@@ -26,5 +26,11 @@ public class InfoAccountCoinAddressResponse {
      * Account key
      */
     private String accountKey;
+
+
+    /**
+     * BIP44 derivation path
+     */
+    private String derivePath;
 }
 
