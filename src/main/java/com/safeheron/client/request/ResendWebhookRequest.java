@@ -9,7 +9,7 @@ import lombok.Data;
  * @author safeheron
  */
 @Data
-public class ResendWebhookRequest extends LimitSearch {
+public class ResendWebhookRequest {
 
     /**
      * Supported events:

@@ -9,7 +9,7 @@ import lombok.Data;
  * @author safeheron
  */
 @Data
-public class ResendFailedRequest extends LimitSearch {
+public class ResendFailedRequest {
 
     /**
      * Start time in UNIX timestamp (ms). The time interval [startTime, endTime] is up to 1 hour

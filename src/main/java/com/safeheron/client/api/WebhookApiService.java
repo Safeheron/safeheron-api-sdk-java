@@ -1,12 +1,12 @@
 package com.safeheron.client.api;
 
-import com.safeheron.client.request.*;
-import com.safeheron.client.response.*;
+import com.safeheron.client.request.ResendFailedRequest;
+import com.safeheron.client.request.ResendWebhookRequest;
+import com.safeheron.client.response.MessagesCountResponse;
+import com.safeheron.client.response.ResultResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
-
-import java.util.List;
 
 /**
  * @author safeheron
@@ -28,7 +28,7 @@ public interface WebhookApiService {
      * @see ResultResponse
      */
     @POST("/v1/webhook/resend")
-    Call<List<ResultResponse>> resendWebhook(@Body ResendWebhookRequest resendWebhookRequest);
+    Call<ResultResponse> resendWebhook(@Body ResendWebhookRequest resendWebhookRequest);
 
     /**
      * Push All Failed Webhook Events
@@ -51,5 +51,5 @@ public interface WebhookApiService {
      * @see ResultResponse
      */
     @POST("/v1/webhook/resend/failed")
-    Call<ResultResponse> resendFailed(@Body ResendFailedRequest resendFailedRequest);
+    Call<MessagesCountResponse> resendFailed(@Body ResendFailedRequest resendFailedRequest);
 }
