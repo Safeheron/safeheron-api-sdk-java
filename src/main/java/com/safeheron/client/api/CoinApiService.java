@@ -68,5 +68,5 @@ public interface CoinApiService {
      * @see CoinBlockHeightResponse
      */
     @POST("/v1/coin/block/height")
-    Call<CoinBlockHeightResponse> coinBlockHeight(@Body CoinBlockHeightRequest coinBlockHeightRequest);
+    Call<List<CoinBlockHeightResponse>> coinBlockHeight(@Body CoinBlockHeightRequest coinBlockHeightRequest);
 }
