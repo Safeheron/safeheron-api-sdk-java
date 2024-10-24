@@ -10,6 +10,8 @@ public class DestinationAddress {
      * Destination address
      */
     private String address;
+
+    private String addressGroupKey;
     /**
      * Transaction amount
      */

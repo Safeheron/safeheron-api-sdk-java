@@ -111,6 +111,15 @@ public interface AccountApiService {
     Call<List<CreateAccountCoinResponse>> createAccountCoin(@Body CreateAccountCoinRequest createAccountCoinRequest);
 
     /**
+     * @param createAccountCoinV2Request
+     * @return CreateAccountCoinV2Response
+     * @see CreateAccountCoinV2Request
+     * @see CreateAccountCoinV2Response
+     */
+    @POST("/v2/account/coin/create")
+    Call<CreateAccountCoinV2Response> createAccountCoinV2(@Body CreateAccountCoinV2Request createAccountCoinV2Request);
+
+    /**
      * Batch Add Coins to Wallet Accounts
      * Bulk addition of specified coins to designated wallet accounts. And, it creates a default address group for each coin and returns the address information contained within the newly created default address group. If a wallet account already contains the currency being added, the function will return the default address group data for that existing coin.
      *
@@ -181,6 +190,17 @@ public interface AccountApiService {
      */
     @POST("/v1/account/coin/address/create")
     Call<CreateAccountCoinAddressResponse> createAccountCoinAddress(@Body CreateAccountCoinAddressRequest createAccountCoinAddressRequest);
+
+
+    /**
+     *
+     * @param createAccountCoinAddressRequest
+     * @return CreateAccountCoinAddressV2Response
+     * @see CreateAccountCoinAddressRequest
+     * @see CreateAccountCoinAddressV2Response
+     */
+    @POST("/v2/account/coin/address/create")
+    Call<CreateAccountCoinAddressV2Response> createAccountCoinAddressV2(@Body CreateAccountCoinAddressRequest createAccountCoinAddressRequest);
 
     /**
      * Batch Add Address Groups for UTXO-Based Coin

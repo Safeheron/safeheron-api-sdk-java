@@ -53,6 +53,10 @@ public class CreateAccountResponse {
          * Coin key
          */
         private String coinKey;
+
+        private String addressGroupKey;
+
+        private String addressGroupName;
         /**
          * Address list
          */

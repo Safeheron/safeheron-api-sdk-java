@@ -20,6 +20,10 @@ public class BatchCreateAccountCoinUTXOResponse {
      */
     private String accountKey;
 
+    private String addressGroupKey;
+
+    private String addressGroupName;
+
     @Data
     @NoArgsConstructor
     public static class Address{
