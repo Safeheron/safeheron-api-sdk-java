@@ -9,33 +9,26 @@ import java.util.List;
  * @author safeheron
  */
 @Data
-public class BatchCreateAccountCoinResponse {
-    /**
-     * Address list
-     */
-    private List<Address> addressList;
-
-    /**
-     * Account key
-     */
-    private String accountKey;
+public class CreateAccountCoinAddressV2Response {
 
     private String addressGroupKey;
 
     private String addressGroupName;
 
+    private List<Address> addressList;
+
     @Data
     @NoArgsConstructor
-    public static class Address{
+    public static class Address {
+        /**
+         * Blockchain type
+         */
+        private String blockchainType;
+
         /**
          * Coin receiving address
          */
         private String address;
-
-        /**
-         * addressType
-         */
-        private String addressType;
 
         /**
          * BIP44 derivation path
@@ -43,3 +36,4 @@ public class BatchCreateAccountCoinResponse {
         private String derivePath;
     }
 }
+

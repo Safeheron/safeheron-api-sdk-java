@@ -23,4 +23,6 @@ public class CreateAccountCoinAddressRequest{
      * Address group name, 30 characters max
      */
     private String addressGroupName;
+
+    private String customerRefId;
 }

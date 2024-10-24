@@ -10,4 +10,6 @@ public class SourceAddress {
      * Source address
      */
     private String address;
+
+    private String addressGroupKey;
 }

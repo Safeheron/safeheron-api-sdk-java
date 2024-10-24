@@ -18,4 +18,6 @@ public class ListAccountCoinAddressRequest extends PageSearch{
      * Account key
      */
     private String accountKey;
+
+    private String customerRefId;
 }

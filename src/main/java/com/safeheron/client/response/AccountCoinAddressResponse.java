@@ -19,6 +19,8 @@ public class AccountCoinAddressResponse {
      */
     private String addressGroupName;
 
+    private String customerRefId;
+
     /**
      * Address list
      */
