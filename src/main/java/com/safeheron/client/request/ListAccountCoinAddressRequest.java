@@ -19,5 +19,8 @@ public class ListAccountCoinAddressRequest extends PageSearch{
      */
     private String accountKey;
 
+    /**
+     * Merchant unique business ID (100 characters max) when adding an address group
+     */
     private String customerRefId;
 }

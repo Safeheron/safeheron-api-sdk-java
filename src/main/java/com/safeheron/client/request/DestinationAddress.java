@@ -11,7 +11,11 @@ public class DestinationAddress {
      */
     private String address;
 
+    /**
+     * The unique identifier of the address group of the destination address, this field is only returned when the destination account type is VAULT_ACCOUNT
+     */
     private String addressGroupKey;
+
     /**
      * Transaction amount
      */

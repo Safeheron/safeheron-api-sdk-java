@@ -19,6 +19,9 @@ public class AccountCoinAddressResponse {
      */
     private String addressGroupName;
 
+    /**
+     * Merchant unique business ID when adding an address group
+     */
     private String customerRefId;
 
     /**

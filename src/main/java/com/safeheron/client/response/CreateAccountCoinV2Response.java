@@ -11,20 +11,37 @@ import java.util.List;
 @Data
 public class CreateAccountCoinV2Response {
 
+    /**
+     * Account key
+     */
     private String accountKey;
 
+    /**
+     * Coin address list
+     */
     private List<CoinAddress> coinAddressList;
 
     @Data
     @NoArgsConstructor
     public static class CoinAddress {
-
+        /**
+         * Coin key
+         */
         private String coinKey;
 
+        /**
+         * The unique identifier of the address group
+         */
         private String addressGroupKey;
 
+        /**
+         * Address group name
+         */
         private String addressGroupName;
 
+        /**
+         * Address list
+         */
         private List<Address> addressList;
 
         @Data

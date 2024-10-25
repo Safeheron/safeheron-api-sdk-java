@@ -98,7 +98,7 @@ public interface AccountApiService {
 
 
     /**
-     * Add Coins to a Wallet Account
+     * Add Coins to a Wallet Account V1
      * Add a new coin to your wallet account, while generating the default address group for the added coin. Once successfully completed, it will return the address information of the newly created default address group. In case the added currency already exists within the account, it will promptly return the existing default address group information for that coin.
      * In a wallet account, UTXO-based cryptocurrencies can have multiple address groups, while other types of cryptocurrencies usually have only one. To check whether a particular cryptocurrency supports the addition of multiple address groups, simply check the 'isMultipleAddress' parameter through the Coin List.
      *
@@ -111,6 +111,9 @@ public interface AccountApiService {
     Call<List<CreateAccountCoinResponse>> createAccountCoin(@Body CreateAccountCoinRequest createAccountCoinRequest);
 
     /**
+     * Add Coins to a Wallet Account V2
+     * Add a new coin to your wallet account, and it will generate address information for the added coin. If the added currency already exists within the account, it will promptly return the existing address information for that coin.
+     *
      * @param createAccountCoinV2Request
      * @return CreateAccountCoinV2Response
      * @see CreateAccountCoinV2Request
@@ -180,7 +183,7 @@ public interface AccountApiService {
     Call<ResultResponse> renameAccountCoinAddress(@Body RenameAccountCoinAddressRequest renameAccountCoinAddressRequest);
 
     /**
-     * Add Address Group for UTXO-Based Coin
+     * Add Address Group for UTXO-Based Coin V1
      * Add a new address group for UTXO-based cryptocurrencies under a wallet account. If the coin does not exist, it will be added first, followed by the new address group. The function will return the details of the added address(es).
      *
      * @param createAccountCoinAddressRequest
@@ -193,6 +196,8 @@ public interface AccountApiService {
 
 
     /**
+     * Add Address Group for UTXOs V2
+     * Add a new address group for UTXO-based cryptocurrencies under a wallet account.If the coin has not been added to the wallet, it will be added automatically.
      *
      * @param createAccountCoinAddressRequest
      * @return CreateAccountCoinAddressV2Response
