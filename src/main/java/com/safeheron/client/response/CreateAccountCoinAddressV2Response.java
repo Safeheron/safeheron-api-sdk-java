@@ -11,10 +11,19 @@ import java.util.List;
 @Data
 public class CreateAccountCoinAddressV2Response {
 
+    /**
+     * The unique identifier of the address group
+     */
     private String addressGroupKey;
 
+    /**
+     * Address group name
+     */
     private String addressGroupName;
 
+    /**
+     * Address list
+     */
     private List<Address> addressList;
 
     @Data

@@ -20,8 +20,14 @@ public class BatchCreateAccountCoinResponse {
      */
     private String accountKey;
 
+    /**
+     * The unique identifier of the address group
+     */
     private String addressGroupKey;
 
+    /**
+     * Address group name
+     */
     private String addressGroupName;
 
     @Data

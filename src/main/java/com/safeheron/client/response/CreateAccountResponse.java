@@ -54,8 +54,14 @@ public class CreateAccountResponse {
          */
         private String coinKey;
 
+        /**
+         * The unique identifier of the address group
+         */
         private String addressGroupKey;
 
+        /**
+         * Address group name
+         */
         private String addressGroupName;
         /**
          * Address list
