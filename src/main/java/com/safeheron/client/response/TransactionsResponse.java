@@ -204,4 +204,9 @@ public class TransactionsResponse {
      * Creator username
      */
     private String createdByUserName;
+
+    /**
+     * Transaction Direction
+     */
+    private String transactionDirection;
 }

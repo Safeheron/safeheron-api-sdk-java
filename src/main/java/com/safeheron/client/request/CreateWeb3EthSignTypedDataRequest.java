@@ -38,6 +38,13 @@ public class CreateWeb3EthSignTypedDataRequest {
     private String customerExt2;
 
     /**
+     * Use custom network
+     * False: Use the network supported by Safeheron by default
+     * True: Use a custom network added through the Safeheron Browser Extension
+     */
+    private Boolean useCustomNetwork;
+
+    /**
      * Message
      */
     private Message message;

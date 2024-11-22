@@ -209,4 +209,9 @@ public class OneTransactionsResponse {
      *     Transaction history (resulting from sped-up EVM and UTXO-based transactions); Only have a value once the current transaction has been accelerated
      */
     private List<TransactionsResponse> speedUpHistory;
+
+    /**
+     * Transaction Direction
+     */
+    private String transactionDirection;
 }
