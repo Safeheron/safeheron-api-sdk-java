@@ -74,16 +74,4 @@ public class TransactionApproval {
     private ProfileTxDTO destinationProfile;
 
     private String replaceTxKey;
-
-    private Long teeCreateTime;
-
-    private String createUsdAmount;
-
-    private String networkKey;
-
-    private String txType;
-
-    private String fromAccountType;
-
-    private String toAccountType;
 }

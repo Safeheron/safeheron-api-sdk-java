@@ -95,4 +95,13 @@ public class ListTransactionsV1Request extends PageSearch {
      * Filter out custom transaction amounts, excluding transaction records below a certain amount specified in USD from the query results
      */
     private String hideSmallAmountUsd;
+
+    /**
+     * Filter transaction history by transaction direction:
+     * Default: Retrieve all types of transactions
+     * INFLOW: Retrieve inflows
+     * OUTFLOW: Retrieve outflows
+     * INTERNAL_TRANSFER: Retrieve internal transfers
+     */
+    private String transactionDirection;
 }

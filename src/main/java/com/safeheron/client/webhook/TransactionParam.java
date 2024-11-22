@@ -38,4 +38,5 @@ public class TransactionParam {
     private Long completedTime;
     private String realDestinationAccountType;
     private String transactionType;
+    private String transactionDirection;
 }
