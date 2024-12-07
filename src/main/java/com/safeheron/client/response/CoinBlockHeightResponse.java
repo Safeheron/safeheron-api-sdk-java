@@ -16,5 +16,5 @@ public class CoinBlockHeightResponse {
     /**
      * Coin's current block height
      */
-    private String localBlockHeight;
+    private Long localBlockHeight;
 }
