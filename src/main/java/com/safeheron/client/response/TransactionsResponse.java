@@ -69,6 +69,11 @@ public class TransactionsResponse {
     private String destinationAddress;
 
     /**
+     * Memo of the destination address when creating a transaction
+     */
+    private String memo;
+
+    /**
      * Destination address list
      */
     private List<DestinationAddress> destinationAddressList;
@@ -76,6 +81,7 @@ public class TransactionsResponse {
     /**
      * If the destination is tag or memo type, then this value is empty
      */
+    @Deprecated
     private String destinationTag;
 
     /**

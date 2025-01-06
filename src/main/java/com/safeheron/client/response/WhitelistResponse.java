@@ -41,6 +41,11 @@ public class WhitelistResponse {
     private String address;
 
     /**
+     * Memo of the address when creating a whitelist
+     */
+    private String memo;
+
+    /**
      * Whitelist status
      * AUDIT: pending approval
      * APPROVED: active
