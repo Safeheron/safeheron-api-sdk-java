@@ -8,7 +8,7 @@ import lombok.Data;
  * @author safeheron
  */
 @Data
-public class createFromTransactionWhitelistRequest {
+public class CreateFromTransactionWhitelistRequest {
 
     /**
      * Whitelist unique name, 20 characters max
