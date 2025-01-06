@@ -92,8 +92,16 @@ public class CreateTransactionRequest {
     private String destinationAddress;
 
     /**
+     * The memo (up to 100 characters) for the destination address, also known as a comment or tag. This parameter is valid for transactions on the following networks:
+     * TON: TON mainnet
+     * TON_TESTNET: TON testnet
+     */
+    private String memo;
+
+    /**
      * Destination Tag
      */
+    @Deprecated
     private String destinationTag;
 
     /**

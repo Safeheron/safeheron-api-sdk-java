@@ -52,6 +52,23 @@ public interface WhitelistApiService {
     @POST("/v1/whitelist/create")
     Call<CreateWhitelistResponse> createWhitelist(@Body CreateWhitelistRequest createWhitelistRequest);
 
+    /**
+     * Create a Whitelist Based on a Transaction
+     * Whitelist the transaction's destination address when the transaction meets the following conditions:
+     *
+     * A transfer transaction from an asset wallet; Web3 wallet transactions or MPC Sign transactions are not supported.
+     * The transaction is in a completed state as COMPLETED.
+     * The transaction's destination address is a one-time address.
+     *
+     * @param createFromTransactionWhitelistRequest
+     * @return CreateFromTransactionWhitelistRequest
+     * @see CreateWhitelistResponse
+     * @see CreateWhitelistResponse
+     */
+    @POST("/v1/whitelist/createFromTransaction")
+    Call<CreateWhitelistResponse> createFromTransactionWhitelist(@Body CreateFromTransactionWhitelistRequest createFromTransactionWhitelistRequest);
+
+
 
 
     /**

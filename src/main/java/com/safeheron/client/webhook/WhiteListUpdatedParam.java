@@ -8,4 +8,5 @@ public class WhiteListUpdatedParam {
     private String whitelistName;
     private String chainType;
     private String address;
+    private String memo;
 }

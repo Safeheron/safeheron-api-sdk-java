@@ -19,6 +19,7 @@ public class TransactionParam {
     private String destinationAccountKey;
     private String destinationAccountType;
     private String destinationAddress;
+    private String memo;
     private List<DestinationAddress> destinationAddressList;
     private String destinationTag;
     private String transactionStatus;
