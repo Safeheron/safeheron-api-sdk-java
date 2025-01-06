@@ -66,7 +66,7 @@ public interface WhitelistApiService {
      * @see CreateWhitelistResponse
      */
     @POST("/v1/whitelist/createFromTransaction")
-    Call<CreateWhitelistResponse> createFromTransaction(@Body CreateFromTransactionWhitelistRequest createFromTransactionWhitelistRequest);
+    Call<CreateWhitelistResponse> createFromTransactionWhitelist(@Body CreateFromTransactionWhitelistRequest createFromTransactionWhitelistRequest);
 
 
 
