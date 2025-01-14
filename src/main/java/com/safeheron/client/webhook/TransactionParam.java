@@ -15,10 +15,12 @@ public class TransactionParam {
     private String sourceAccountKey;
     private String sourceAccountType;
     private String sourceAddress;
+    private String isSourcePhishing;
     private List<SourceAddress> sourceAddressList;
     private String destinationAccountKey;
     private String destinationAccountType;
     private String destinationAddress;
+    private String isDestinationPhishing;
     private String memo;
     private List<DestinationAddress> destinationAddressList;
     private String destinationTag;

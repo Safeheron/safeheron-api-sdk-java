@@ -49,6 +49,11 @@ public class OneTransactionsResponse {
     private String sourceAddress;
 
     /**
+     * Source address shows potential phishing risk. Only incoming transactions on EVM chains and TRON are valid
+     */
+    private String isSourcePhishing;
+
+    /**
      * Source address list
      */
     private List<SourceAddress> sourceAddressList;
@@ -67,6 +72,11 @@ public class OneTransactionsResponse {
      * Destination address
      */
     private String destinationAddress;
+
+    /**
+     * Destination address shows potential phishing risk. Only outgoing transactions on EVM chains and TRON are valid
+     */
+    private String isDestinationPhishing;
 
     /**
      * Memo of the destination address when creating a transaction

@@ -83,6 +83,18 @@ public interface TransactionApiService {
     Call<OneTransactionsResponse> oneTransactions(@Body OneTransactionsRequest oneTransactionsRequest);
 
     /**
+     * Retrieve Transaction Approval Details
+     * Query approval details of a transaction. Exclusively for transactions using the new advanced transaction policy. Learn more about new advanced transaction policies.
+     *
+     * @param approvalDetailTransactionsRequest
+     * @return ApprovalDetailTransactionsResponse
+     * @see ApprovalDetailTransactionsRequest
+     * @see ApprovalDetailTransactionsResponse
+     */
+    @POST("/v1/transactions/approvalDetail")
+    Call<ApprovalDetailTransactionsResponse> approvalDetailTransactions(@Body ApprovalDetailTransactionsRequest approvalDetailTransactionsRequest);
+
+    /**
      * Estimate Transaction Fee
      * This interface provides users with an estimated range of transaction fee rates of a given cryptocurrency when creating or speeding up transactions.
      *
