@@ -12,6 +12,11 @@ public class DestinationAddress {
     private String address;
 
     /**
+     * Destination address shows potential phishing risk. Only outgoing transactions on EVM chains and TRON are valid
+     */
+    private String isDestinationPhishing;
+
+    /**
      * Memo of the destination address when creating a transaction
      */
     private String memo;
