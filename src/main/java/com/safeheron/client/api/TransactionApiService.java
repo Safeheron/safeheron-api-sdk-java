@@ -48,6 +48,17 @@ public interface TransactionApiService {
     Call<TxKeyResult> createTransactions(@Body CreateTransactionRequest createTransactionRequest);
 
     /**
+     * Create a new transaction V3.
+     *
+     * @param createTransactionRequest
+     * @return CreateTransactionV3Response
+     * @see CreateTransactionRequest
+     * @see CreateTransactionV3Response
+     */
+    @POST("/v3/transactions/create")
+    Call<CreateTransactionV3Response> createTransactionsV3(@Body CreateTransactionRequest createTransactionRequest);
+
+    /**
      * For UTXOs that natively support multiple OUTPUTs, this interface allows a single transaction to transfer funds to multiple destination addresses simultaneously.(To use the Co-Signer, please use version 1.5.9 or higher)
      *
      * @param createTransactionsUTXOMultidestRequest
