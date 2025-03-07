@@ -9,7 +9,9 @@ import com.safeheron.client.utils.JsonUtil;
 import com.safeheron.client.utils.RsaUtil;
 import org.apache.commons.lang.StringUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -77,6 +79,45 @@ public class CoSignerConverter {
         String decrypt = AesUtil.decrypt(coSignerCallBack.getBizContent(), aesKey, iv,aesType);
         ObjectMapper mapper = JsonUtil.getObjectMapper();
 
+        //Data conversion
+        CoSignerBizContent coSignerBizContent = mapper.readValue(decrypt, CoSignerBizContent.class);
+        String coSignerBizContentJsonString = JsonUtil.toJson(coSignerBizContent.getCustomerContent());
+        if (CoSignerTypeEnum.TRANSACTION.getTypeList().contains(coSignerBizContent.getType())) {
+            TransactionApproval transactionApproval = mapper.readValue(coSignerBizContentJsonString, TransactionApproval.class);
+            coSignerBizContent.setCustomerContent(transactionApproval);
+        } else if (CoSignerTypeEnum.MPC_SIGN.getTypeList().contains(coSignerBizContent.getType())) {
+            MPCSignApproval mpcSignApproval = mapper.readValue(coSignerBizContentJsonString, MPCSignApproval.class);
+            coSignerBizContent.setCustomerContent(mpcSignApproval);
+        } else if (CoSignerTypeEnum.WEB3_SIGN.getTypeList().contains(coSignerBizContent.getType())) {
+            Web3SignApproval web3SignApproval = mapper.readValue(coSignerBizContentJsonString, Web3SignApproval.class);
+            coSignerBizContent.setCustomerContent(web3SignApproval);
+        }
+        return coSignerBizContent;
+    }
+
+    /**
+     * requestV3Convert
+     *
+     * @param coSignerCallBackV3
+     * @return CoSignerBizContent
+     * @see CoSignerCallBackV3
+     * @see CoSignerBizContent
+     */
+    public CoSignerBizContent requestV3Convert(CoSignerCallBackV3 coSignerCallBackV3) throws Exception {
+        // Verify sign
+        Map<String, String> sigMap = new TreeMap<>();
+        sigMap.put("version", coSignerCallBackV3.getVersion());
+        sigMap.put("timestamp", coSignerCallBackV3.getTimestamp().toString());
+        sigMap.put("bizContent", coSignerCallBackV3.getBizContent());
+
+        String signContent = sigMap.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue()).collect(Collectors.joining("&"));
+        boolean checkResult = RsaUtil.verifySignPSS(signContent, coSignerCallBackV3.getSig(), apiPubKey);
+        if (!checkResult) {
+            throw new SafeheronException("signature verification failed");
+        }
+        ObjectMapper mapper = JsonUtil.getObjectMapper();
+        String bizContent = coSignerCallBackV3.getBizContent();
+        String decrypt = new String(Base64.getDecoder().decode(bizContent), StandardCharsets.UTF_8);
         //Data conversion
         CoSignerBizContent coSignerBizContent = mapper.readValue(decrypt, CoSignerBizContent.class);
         String coSignerBizContentJsonString = JsonUtil.toJson(coSignerBizContent.getCustomerContent());

@@ -1,16 +1,14 @@
 package com.safeheron.client.utils;
 
 import com.safeheron.client.config.RSATypeEnum;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.OAEPParameterSpec;
 import javax.crypto.spec.PSource;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.Signature;
+import java.security.*;
 import java.security.spec.MGF1ParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -26,8 +24,13 @@ public class RsaUtil {
 
     public static final String SIGN_TYPE_RSA_OAEP = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding";
     private static final String SIGN_ALGORITHMS_SHA256RSA = "SHA256WithRSA";
+    public static final String SIGN_ALGORITHMS_SHA256RSA_PSS = "SHA256withRSA/PSS";
     private static final int MAX_ENCRYPT_BLOCK = 501;
     private static final int MAX_DECRYPT_BLOCK = 512;
+
+    static {
+        Security.addProvider(new BouncyCastleProvider());
+    }
 
     public static String encrypt(byte[] plainText, String publicKey, RSATypeEnum RSAType) throws Exception {
         ByteArrayOutputStream out = null;
@@ -37,7 +40,7 @@ public class RsaUtil {
             if (RSATypeEnum.ECB_OAEP.equals(RSAType)) {
                 cipher = Cipher.getInstance(SIGN_TYPE_RSA_OAEP);
                 OAEPParameterSpec oaepParams = new OAEPParameterSpec("SHA-256", "MGF1", new MGF1ParameterSpec("SHA-256"), PSource.PSpecified.DEFAULT);
-                cipher.init(Cipher.ENCRYPT_MODE, pubKey,oaepParams);
+                cipher.init(Cipher.ENCRYPT_MODE, pubKey, oaepParams);
             } else {
                 cipher = Cipher.getInstance(SIGN_TYPE_RSA);
                 cipher.init(Cipher.ENCRYPT_MODE, pubKey);
@@ -65,7 +68,7 @@ public class RsaUtil {
         }
     }
 
-    public static byte[] decrypt(String content, String privateKey,RSATypeEnum RSAType) throws Exception {
+    public static byte[] decrypt(String content, String privateKey, RSATypeEnum RSAType) throws Exception {
         ByteArrayOutputStream out = null;
         try {
             PrivateKey priKey = getPrivateKey(SIGN_TYPE_RSA, privateKey);
@@ -78,7 +81,7 @@ public class RsaUtil {
                 cipher = Cipher.getInstance(SIGN_TYPE_RSA);
                 cipher.init(Cipher.DECRYPT_MODE, priKey);
             }
-            byte[] encryptedData =  Base64.getDecoder().decode(content);
+            byte[] encryptedData = Base64.getDecoder().decode(content);
             int inputLen = encryptedData.length;
             out = new ByteArrayOutputStream();
             int i = 0, offSet = 0;
@@ -103,7 +106,7 @@ public class RsaUtil {
         }
     }
 
-    public static String sign(String content, String privateKey)  throws Exception{
+    public static String sign(String content, String privateKey) throws Exception {
         PrivateKey priKey = getPrivateKey(SIGN_TYPE_RSA, privateKey);
         Signature privateSignature = Signature.getInstance(SIGN_ALGORITHMS_SHA256RSA);
         privateSignature.initSign(priKey);
@@ -117,7 +120,15 @@ public class RsaUtil {
         Signature signature = Signature.getInstance(SIGN_ALGORITHMS_SHA256RSA);
         signature.initVerify(pubKey);
         signature.update(content.getBytes(StandardCharsets.UTF_8));
-        return signature.verify( Base64.getDecoder().decode(sign.getBytes()));
+        return signature.verify(Base64.getDecoder().decode(sign.getBytes()));
+    }
+
+    public static boolean verifySignPSS(String content, String sign, String publicKey) throws Exception {
+        PublicKey pubKey = getPublicKey(SIGN_TYPE_RSA, publicKey);
+        Signature signature = Signature.getInstance(SIGN_ALGORITHMS_SHA256RSA_PSS);
+        signature.initVerify(pubKey);
+        signature.update(content.getBytes(StandardCharsets.UTF_8));
+        return signature.verify(Base64.getDecoder().decode(sign.getBytes()));
     }
 
     private static PublicKey getPublicKey(String algorithm, String publicKey) throws Exception {
