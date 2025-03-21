@@ -150,6 +150,21 @@ public class OneTransactionsResponse {
     private String customerRefId;
 
     /**
+     * Transaction counter used to prevent double-spending and replay attacks. This field has a value when a transaction on an EVM-compatible public chain completes approval, or when a custom nonce is passed during transaction creation
+     */
+    private String nonce;
+
+    /**
+     * Represents the txKey of the replaced transaction, returned only during transaction acceleration. Please note that an accelerated transaction and the original transaction are two completely independent transactions and should not be confused or regarded as the same transaction
+     */
+    private String replacedTxKey;
+
+    /**
+     * Represents the customerRefId of the replaced transaction, returned only during transaction acceleration. Please note that an accelerated transaction and the original transaction are two completely independent transactions and should not be confused or regarded as the same transaction. (Note: This field has a value only for transactions accelerated after March 21, 2025.)
+     */
+    private String replacedCustomerRefId;
+
+    /**
      * Merchant extended field
      */
     private String customerExt1;

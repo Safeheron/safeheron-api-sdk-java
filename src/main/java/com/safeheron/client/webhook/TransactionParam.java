@@ -34,6 +34,9 @@ public class TransactionParam {
     private String feeCoinKey;
     private String replaceTxHash;
     private String customerRefId;
+    private String nonce;
+    private String replacedTxKey;
+    private String replacedCustomerRefId;
     private String customerExt1;
     private String customerExt2;
     private String amlLock;

@@ -221,4 +221,34 @@ public class CoSignerConverter {
         responseData.put("aesType", AESTypeEnum.GCM.getCode());
         return responseData;
     }
+
+
+    /**
+     * responseConverterV3
+     *
+     * @param coSignerResponseV3
+     * @return Map<String, Object>
+     * @see CoSignerResponseV3
+     * @see Map<String, Object>
+     */
+    public Map<String, String> responseV3Converter(CoSignerResponseV3 coSignerResponseV3) throws Exception {
+        final String responseJson = JsonUtil.toJson(coSignerResponseV3);
+        // Create params map
+        long timestamp = System.currentTimeMillis();
+        Map<String, String> responseData = new TreeMap<>();
+        responseData.put("code", "200");
+        responseData.put("message", "SUCCESS");
+        responseData.put("timestamp", timestamp + "");
+        responseData.put("version", "v3");
+        if (StringUtils.isNotBlank(responseJson)) {
+            responseData.put("bizContent", Base64.getEncoder().encodeToString(responseJson.getBytes()));
+        }
+        // Sign the response data with your bizPrivKey
+        String signContent = responseData.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&"));
+        String rsaSig = RsaUtil.signPSS(signContent, bizPrivKey);
+        responseData.put("sig", rsaSig);
+        return responseData;
+    }
 }

@@ -115,6 +115,15 @@ public class RsaUtil {
         return Base64.getEncoder().encodeToString(signature);
     }
 
+    public static String signPSS(String content, String privateKey) throws Exception {
+        PrivateKey priKey = getPrivateKey(SIGN_TYPE_RSA, privateKey);
+        Signature privateSignature = Signature.getInstance(SIGN_ALGORITHMS_SHA256RSA_PSS);
+        privateSignature.initSign(priKey);
+        privateSignature.update(content.getBytes(StandardCharsets.UTF_8));
+        byte[] signature = privateSignature.sign();
+        return Base64.getEncoder().encodeToString(signature);
+    }
+
     public static boolean verifySign(String content, String sign, String publicKey) throws Exception {
         PublicKey pubKey = getPublicKey(SIGN_TYPE_RSA, publicKey);
         Signature signature = Signature.getInstance(SIGN_ALGORITHMS_SHA256RSA);
