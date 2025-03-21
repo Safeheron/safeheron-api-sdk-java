@@ -247,7 +247,7 @@ public class CoSignerConverter {
         if (StringUtils.isNotBlank(responseJson)) {
             responseData.put("bizContent", Base64.getEncoder().encodeToString(responseJson.getBytes()));
         }
-        // Sign the response data with your Approval Callback Service's public key
+        // Sign the response data with your Approval Callback Service's private key
         String signContent = responseData.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + entry.getValue())
                 .collect(Collectors.joining("&"));
