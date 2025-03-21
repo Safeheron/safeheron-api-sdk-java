@@ -59,6 +59,10 @@ public class TransactionApproval {
 
     private String customerRefId;
 
+    private String replacedTxKey;
+
+    private String replacedCustomerRefId;
+
     private String customerExt1;
 
     private String customerExt2;
