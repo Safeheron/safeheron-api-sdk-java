@@ -23,26 +23,30 @@ import java.util.stream.Collectors;
  */
 public class CoSignerConverter {
     /**
-     * apiPubKey
-     * RSA public key (api_pubkey) is used in the API Key configuration on Safeheron Web Console.
+     * coSignerPubKey
+     * 1.The API Co-Signer, acting as the client of the Approval Callback Service, sends a POST request and signs the request data using its private key.
+     * 2.Upon receiving the request, the Approval Callback Service uses the API Co-Signer's public key to authenticate the request data, ensuring that the request originates from the API Co-Signer.
+     * 3.Use the export-public-key command of the API Co-Signer CLI to export the API Co-Signer's public key.
      */
-    private final String apiPubKey;
+    private final String coSignerPubKey;
 
     /**
-     * bizPrivKey
-     * RSA private key (biz_privkey) is configured in the audit service.
+     * approvalCallbackServicePrivateKey
+     * 1.The Approval Callback Service, acting as the server, signs the response data using its private key.
+     * 2.Upon receiving the response, the API Co-Signer uses the Approval Callback Service's public key to authenticate the response data, ensuring that the response originates from the Approval Callback Service.
+     * 3.The API Co-Signer automatically recieves and applies the Approval Callback Service's public key and callback address. (When creating the API Key, it is necessary to fill in the Approval Callback Service's public key and callback address.)
      */
-    private final String bizPrivKey;
+    private final String approvalCallbackServicePrivateKey;
 
     /**
      * CoSignerConverter
      *
-     * @param apiPubKey
-     * @param bizPrivKey
+     * @param coSignerPubKey
+     * @param approvalCallbackServicePrivateKey
      */
-    public CoSignerConverter(String apiPubKey, String bizPrivKey) {
-        this.apiPubKey = apiPubKey;
-        this.bizPrivKey = bizPrivKey;
+    public CoSignerConverter(String coSignerPubKey, String approvalCallbackServicePrivateKey) {
+        this.coSignerPubKey = coSignerPubKey;
+        this.approvalCallbackServicePrivateKey = approvalCallbackServicePrivateKey;
     }
 
     /**
@@ -63,14 +67,14 @@ public class CoSignerConverter {
         String signContent = sigMap.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + entry.getValue())
                 .collect(Collectors.joining("&"));
-        boolean checkResult = RsaUtil.verifySign(signContent, coSignerCallBack.getSig(), apiPubKey);
+        boolean checkResult = RsaUtil.verifySign(signContent, coSignerCallBack.getSig(), coSignerPubKey);
         if (!checkResult) {
             throw new SafeheronException("signature verification failed");
         }
 
         // Use your RSA private key to decrypt request's aesKey and aesIv
         RSATypeEnum rsaType = StringUtils.isNotEmpty(coSignerCallBack.getRsaType()) && RSATypeEnum.valueByCode(coSignerCallBack.getRsaType()) != null ? RSATypeEnum.valueByCode(coSignerCallBack.getRsaType()) : RSATypeEnum.RSA;
-        byte[] aesSaltDecrypt = RsaUtil.decrypt(coSignerCallBack.getKey(), bizPrivKey,rsaType);
+        byte[] aesSaltDecrypt = RsaUtil.decrypt(coSignerCallBack.getKey(), approvalCallbackServicePrivateKey,rsaType);
         byte[] aesKey = Arrays.copyOfRange(aesSaltDecrypt, 0, 32);
         byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
@@ -111,7 +115,7 @@ public class CoSignerConverter {
         sigMap.put("bizContent", coSignerCallBackV3.getBizContent());
 
         String signContent = sigMap.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue()).collect(Collectors.joining("&"));
-        boolean checkResult = RsaUtil.verifySignPSS(signContent, coSignerCallBackV3.getSig(), apiPubKey);
+        boolean checkResult = RsaUtil.verifySignPSS(signContent, coSignerCallBackV3.getSig(), coSignerPubKey);
         if (!checkResult) {
             throw new SafeheronException("signature verification failed");
         }
@@ -158,7 +162,7 @@ public class CoSignerConverter {
         // Use Safeheron apiPubKey to encrypt response's aesKey and aesIv
         byte[] sourceKey = Arrays.copyOf(aesKey, aesKey.length + ivKey.length);
         System.arraycopy(ivKey, 0, sourceKey, aesKey.length, ivKey.length);
-        String rsaEncryptResult = RsaUtil.encrypt(sourceKey, apiPubKey, RSATypeEnum.RSA);
+        String rsaEncryptResult = RsaUtil.encrypt(sourceKey, coSignerPubKey, RSATypeEnum.RSA);
 
         // Create params map
         long timestamp = System.currentTimeMillis();
@@ -175,7 +179,7 @@ public class CoSignerConverter {
         String signContent = responseData.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + entry.getValue())
                 .collect(Collectors.joining("&"));
-        String rsaSig = RsaUtil.sign(signContent, bizPrivKey);
+        String rsaSig = RsaUtil.sign(signContent, approvalCallbackServicePrivateKey);
         responseData.put("sig", rsaSig);
         return responseData;
     }
@@ -200,7 +204,7 @@ public class CoSignerConverter {
         // Use Safeheron apiPubKey to encrypt response's aesKey and aesIv
         byte[] sourceKey = Arrays.copyOf(aesKey, aesKey.length + ivKey.length);
         System.arraycopy(ivKey, 0, sourceKey, aesKey.length, ivKey.length);
-        String rsaEncryptResult = RsaUtil.encrypt(sourceKey, apiPubKey, RSATypeEnum.ECB_OAEP);
+        String rsaEncryptResult = RsaUtil.encrypt(sourceKey, coSignerPubKey, RSATypeEnum.ECB_OAEP);
         // Create params map
         long timestamp = System.currentTimeMillis();
         Map<String, String> responseData = new TreeMap<>();
@@ -215,7 +219,7 @@ public class CoSignerConverter {
         String signContent = responseData.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + entry.getValue())
                 .collect(Collectors.joining("&"));
-        String rsaSig = RsaUtil.sign(signContent, bizPrivKey);
+        String rsaSig = RsaUtil.sign(signContent, approvalCallbackServicePrivateKey);
         responseData.put("sig", rsaSig);
         responseData.put("rsaType", RSATypeEnum.ECB_OAEP.getCode());
         responseData.put("aesType", AESTypeEnum.GCM.getCode());
@@ -243,11 +247,11 @@ public class CoSignerConverter {
         if (StringUtils.isNotBlank(responseJson)) {
             responseData.put("bizContent", Base64.getEncoder().encodeToString(responseJson.getBytes()));
         }
-        // Sign the response data with your bizPrivKey
+        // Sign the response data with your Approval Callback Service's public key
         String signContent = responseData.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + entry.getValue())
                 .collect(Collectors.joining("&"));
-        String rsaSig = RsaUtil.signPSS(signContent, bizPrivKey);
+        String rsaSig = RsaUtil.signPSS(signContent, approvalCallbackServicePrivateKey);
         responseData.put("sig", rsaSig);
         return responseData;
     }
