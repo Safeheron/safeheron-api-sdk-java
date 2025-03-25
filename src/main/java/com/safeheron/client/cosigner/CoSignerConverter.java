@@ -103,14 +103,14 @@ public class CoSignerConverter {
      * requestV3Convert
      *
      * @param coSignerCallBackV3
-     * @return CoSignerBizContent
+     * @return CoSignerBizContentV3
      * @see CoSignerCallBackV3
-     * @see CoSignerBizContent
+     * @see CoSignerBizContentV3
      */
-    public CoSignerBizContent requestV3Convert(CoSignerCallBackV3 coSignerCallBackV3) throws Exception {
+    public CoSignerBizContentV3 requestV3Convert(CoSignerCallBackV3 coSignerCallBackV3) throws Exception {
         // Verify sign
         Map<String, String> sigMap = new TreeMap<>();
-        sigMap.put("version", coSignerCallBackV3.getVersion());
+        sigMap.put("version", "v3");
         sigMap.put("timestamp", coSignerCallBackV3.getTimestamp().toString());
         sigMap.put("bizContent", coSignerCallBackV3.getBizContent());
 
@@ -123,17 +123,17 @@ public class CoSignerConverter {
         String bizContent = coSignerCallBackV3.getBizContent();
         String decrypt = new String(Base64.getDecoder().decode(bizContent), StandardCharsets.UTF_8);
         //Data conversion
-        CoSignerBizContent coSignerBizContent = mapper.readValue(decrypt, CoSignerBizContent.class);
-        String coSignerBizContentJsonString = JsonUtil.toJson(coSignerBizContent.getCustomerContent());
+        CoSignerBizContentV3 coSignerBizContent = mapper.readValue(decrypt, CoSignerBizContentV3.class);
+        String coSignerBizContentJsonString = JsonUtil.toJson(coSignerBizContent.getDetail());
         if (CoSignerTypeEnum.TRANSACTION.getTypeList().contains(coSignerBizContent.getType())) {
             TransactionApproval transactionApproval = mapper.readValue(coSignerBizContentJsonString, TransactionApproval.class);
-            coSignerBizContent.setCustomerContent(transactionApproval);
+            coSignerBizContent.setDetail(transactionApproval);
         } else if (CoSignerTypeEnum.MPC_SIGN.getTypeList().contains(coSignerBizContent.getType())) {
             MPCSignApproval mpcSignApproval = mapper.readValue(coSignerBizContentJsonString, MPCSignApproval.class);
-            coSignerBizContent.setCustomerContent(mpcSignApproval);
+            coSignerBizContent.setDetail(mpcSignApproval);
         } else if (CoSignerTypeEnum.WEB3_SIGN.getTypeList().contains(coSignerBizContent.getType())) {
             Web3SignApproval web3SignApproval = mapper.readValue(coSignerBizContentJsonString, Web3SignApproval.class);
-            coSignerBizContent.setCustomerContent(web3SignApproval);
+            coSignerBizContent.setDetail(web3SignApproval);
         }
         return coSignerBizContent;
     }
