@@ -110,7 +110,7 @@ public class CoSignerConverter {
     public CoSignerBizContentV3 requestV3Convert(CoSignerCallBackV3 coSignerCallBackV3) throws Exception {
         // Verify sign
         Map<String, String> sigMap = new TreeMap<>();
-        sigMap.put("version", coSignerCallBackV3.getVersion());
+        sigMap.put("version", "v3");
         sigMap.put("timestamp", coSignerCallBackV3.getTimestamp().toString());
         sigMap.put("bizContent", coSignerCallBackV3.getBizContent());
 
