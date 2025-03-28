@@ -7,7 +7,7 @@ import com.safeheron.client.exception.SafeheronException;
 import com.safeheron.client.utils.AesUtil;
 import com.safeheron.client.utils.JsonUtil;
 import com.safeheron.client.utils.RsaUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.Map;
