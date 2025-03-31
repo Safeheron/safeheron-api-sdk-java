@@ -10,7 +10,7 @@ import com.safeheron.client.utils.JsonUtil;
 import com.safeheron.client.utils.RsaUtil;
 import okhttp3.*;
 import okio.Buffer;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;

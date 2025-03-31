@@ -10,7 +10,7 @@ import com.safeheron.client.utils.AesUtil;
 import com.safeheron.client.utils.JsonUtil;
 import com.safeheron.client.utils.RsaUtil;
 import okhttp3.ResponseBody;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import retrofit2.Converter;
 
 import java.io.IOException;
