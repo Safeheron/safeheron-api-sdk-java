@@ -95,20 +95,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.69</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty</artifactId>
-            <version>1.9.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-protobuf</artifactId>
             <version>1.9.0</version>
             <scope>provided</scope>
         </dependency>

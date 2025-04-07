@@ -1,5 +1,6 @@
 package com.safeheron.demo.cosigner;
 
+import com.safeheron.client.config.ActionEnum;
 import com.safeheron.client.cosigner.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.BeforeClass;
@@ -30,29 +31,33 @@ public class CoSignerTest {
         File file = new File("src/test/resources/demo/api/cosigner/config.yaml");
         InputStream inputStream = new FileInputStream(file);
         config = yaml.load(inputStream);
-        coSignerConverter = new CoSignerConverter(config.get("apiPubKey"), config.get("bizPrivKey"));
+        coSignerConverter = new CoSignerConverter(config.get("coSignerPubKey"), config.get("approvalCallbackServicePrivateKey"));
     }
 
     @Test
     public void testCoSigner() throws Exception {
         //The CoSignerCallBack received by the controller
-        CoSignerCallBack coSignerCallBack = new CoSignerCallBack();
-        CoSignerBizContent coSignerBizContent = coSignerConverter.requestConvert(coSignerCallBack);
+        //Visit the following link to view the request data specification：https://docs.safeheron.com/api/en.html#API%20Co-Signer%20Request%20Data
+        CoSignerCallBackV3 coSignerCallBack = new CoSignerCallBackV3();
+        CoSignerBizContentV3 coSignerBizContent = coSignerConverter.requestV3Convert(coSignerCallBack);
         System.out.println(String.format("Decrypt coSignerBizContent: %s", coSignerBizContent));
 
         //According to different types of CoSignerCallBack, the customer handles the corresponding type of business logic.
-        if (coSignerBizContent.getCustomerContent() instanceof TransactionApproval) {
+        if (coSignerBizContent.getDetail() instanceof TransactionApproval) {
             //todo the customer handles the business logic whose callback type is the transaction
-        } else if (coSignerBizContent.getCustomerContent() instanceof MPCSignApproval) {
+        } else if (coSignerBizContent.getDetail() instanceof MPCSignApproval) {
             //todo the customer handles the business logic whose callback type is the MPCSign
-        } else if (coSignerBizContent.getCustomerContent() instanceof Web3SignApproval) {
+        } else if (coSignerBizContent.getDetail() instanceof Web3SignApproval) {
             //todo the customer handles the business logic whose callback type is the Web3Sign
         }
 
-        CoSignerResponse coSignerResponse = new CoSignerResponse();
-        coSignerResponse.setApprove(true);
-        coSignerResponse.setTxKey("TxKey that needs to be approved");
-        Map<String, String> encryptResponse = coSignerConverter.responseConverterWithNewCryptoType(coSignerResponse);
+        //Visit the following link to view the response data specification.：https://docs.safeheron.com/api/en.html#Approval%20Callback%20Service%20Response%20Data
+        CoSignerResponseV3 coSignerResponse = new CoSignerResponseV3();
+        //1. Set the Action attribute to either APPROVE or REJECT, depending on your decision.
+        coSignerResponse.setAction(ActionEnum.APPROVE.getCode());
+        //2. Set the approvalId attribute to the value of approvalId in the request.
+        coSignerResponse.setApprovalId(coSignerBizContent.getApprovalId());
+        Map<String, String> encryptResponse = coSignerConverter.responseV3Converter(coSignerResponse);
         //The customer returns encryptResponse after processing the business logic.
     }
 }
