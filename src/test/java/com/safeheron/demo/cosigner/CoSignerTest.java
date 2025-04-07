@@ -31,12 +31,13 @@ public class CoSignerTest {
         File file = new File("src/test/resources/demo/api/cosigner/config.yaml");
         InputStream inputStream = new FileInputStream(file);
         config = yaml.load(inputStream);
-        coSignerConverter = new CoSignerConverter(config.get("apiPubKey"), config.get("bizPrivKey"));
+        coSignerConverter = new CoSignerConverter(config.get("coSignerPubKey"), config.get("approvalCallbackServicePrivateKey"));
     }
 
     @Test
     public void testCoSigner() throws Exception {
         //The CoSignerCallBack received by the controller
+        //Visit the following link to view the request data specification：https://docs.safeheron.com/api/en.html#API%20Co-Signer%20Request%20Data
         CoSignerCallBackV3 coSignerCallBack = new CoSignerCallBackV3();
         CoSignerBizContentV3 coSignerBizContent = coSignerConverter.requestV3Convert(coSignerCallBack);
         System.out.println(String.format("Decrypt coSignerBizContent: %s", coSignerBizContent));
@@ -50,8 +51,11 @@ public class CoSignerTest {
             //todo the customer handles the business logic whose callback type is the Web3Sign
         }
 
+        //	//Visit the following link to view the response data specification.：https://docs.safeheron.com/api/en.html#Approval%20Callback%20Service%20Response%20Data
         CoSignerResponseV3 coSignerResponse = new CoSignerResponseV3();
+        //Replace with APPROVE or REJECT
         coSignerResponse.setAction(ActionEnum.APPROVE.getCode());
+        //Replace with the approvalId data from the request
         coSignerResponse.setApprovalId(coSignerBizContent.getApprovalId());
         Map<String, String> encryptResponse = coSignerConverter.responseV3Converter(coSignerResponse);
         //The customer returns encryptResponse after processing the business logic.
