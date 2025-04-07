@@ -51,11 +51,11 @@ public class CoSignerTest {
             //todo the customer handles the business logic whose callback type is the Web3Sign
         }
 
-        //	//Visit the following link to view the response data specification.：https://docs.safeheron.com/api/en.html#Approval%20Callback%20Service%20Response%20Data
+        //Visit the following link to view the response data specification.：https://docs.safeheron.com/api/en.html#Approval%20Callback%20Service%20Response%20Data
         CoSignerResponseV3 coSignerResponse = new CoSignerResponseV3();
-        //Replace with APPROVE or REJECT
+        //1. Set the Action attribute to either APPROVE or REJECT, depending on your decision.
         coSignerResponse.setAction(ActionEnum.APPROVE.getCode());
-        //Replace with the approvalId data from the request
+        //2. Set the approvalId attribute to the value of approvalId in the request.
         coSignerResponse.setApprovalId(coSignerBizContent.getApprovalId());
         Map<String, String> encryptResponse = coSignerConverter.responseV3Converter(coSignerResponse);
         //The customer returns encryptResponse after processing the business logic.
