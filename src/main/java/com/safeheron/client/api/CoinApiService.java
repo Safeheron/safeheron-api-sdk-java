@@ -56,7 +56,7 @@ public interface CoinApiService {
      * @see CoinBalanceSnapshotResponse
      */
     @POST("/v1/coin/balance/snapshot")
-    Call<CoinBalanceSnapshotResponse> coinBalanceSnapshot(@Body CoinBalanceSnapshotRequest coinBalanceSnapshotRequest);
+    Call<List<CoinBalanceSnapshotResponse>> coinBalanceSnapshot(@Body CoinBalanceSnapshotRequest coinBalanceSnapshotRequest);
 
     /**
      * Retrieve Current Block Height for Currency
