@@ -18,4 +18,12 @@ public class BatchCreateWeb3AccountRequest {
      * Number of wallets to be created, greater than 0, less than 100
      */
     private Integer count;
+
+    /**
+     * 	Whether display in Safeheron Console
+     * True: not display
+     * False: display
+     * Default: false
+     */
+    private boolean hiddenOnUI;
 }
