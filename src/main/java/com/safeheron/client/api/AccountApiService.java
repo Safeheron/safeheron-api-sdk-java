@@ -171,6 +171,18 @@ public interface AccountApiService {
     Call<InfoAccountCoinAddressResponse> infoAccountCoinAddress(@Body InfoAccountCoinAddressRequest infoAccountCoinAddressRequest);
 
     /**
+     * Retrieve Coin Balance
+     * Get the coin balance of all asset wallets under the team.
+     *
+     * @param accountCoinBalanceRequest
+     * @return AccountCoinBalanceResponse
+     * @see AccountCoinBalanceRequest
+     * @see AccountCoinBalanceResponse
+     */
+    @POST("/v1/account/coin/balance")
+    Call<AccountCoinBalanceResponse> accountCoinBalance(@Body AccountCoinBalanceRequest accountCoinBalanceRequest);
+
+    /**
      * Rename Coin Address Group of a Wallet Account
      * Rename a coin address group of a wallet account.
      *
