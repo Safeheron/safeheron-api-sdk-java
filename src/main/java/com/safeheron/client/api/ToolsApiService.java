@@ -8,8 +8,6 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
-import java.util.List;
-
 /**
  * @author safeheron
  */
@@ -36,7 +34,7 @@ public interface ToolsApiService {
      * @see AmlCheckerRetrievesResponse
      */
     @POST("/v1/tools/aml-checker/retrieves")
-    Call<List<AmlCheckerRetrievesResponse>> amlCheckerRetrieves(@Body AmlCheckerRetrievesRequest amlCheckerRetrievesRequest);
+    Call<AmlCheckerRetrievesResponse> amlCheckerRetrieves(@Body AmlCheckerRetrievesRequest amlCheckerRetrievesRequest);
 
 
 }
