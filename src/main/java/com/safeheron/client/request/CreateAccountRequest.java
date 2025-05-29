@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class CreateAccountRequest {
     /**
-     * Account name, within 30 characters
+     * Account name, 50 characters max
      */
     private String accountName;
 

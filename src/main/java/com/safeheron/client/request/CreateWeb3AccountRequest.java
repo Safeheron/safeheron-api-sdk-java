@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class CreateWeb3AccountRequest {
     /**
-     * Account name, within 30 characters
+     * Account name, 50 characters max
      */
     private String accountName;
 

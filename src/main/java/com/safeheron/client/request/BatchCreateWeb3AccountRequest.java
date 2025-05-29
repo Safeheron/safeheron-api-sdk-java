@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class BatchCreateWeb3AccountRequest {
     /**
-     * The prefix of wallet account name, 30 characters max
+     * The prefix of wallet account name, 50 characters max
      */
     private String accountName;
 
