@@ -115,6 +115,12 @@ public class CreateTransactionRequest {
     private Boolean failOnContract;
 
     /**
+     * Default value is true. When initiating and approving transactions, Safeheron assesses the destinationAddress for risk through its AML/KYT service provider. It then decides whether to permit the transaction based on this assessment. By default, if the destination address presents compliance risks, the system prohibits the transaction.
+     * If you fully understand the associated risks and still need to transfer funds to this address, you can explicitly set failOnAml to false. In this case, Safeheron will disregard the risk assessment results and allow the transaction to proceed.
+     */
+    private Boolean failOnAml;
+
+    /**
      * Custom nonce
      */
     private Long nonce;
