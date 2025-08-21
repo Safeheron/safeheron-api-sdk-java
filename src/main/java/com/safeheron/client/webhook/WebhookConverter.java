@@ -39,6 +39,12 @@ public class WebhookConverter {
      * @param webHookRsaPrivateKey
      */
     public WebhookConverter(String safeheronWebHookRsaPublicKey, String webHookRsaPrivateKey) {
+        if (safeheronWebHookRsaPublicKey.contains("-----BEGIN PUBLIC KEY-----")) {
+            safeheronWebHookRsaPublicKey = safeheronWebHookRsaPublicKey.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").replaceAll("\n", "");
+        }
+        if (webHookRsaPrivateKey.contains("-----BEGIN PRIVATE KEY-----")) {
+            webHookRsaPrivateKey = webHookRsaPrivateKey.replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "").replaceAll("\n", "");
+        }
         this.safeheronWebHookRsaPublicKey = safeheronWebHookRsaPublicKey;
         this.webHookRsaPrivateKey = webHookRsaPrivateKey;
     }
@@ -68,13 +74,13 @@ public class WebhookConverter {
 
         // Use your RSA private key to decrypt response's aesKey and aesIv
         RSATypeEnum rsaType = StringUtils.isNotEmpty(webHook.getRsaType()) && RSATypeEnum.valueByCode(webHook.getRsaType()) != null ? RSATypeEnum.valueByCode(webHook.getRsaType()) : RSATypeEnum.RSA;
-        byte[] aesSaltDecrypt = RsaUtil.decrypt(webHook.getKey(), webHookRsaPrivateKey,rsaType);
+        byte[] aesSaltDecrypt = RsaUtil.decrypt(webHook.getKey(), webHookRsaPrivateKey, rsaType);
         byte[] aesKey = Arrays.copyOfRange(aesSaltDecrypt, 0, 32);
         byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
         // Use AES to decrypt bizContent
         AESTypeEnum aesType = StringUtils.isNotEmpty(webHook.getAesType()) && AESTypeEnum.valueByCode(webHook.getAesType()) != null ? AESTypeEnum.valueByCode(webHook.getAesType()) : AESTypeEnum.CBC;
-        String decrypt = AesUtil.decrypt(webHook.getBizContent(), aesKey, iv,aesType);
+        String decrypt = AesUtil.decrypt(webHook.getBizContent(), aesKey, iv, aesType);
         ObjectMapper mapper = JsonUtil.getObjectMapper();
 
         //Data conversion

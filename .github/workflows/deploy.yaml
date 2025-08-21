@@ -1,0 +1,31 @@
+name: Maven Central Repo Deployment
+
+on:
+  release:
+    types: [ released ]
+
+jobs:
+  publish-central:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout Git Repo
+        uses: actions/checkout@v4
+
+      - name: Set up Apache Maven Central
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          server-id: central
+          server-username: SERVER_USERNAME
+          server-password: SERVER_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_GPG_SECRET }}
+          gpg-passphrase: GPG_PASSPHRASE
+
+      - name: Publish to Apache Maven Central
+        run: mvn deploy -DskipTests
+        env:
+          SERVER_USERNAME: ${{ secrets.MAVEN_SERVER_USERNAME }}
+          SERVER_PASSWORD: ${{ secrets.MAVEN_SERVER_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSWORD }}
