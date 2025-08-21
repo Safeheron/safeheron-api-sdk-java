@@ -45,6 +45,12 @@ public class CoSignerConverter {
      * @param approvalCallbackServicePrivateKey
      */
     public CoSignerConverter(String coSignerPubKey, String approvalCallbackServicePrivateKey) {
+        if (coSignerPubKey.contains("-----BEGIN PUBLIC KEY-----")) {
+            coSignerPubKey = coSignerPubKey.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").replaceAll("\n", "");
+        }
+        if (approvalCallbackServicePrivateKey.contains("-----BEGIN PRIVATE KEY-----")) {
+            approvalCallbackServicePrivateKey = approvalCallbackServicePrivateKey.replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "").replaceAll("\n", "");
+        }
         this.coSignerPubKey = coSignerPubKey;
         this.approvalCallbackServicePrivateKey = approvalCallbackServicePrivateKey;
     }
@@ -74,13 +80,13 @@ public class CoSignerConverter {
 
         // Use your RSA private key to decrypt request's aesKey and aesIv
         RSATypeEnum rsaType = StringUtils.isNotEmpty(coSignerCallBack.getRsaType()) && RSATypeEnum.valueByCode(coSignerCallBack.getRsaType()) != null ? RSATypeEnum.valueByCode(coSignerCallBack.getRsaType()) : RSATypeEnum.RSA;
-        byte[] aesSaltDecrypt = RsaUtil.decrypt(coSignerCallBack.getKey(), approvalCallbackServicePrivateKey,rsaType);
+        byte[] aesSaltDecrypt = RsaUtil.decrypt(coSignerCallBack.getKey(), approvalCallbackServicePrivateKey, rsaType);
         byte[] aesKey = Arrays.copyOfRange(aesSaltDecrypt, 0, 32);
         byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 
         // Use AES to decrypt bizContent
         AESTypeEnum aesType = StringUtils.isNotEmpty(coSignerCallBack.getAesType()) && AESTypeEnum.valueByCode(coSignerCallBack.getAesType()) != null ? AESTypeEnum.valueByCode(coSignerCallBack.getAesType()) : AESTypeEnum.CBC;
-        String decrypt = AesUtil.decrypt(coSignerCallBack.getBizContent(), aesKey, iv,aesType);
+        String decrypt = AesUtil.decrypt(coSignerCallBack.getBizContent(), aesKey, iv, aesType);
         ObjectMapper mapper = JsonUtil.getObjectMapper();
 
         //Data conversion

@@ -20,6 +20,12 @@ public class ServiceCreator {
     private static volatile Map<String, Retrofit> retrofitMap = new HashMap<>();
 
     public static <S> S create(Class<S> serviceClass, SafeheronConfig config) {
+        if (config.getSafeheronRsaPublicKey().contains("-----BEGIN PUBLIC KEY-----")) {
+            config.setSafeheronRsaPublicKey(config.getSafeheronRsaPublicKey().replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").replaceAll("\n", ""));
+        }
+        if (config.getRsaPrivateKey().contains("-----BEGIN PRIVATE KEY-----")) {
+            config.setRsaPrivateKey(config.getRsaPrivateKey().replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "").replaceAll("\n", ""));
+        }
         Retrofit instance = getRetrofit(config);
         return instance.create(serviceClass);
     }
