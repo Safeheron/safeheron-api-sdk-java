@@ -19,6 +19,18 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <id>support</id>
+            <name>support</name>
+            <email>support@safeheron.com</email>
+            <roles>
+                <role>Project Manager</role>
+                <role>Architect</role>
+            </roles>
+        </developer>
+    </developers>
+
     <scm>
         <connection>https://github.com/Safeheron/safeheron-api-sdk-java.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:Safeheron/safeheron-api-sdk-java.git
@@ -146,6 +158,19 @@
                     <publishingServerId>central</publishingServerId>
                     <autoPublish>true</autoPublish>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
