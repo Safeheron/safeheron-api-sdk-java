@@ -16,8 +16,8 @@ public interface TransactionApiService {
      * Transaction List V1
      * Filter transaction history by various conditions. For optimal results, we recommend using the V2 version.
      *
-     * @param listTransactionsV1Request
-     * @return PageResult<TransactionsResponse>
+     * @param listTransactionsV1Request listTransactionsV1Request
+     * @return TransactionsResponse
      * @see ListTransactionsV1Request
      * @see TransactionsResponse
      */
@@ -28,8 +28,8 @@ public interface TransactionApiService {
      * Transaction List V2
      * Filter transaction history by various conditions.
      *
-     * @param listTransactionsV2Request
-     * @return List<TransactionsResponse>
+     * @param listTransactionsV2Request listTransactionsV2Request
+     * @return TransactionsResponse
      * @see ListTransactionsV2Request
      * @see TransactionsResponse
      */
@@ -39,7 +39,7 @@ public interface TransactionApiService {
     /**
      * Create a new transaction.
      *
-     * @param createTransactionRequest
+     * @param createTransactionRequest createTransactionRequest
      * @return TxKeyResult
      * @see CreateTransactionRequest
      * @see TxKeyResult
@@ -50,7 +50,7 @@ public interface TransactionApiService {
     /**
      * Create a new transaction V3.
      *
-     * @param createTransactionRequest
+     * @param createTransactionRequest createTransactionRequest
      * @return CreateTransactionV3Response
      * @see CreateTransactionRequest
      * @see CreateTransactionV3Response
@@ -61,7 +61,7 @@ public interface TransactionApiService {
     /**
      * For UTXOs that natively support multiple OUTPUTs, this interface allows a single transaction to transfer funds to multiple destination addresses simultaneously.(To use the Co-Signer, please use version 1.5.9 or higher)
      *
-     * @param createTransactionsUTXOMultidestRequest
+     * @param createTransactionsUTXOMultidestRequest createTransactionsUTXOMultidestRequest
      * @return TxKeyResult
      * @see CreateTransactionRequest
      * @see TxKeyResult
@@ -73,7 +73,7 @@ public interface TransactionApiService {
      * Speed up EVM and UTXO-based Transactions
      * Transactions with low transaction fees and those that have been pending for a long time can be sped up. EVM-based and BTC transactions can be sped up through RBF(If 'isRbf' is set to true during transaction creation, the transaction will be accelerated using RBF acceleration. Otherwise, CPFP acceleration will be used.) For other UTXO-based transactions, CPFP will be used.
      *
-     * @param recreateTransactionRequest
+     * @param recreateTransactionRequest recreateTransactionRequest
      * @return TxKeyResult
      * @see RecreateTransactionRequest
      * @see TxKeyResult
@@ -85,7 +85,7 @@ public interface TransactionApiService {
      * Retrieve a Transaction
      * To query a transaction, either customerRefId or txKey are required. If both values are provided, the retrieval will be based on the txKey.
      *
-     * @param oneTransactionsRequest
+     * @param oneTransactionsRequest oneTransactionsRequest
      * @return TransactionsResponse
      * @see OneTransactionsRequest
      * @see TransactionsResponse
@@ -97,7 +97,7 @@ public interface TransactionApiService {
      * Retrieve Transaction Approval Details
      * Query approval details of a transaction. Exclusively for transactions using the new advanced transaction policy. Learn more about new advanced transaction policies.
      *
-     * @param approvalDetailTransactionsRequest
+     * @param approvalDetailTransactionsRequest approvalDetailTransactionsRequest
      * @return ApprovalDetailTransactionsResponse
      * @see ApprovalDetailTransactionsRequest
      * @see ApprovalDetailTransactionsResponse
@@ -109,7 +109,7 @@ public interface TransactionApiService {
      * Estimate Transaction Fee
      * This interface provides users with an estimated range of transaction fee rates of a given cryptocurrency when creating or speeding up transactions.
      *
-     * @param transactionsFeeRateRequest
+     * @param transactionsFeeRateRequest transactionsFeeRateRequest
      * @return TransactionsFeeRateResponse
      * @see TransactionsFeeRateRequest
      * @see TransactionsFeeRateResponse
@@ -121,7 +121,7 @@ public interface TransactionApiService {
      * Cancel Transaction
      * Cancel the authorization-pending transaction and the signing-in-progress transaction.
      *
-     * @param cancelTransactionRequest
+     * @param cancelTransactionRequest cancelTransactionRequest
      * @return ResultResponse
      * @see CancelTransactionRequest
      * @see ResultResponse
@@ -133,7 +133,7 @@ public interface TransactionApiService {
      * UTXO-Based Coin Sweeping
      * For multi-address UTXO coins under a wallet account, this interface allows users to collect the balances of certain qualifying addresses into a specified destination address.
      *
-     * @param collectionTransactionsUTXORequest
+     * @param collectionTransactionsUTXORequest collectionTransactionsUTXORequest
      * @return CollectionTransactionsUTXOResponse
      * @see CollectionTransactionsUTXORequest
      * @see CollectionTransactionsUTXOResponse

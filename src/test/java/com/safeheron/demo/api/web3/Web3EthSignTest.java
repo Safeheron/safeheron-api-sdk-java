@@ -38,7 +38,6 @@ import java.util.*;
 
 /**
  * @author safeheron
- * @date 2023/8/23
  */
 public class Web3EthSignTest {
 

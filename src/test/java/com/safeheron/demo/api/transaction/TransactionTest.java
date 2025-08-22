@@ -21,7 +21,6 @@ import java.util.UUID;
 
 /**
  * @author xigaoku
- * @date 2022/10/12 19:27
  */
 @Slf4j
 public class TransactionTest {

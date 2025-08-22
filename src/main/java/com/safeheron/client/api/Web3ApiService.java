@@ -15,7 +15,7 @@ public interface Web3ApiService {
     /**
      * Create a Web3 Wallet Account
      *
-     * @param createWeb3AccountRequest
+     * @param createWeb3AccountRequest createWeb3AccountRequest
      * @return Web3AccountResponse
      * @see CreateWeb3AccountRequest
      * @see Web3AccountResponse
@@ -27,7 +27,7 @@ public interface Web3ApiService {
      * Batch Create Web3 Wallet Accounts
      * Create a batch of wallet accounts based on specified number. Web3 wallet accounts created in batches are not displayed in the Safeheron App by default.
      *
-     * @param batchCreateWeb3AccountRequest
+     * @param batchCreateWeb3AccountRequest batchCreateWeb3AccountRequest
      * @return BatchCreateWeb3AccountResponse
      * @see BatchCreateWeb3AccountRequest
      * @see BatchCreateWeb3AccountResponse
@@ -39,8 +39,8 @@ public interface Web3ApiService {
      * List Web3 Wallet Accounts
      * Filter Web3 wallet account lists by various conditions.
      *
-     * @param listWeb3AccountRequest
-     * @return List<Web3AccountResponse>
+     * @param listWeb3AccountRequest listWeb3AccountRequest
+     * @return Web3AccountResponse
      * @see ListWeb3AccountRequest
      * @see Web3AccountResponse
      */
@@ -51,7 +51,7 @@ public interface Web3ApiService {
      * Create ethSign
      * Merchants can initiate an ethSign signature through this interface. The merchant is required to serialize the transaction data, generating a corresponding hash (supporting both 0x and non-0x formatted data). The hash is then submitted through this interface to create a signature, which can be obtained by Retrieve a Single Web3 Signature interface or webhook. From there, merchants can complete the subsequent steps according to their own needs once they have obtained the signature.
      *
-     * @param createWeb3EthSignRequest
+     * @param createWeb3EthSignRequest createWeb3EthSignRequest
      * @return TxKeyResult
      * @see CreateWeb3EthSignRequest
      * @see TxKeyResult
@@ -63,7 +63,7 @@ public interface Web3ApiService {
      * Create personalSign
      * Merchants can initiate a personalSign signature for any text using this interface. The merchant only needs to prepare the data to be signed and submit it through this interface to create the signature. The resulting signature can then be obtained by Retrieve a Single Web3 Signature interface or via webhook. From there, merchants can complete the subsequent steps according to their own needs once they have obtained the signature.
      *
-     * @param createWeb3PersonalSignRequest
+     * @param createWeb3PersonalSignRequest createWeb3PersonalSignRequest
      * @return TxKeyResult
      * @see CreateWeb3PersonalSignRequest
      * @see TxKeyResult
@@ -75,7 +75,7 @@ public interface Web3ApiService {
      * Create ethSignTypedData
      * Merchants can initiate an ethSignTypedData signature of specific formatted data (supporting data formats of v1, v3, and v4) through this interface. Merchants will need to format their signature data and submit it through the interface. Once the signature is created, the result can be retrieved via Retrieve a Single Web3 Signature interface or webhook. From there, merchants can complete the subsequent steps according to their own needs once they have obtained the signature.
      *
-     * @param CreateWeb3EthSignTypedDataRequest
+     * @param CreateWeb3EthSignTypedDataRequest createWeb3EthSignTypedDataRequest
      * @return TxKeyResult
      * @see CreateWeb3EthSignTypedDataRequest
      * @see TxKeyResult
@@ -88,7 +88,7 @@ public interface Web3ApiService {
      * Create ethSignTransaction
      * Merchants can initiate ethSignTransaction signature transactions through this interface. The merchant must prepare transaction-related data, such as from, to, nonce, gas limit, gas price, value, data, and more. Once this data is submitted, a signature is created and the result can be obtained by Retrieve a Single Web3 Signature interface or webhook. From there, merchants can complete the subsequent steps according to their own needs once they have obtained the signature.
      *
-     * @param createWeb3EthSignTransactionRequest
+     * @param createWeb3EthSignTransactionRequest createWeb3EthSignTransactionRequest
      * @return TxKeyResult
      * @see CreateWeb3EthSignTransactionRequest
      * @see TxKeyResult
@@ -100,7 +100,7 @@ public interface Web3ApiService {
      * Cancel Signature
      * Cancel pending signatures.
      *
-     * @param cancelWeb3SignRequest
+     * @param cancelWeb3SignRequest cancelWeb3SignRequest
      * @return ResultResponse
      * @see CancelWeb3SignRequest
      * @see ResultResponse
@@ -112,7 +112,7 @@ public interface Web3ApiService {
      * Retrieve a Single Web3 Signature
      * To query a transaction, either customerRefId or txKey are required. If both values are provided, the retrieval will be based on the txKey.
      *
-     * @param oneWeb3SignRequest
+     * @param oneWeb3SignRequest oneWeb3SignRequest
      * @return Web3SignResponse
      * @see OneWeb3SignRequest
      * @see Web3SignResponse
@@ -124,8 +124,8 @@ public interface Web3ApiService {
      * Web3 Sign Transaction List
      * Filter Web3 Sign history by various conditions.
      *
-     * @param listWeb3SignRequest
-     * @return List<Web3SignResponse>
+     * @param listWeb3SignRequest listWeb3SignRequest
+     * @return Web3SignResponse
      * @see ListWeb3SignRequest
      * @see Web3SignResponse
      */

@@ -16,7 +16,6 @@ import java.util.Map;
 
 /**
  * @author pengzhaofeng
- * @date 2023/8/1 19:27
  */
 @Slf4j
 public class CoSignerTest {

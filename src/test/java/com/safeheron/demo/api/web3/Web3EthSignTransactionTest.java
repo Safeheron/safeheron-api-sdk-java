@@ -40,7 +40,6 @@ import java.util.UUID;
 
 /**
  * @author safeheron
- * @date 2023/8/21
  */
 public class Web3EthSignTransactionTest {
 

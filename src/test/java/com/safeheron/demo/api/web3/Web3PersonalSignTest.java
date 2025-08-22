@@ -24,7 +24,6 @@ import java.util.UUID;
 
 /**
  * @author safeheron
- * @date 2023/8/23
  */
 public class Web3PersonalSignTest {
 

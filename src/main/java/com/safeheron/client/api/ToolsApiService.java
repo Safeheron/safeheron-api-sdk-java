@@ -17,7 +17,7 @@ public interface ToolsApiService {
     /**
      * Create AML Risk Assessment Request
      *
-     * @param amlCheckerRequestRequest
+     * @param amlCheckerRequestRequest amlCheckerRequestRequest
      * @return AmlCheckerRequestResponse
      * @see AmlCheckerRequestRequest
      * @see AmlCheckerRequestResponse
@@ -28,7 +28,7 @@ public interface ToolsApiService {
     /**
      * Retrieve AML Risk Assessment Result
      *
-     * @param amlCheckerRetrievesRequest
+     * @param amlCheckerRetrievesRequest amlCheckerRetrievesRequest
      * @return AmlCheckerRetrievesResponse
      * @see AmlCheckerRetrievesRequest
      * @see AmlCheckerRetrievesResponse

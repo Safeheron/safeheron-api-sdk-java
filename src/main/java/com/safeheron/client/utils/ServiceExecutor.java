@@ -9,12 +9,14 @@ import java.io.IOException;
 
 /**
  * @author safeheron
- * @date 2022/8/1 15:17
  */
 @Slf4j
 public class ServiceExecutor {
     /**
      * Execute a REST call and block until the response is received.
+     * @param <T> return param type
+     * @param call call
+     * @return return
      */
     public static <T> T execute(Call<T> call) {
         try {
