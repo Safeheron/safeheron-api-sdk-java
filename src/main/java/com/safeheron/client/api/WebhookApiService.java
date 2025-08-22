@@ -22,8 +22,8 @@ public interface WebhookApiService {
      * Events related to Web3, including WEB3_SIGN_CREATED and WEB3_SIGN_STATUS_CHANGED.
      * More types of webhook events will be supported in the future.
      *
-     * @param resendWebhookRequest
-     * @return List<ResultResponse>
+     * @param resendWebhookRequest resendWebhookRequest
+     * @return ResultResponse
      * @see ResendWebhookRequest
      * @see ResultResponse
      */
@@ -45,7 +45,7 @@ public interface WebhookApiService {
      * More types of webhook events will be supported in the future.
      * Please note that when re-pushing all failed webhook events, your system needs to avoid rollback issues. For example, during the lifecycle of a transaction, multiple TRANSACTION_STATUS_CHANGED webhook events may be generated, such as BROADCASTING, CONFIRMING, and COMPLETED. If your system did not receive the CONFIRMING event due to network issues but did receive the COMPLETED event, using this interface would cause Safeheron to attempt resending the CONFIRMING event to your system. Your system needs to ensure that the transaction does not incorrectly revert from the COMPLETED status back to the CONFIRMING status.
      *
-     * @param resendFailedRequest
+     * @param resendFailedRequest resendFailedRequest
      * @return ResultResponse
      * @see ResendFailedRequest
      * @see ResultResponse

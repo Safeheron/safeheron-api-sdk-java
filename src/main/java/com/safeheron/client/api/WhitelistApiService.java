@@ -17,8 +17,8 @@ public interface WhitelistApiService {
      * List Whitelist Data
      * Paginate the whitelist data based on the query criteria.
      *
-     * @param listWhitelistRequest
-     * @return List<WhitelistResponse>
+     * @param listWhitelistRequest listWhitelistRequest
+     * @return WhitelistResponse
      * @see ListWhitelistRequest
      * @see WhitelistResponse
      */
@@ -29,7 +29,7 @@ public interface WhitelistApiService {
      * Retrieve a Single Whitelist
      * Retrieve the data of a whitelist.
      *
-     * @param oneWhitelistRequest
+     * @param oneWhitelistRequest oneWhitelistRequest
      * @return OneWhitelistRequest
      * @see WhitelistResponse
      * @see WhitelistResponse
@@ -44,7 +44,7 @@ public interface WhitelistApiService {
      * Admin approval: If a custom whitelist approval process is not set, it will become effective after being approved by the team admins according to the team's decision-making process.
      * Custom whitelist approval: If a whitelist approval process is set, it will become effective after being approved according to the process.
      *
-     * @param createWhitelistRequest
+     * @param createWhitelistRequest createWhitelistRequest
      * @return CreateWhitelistRequest
      * @see CreateWhitelistResponse
      * @see CreateWhitelistResponse
@@ -60,7 +60,7 @@ public interface WhitelistApiService {
      * The transaction is in a completed state as COMPLETED.
      * The transaction's destination address is a one-time address.
      *
-     * @param createFromTransactionWhitelistRequest
+     * @param createFromTransactionWhitelistRequest createFromTransactionWhitelistRequest
      * @return CreateFromTransactionWhitelistRequest
      * @see CreateWhitelistResponse
      * @see CreateWhitelistResponse
@@ -78,7 +78,7 @@ public interface WhitelistApiService {
      * Admin approval: If a custom whitelist approval process is not set, it will become effective after being approved by the team admins according to the team's decision-making process.
      * Custom whitelist approval: If a whitelist approval process is set, it will become effective after being approved according to the process.
      *
-     * @param editWhitelistRequest
+     * @param editWhitelistRequest editWhitelistRequest
      * @return EditWhitelistRequest
      * @see ResultResponse
      * @see ResultResponse
@@ -90,7 +90,7 @@ public interface WhitelistApiService {
      * Delete a Whitelist
      * To delete a whitelisted address, note that no approval is required for deletion. If a whitelisted address that is under approval is deleted, the approval task will also be automatically cancelled.
      *
-     * @param deleteWhitelistRequest
+     * @param deleteWhitelistRequest deleteWhitelistRequest
      * @return DeleteWhitelistRequest
      * @see ResultResponse
      * @see ResultResponse

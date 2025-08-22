@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author safeheron
- * @date 2022/8/1 15:17
  */
 public class ServiceCreator {
     private static volatile Map<String, Retrofit> retrofitMap = new HashMap<>();

@@ -19,7 +19,7 @@ public interface MPCSignApiService {
      * Create an MPC Sign Transaction
      * Merchant can initiate MPC Sign via this interface. The merchant must first serialize the transaction data and generate a hash before using this interface to submit the hash and create a transaction. The resulting signature can be retrieved via the MPC Sign transaction interface or webhook. The merchant can proceed with the necessary follow-up processes to obtain the signature according to their specific needs.
      *
-     * @param createMPCSignTransactionRequest
+     * @param createMPCSignTransactionRequest createMPCSignTransactionRequest
      * @return TxKeyResult
      * @see CreateMPCSignTransactionRequest
      * @see TxKeyResult
@@ -31,7 +31,7 @@ public interface MPCSignApiService {
      * Retrieve a Single MPC Sign Transaction
      * To query a specific MPC Sign transaction, either customerRefId or txKey must be provided. If both parameters are provided, the query will be based on the txKey parameter.
      *
-     * @param oneMPCSignTransactionsRequest
+     * @param oneMPCSignTransactionsRequest oneMPCSignTransactionsRequest
      * @return MPCSignTransactionsResponse
      * @see OneMPCSignTransactionsRequest
      * @see MPCSignTransactionsResponse
@@ -43,8 +43,8 @@ public interface MPCSignApiService {
      * MPC Sign Transaction List
      * Filter MPC Sign transaction history by various conditions.
      *
-     * @param listMPCSignTransactionsRequest
-     * @return List<MPCSignTransactionsResponse>
+     * @param listMPCSignTransactionsRequest listMPCSignTransactionsRequest
+     * @return MPCSignTransactionsResponse
      * @see ListMPCSignTransactionsRequest
      * @see MPCSignTransactionsResponse
      */

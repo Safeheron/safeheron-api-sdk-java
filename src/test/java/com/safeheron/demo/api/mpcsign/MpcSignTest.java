@@ -41,7 +41,6 @@ import java.util.UUID;
 
 /**
  * @author safeheron
- * @date 2022/7/12 12:12
  */
 public class MpcSignTest {
 

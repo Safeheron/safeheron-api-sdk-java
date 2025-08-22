@@ -41,8 +41,8 @@ public class CoSignerConverter {
     /**
      * CoSignerConverter
      *
-     * @param coSignerPubKey
-     * @param approvalCallbackServicePrivateKey
+     * @param coSignerPubKey coSignerPubKey
+     * @param approvalCallbackServicePrivateKey approvalCallbackServicePrivateKey
      */
     public CoSignerConverter(String coSignerPubKey, String approvalCallbackServicePrivateKey) {
         if (coSignerPubKey.contains("-----BEGIN PUBLIC KEY-----")) {
@@ -58,10 +58,11 @@ public class CoSignerConverter {
     /**
      * requestConvert
      *
-     * @param coSignerCallBack
+     * @param coSignerCallBack coSignerCallBack
      * @return CoSignerBizContent
      * @see CoSignerCallBack
      * @see CoSignerBizContent
+     * @throws Exception Exception
      */
     public CoSignerBizContent requestConvert(CoSignerCallBack coSignerCallBack) throws Exception {
         // Verify sign
@@ -108,10 +109,11 @@ public class CoSignerConverter {
     /**
      * requestV3Convert
      *
-     * @param coSignerCallBackV3
+     * @param coSignerCallBackV3 coSignerCallBackV3
      * @return CoSignerBizContentV3
      * @see CoSignerCallBackV3
      * @see CoSignerBizContentV3
+     * @throws Exception Exception
      */
     public CoSignerBizContentV3 requestV3Convert(CoSignerCallBackV3 coSignerCallBackV3) throws Exception {
         // Verify sign
@@ -148,10 +150,11 @@ public class CoSignerConverter {
      * responseConverter
      * It has been Deprecated,Please use {@link #responseConverterWithNewCryptoType}
      *
-     * @param coSignerResponse
-     * @return Map<String, Object>
+     * @param coSignerResponse coSignerResponse
+     * @return Map
      * @see CoSignerResponse
-     * @see Map<String, Object>
+     * @see Map
+     * @throws Exception Exception
      */
     @Deprecated
     public Map<String, String> responseConverter(CoSignerResponse coSignerResponse) throws Exception {
@@ -193,10 +196,11 @@ public class CoSignerConverter {
     /**
      * responseConverterWithNewCryptoType
      *
-     * @param coSignerResponse
-     * @return Map<String, Object>
+     * @param coSignerResponse coSignerResponse
+     * @return Map
      * @see CoSignerResponse
-     * @see Map<String, Object>
+     * @see Map
+     * @throws Exception Exception
      */
     public Map<String, String> responseConverterWithNewCryptoType(CoSignerResponse coSignerResponse) throws Exception {
         final String responseJson = JsonUtil.toJson(coSignerResponse);
@@ -236,10 +240,11 @@ public class CoSignerConverter {
     /**
      * responseConverterV3
      *
-     * @param coSignerResponseV3
-     * @return Map<String, Object>
+     * @param coSignerResponseV3 coSignerResponseV3
+     * @return Map
      * @see CoSignerResponseV3
-     * @see Map<String, Object>
+     * @see Map
+     * @throws Exception Exception
      */
     public Map<String, String> responseV3Converter(CoSignerResponseV3 coSignerResponseV3) throws Exception {
         final String responseJson = JsonUtil.toJson(coSignerResponseV3);

@@ -15,7 +15,6 @@ import java.util.Map;
 
 /**
  * @author xigaoku
- * @date 2022/10/12 19:27
  */
 @Slf4j
 public class WebHookTest {

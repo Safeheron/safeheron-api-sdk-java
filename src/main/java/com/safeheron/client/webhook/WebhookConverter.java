@@ -35,8 +35,8 @@ public class WebhookConverter {
     /**
      * WebhookConverter
      *
-     * @param safeheronWebHookRsaPublicKey
-     * @param webHookRsaPrivateKey
+     * @param safeheronWebHookRsaPublicKey safeheronWebHookRsaPublicKey
+     * @param webHookRsaPrivateKey webHookRsaPrivateKey
      */
     public WebhookConverter(String safeheronWebHookRsaPublicKey, String webHookRsaPrivateKey) {
         if (safeheronWebHookRsaPublicKey.contains("-----BEGIN PUBLIC KEY-----")) {
@@ -52,10 +52,11 @@ public class WebhookConverter {
     /**
      * convert
      *
-     * @param webHook
+     * @param webHook webHook
      * @return WebHookResponse
      * @see WebHook
      * @see WebHookResponse
+     * @throws Exception Exception
      */
     public WebHookBizContent convert(WebHook webHook) throws Exception {
         // Verify sign

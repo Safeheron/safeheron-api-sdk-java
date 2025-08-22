@@ -18,7 +18,7 @@ public interface CoinApiService {
      * Coin List
      * Retrieve the list of coins supported by Safeheron.
      *
-     * @return List<CoinResponse>
+     * @return CoinResponse
      * @see CoinResponse
      */
     @POST("/v1/coin/list")
@@ -28,7 +28,7 @@ public interface CoinApiService {
      * Coin Maintenance List
      * Retrieve the information of coins under maintenance in Safeheron.
      *
-     * @return List<CoinMaintainResponse>
+     * @return CoinMaintainResponse
      * @see CoinMaintainResponse
      */
     @POST("/v1/coin/maintain/list")
@@ -38,7 +38,7 @@ public interface CoinApiService {
      * Verify Coin Address
      * Verify the correctness of a cryptocurrency address based on the provided validation attributes.
      *
-     * @param checkCoinAddressRequest
+     * @param checkCoinAddressRequest checkCoinAddressRequest
      * @return CheckCoinAddressResponse
      * @see CheckCoinAddressRequest
      * @see CheckCoinAddressResponse
@@ -50,7 +50,7 @@ public interface CoinApiService {
      * Snapshot the Coin Balance
      * Safeheron takes and stores daily snapshots of balances based on the transaction block's creation time in GMT+8. Please note that the snapshot only keeps data within 30 days.
      *
-     * @param coinBalanceSnapshotRequest
+     * @param coinBalanceSnapshotRequest coinBalanceSnapshotRequest
      * @return CoinBalanceSnapshotResponse
      * @see CoinBalanceSnapshotRequest
      * @see CoinBalanceSnapshotResponse
@@ -62,7 +62,7 @@ public interface CoinApiService {
      * Retrieve Current Block Height for Currency
      * Retrieve the current block height for a specific cryptocurrency by providing its key.
      *
-     * @param coinBlockHeightRequest
+     * @param coinBlockHeightRequest coinBlockHeightRequest
      * @return CoinBlockHeightResponse
      * @see CoinBlockHeightRequest
      * @see CoinBlockHeightResponse
