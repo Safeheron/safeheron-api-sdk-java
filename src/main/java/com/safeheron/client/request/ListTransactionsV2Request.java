@@ -31,6 +31,11 @@ public class ListTransactionsV2Request extends LimitSearch {
     private String destinationAccountType;
 
     /**
+     * The unique identifier key of a wallet account, used to query all transactions under that wallet. This is only supported for VAULT_ACCOUNT type wallets. This has a higher priority than sourceAccountKey, sourceAccountType, destinationAccountKey, destinationAccountType, and realDestinationAccountType. If accountKey is passed along with the five parameters mentioned above, only accountKey will be effective
+     */
+    private String accountKey;
+
+    /**
      * Start time for creating a transaction, UNIX timestamp (ms)
      */
     private Long createTimeMin;
