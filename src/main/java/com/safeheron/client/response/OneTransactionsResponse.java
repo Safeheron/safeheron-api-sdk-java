@@ -197,11 +197,6 @@ public class OneTransactionsResponse {
     private String realDestinationAccountType;
 
     /**
-     * Transaction substatus description
-     */
-    private String transactionSubStatusDesc;
-
-    /**
      * Amount in USD when transact
      */
     private String txAmountToUsd;
@@ -212,19 +207,9 @@ public class OneTransactionsResponse {
     private String sourceAccountName;
 
     /**
-     * Source account type name
-     */
-    private String sourceAccountTypeName;
-
-    /**
      * Destination account name
      */
     private String destinationAccountName;
-
-    /**
-     * Destination account type name
-     */
-    private String destinationAccountTypeName;
 
     /**
      * Final approver username

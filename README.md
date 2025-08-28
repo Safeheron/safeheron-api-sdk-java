@@ -8,6 +8,18 @@
 - [Official documentation](https://docs.safeheron.com/api/index.html)
 
 # Usage
+
+Add this dependency to your project's POM:
+
+```xml
+
+<dependency>
+    <groupId>com.safeheron</groupId>
+    <artifactId>api-sdk-java</artifactId>
+    <version>1.0.4</version>
+</dependency>
+```
+
 ## Download and build
 ```shell
 $ git clone https://github.com/Safeheron/safeheron-api-sdk-java.git
