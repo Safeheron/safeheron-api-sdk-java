@@ -45,8 +45,9 @@ public class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
 
         Integer code = apiResult.getCode();
         String message = apiResult.getMessage();
+        String date = apiResult.getData();
         if (!Integer.valueOf(200).equals(code)) {
-            throw new SafeheronException(code, message);
+            throw new SafeheronException(code, message,date);
         }
 
         try{

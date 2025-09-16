@@ -22,6 +22,11 @@ public class ApiResult<T> implements Serializable {
     private String message;
 
     /**
+     * Response error data
+     */
+    private String data;
+
+    /**
      * Response timestamp, UNIX millisecond-format string
      */
     private String timestamp;

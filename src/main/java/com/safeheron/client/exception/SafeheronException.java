@@ -10,6 +10,14 @@ public class SafeheronException extends RuntimeException {
 
     private Integer code;
     private String message;
+    private String data;
+
+    public SafeheronException(Integer code, String message, String data){
+        super(message);
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
 
     public SafeheronException(Integer code, String message){
         super(message);
@@ -24,6 +32,10 @@ public class SafeheronException extends RuntimeException {
 
     public Integer getCode() {
         return code;
+    }
+
+    public String getDate() {
+        return data;
     }
 
     @Override
