@@ -26,6 +26,12 @@ public class Web3SignApproval {
 
     private String customerRefId;
 
+    private String note;
+
+    private String customerExt1;
+
+    private String customerExt2;
+
     private Message message;
 
     private MessageHash messageHash;
