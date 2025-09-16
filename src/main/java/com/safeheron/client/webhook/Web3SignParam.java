@@ -8,6 +8,8 @@ import java.util.List;
 public class Web3SignParam {
     private String txKey;
 
+    private String customerRefId;
+
     private String transactionStatus;
 
     private String transactionSubStatus;
