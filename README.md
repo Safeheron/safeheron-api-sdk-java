@@ -16,7 +16,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.safeheron</groupId>
     <artifactId>api-sdk-java</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
 </dependency>
 ```
 
