@@ -50,6 +50,18 @@ public class AccountResponse {
     private Boolean hiddenOnUI;
 
     /**
+     * When initiating a transaction, Gas Service automatically supplements the Gas fee for wallets where autoFuel is true
+     */
+    private Boolean autoFuel;
+
+    /**
+     * Wallet's archive status in Safeheron App and Web Console
+     * True: Archived
+     * False: Unarchived
+     */
+    private Boolean archived;
+
+    /**
      * Account balance, in USD when retrieve
      */
     private String usdBalance;

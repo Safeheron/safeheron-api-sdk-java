@@ -18,6 +18,21 @@ public class ListAccountRequest extends PageSearch {
     private Boolean hiddenOnUI;
 
     /**
+     * Filter wallets based on autoFuel setting:
+     * Default: Ignore this query parameter
+     * true: Only query wallets where autoFuel is set to true
+     * false: Only query wallets where autoFuel is set to false
+     */
+    private Boolean autoFuel;
+
+    /**
+     * Wallet's archive status in Safeheron App and Web Console
+     * True: Archived
+     * False: Unarchived
+     */
+    private Boolean archived;
+
+    /**
      * Filter the response based on this account name prefix
      */
     private String namePrefix;

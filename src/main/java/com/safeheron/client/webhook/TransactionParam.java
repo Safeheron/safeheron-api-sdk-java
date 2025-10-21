@@ -1,6 +1,7 @@
 package com.safeheron.client.webhook;
 
 import com.safeheron.client.request.DestinationAddress;
+import com.safeheron.client.request.GasFee;
 import com.safeheron.client.request.SourceAddress;
 import lombok.Data;
 
@@ -32,6 +33,7 @@ public class TransactionParam {
     private String createdByUserKey;
     private String txFee;
     private String feeCoinKey;
+    private List<GasFee> gasFee;
     private String replaceTxHash;
     private String customerRefId;
     private String nonce;

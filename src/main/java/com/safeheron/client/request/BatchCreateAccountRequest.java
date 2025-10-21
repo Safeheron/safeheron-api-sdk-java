@@ -23,6 +23,11 @@ public class BatchCreateAccountRequest {
     private Boolean hiddenOnUI;
 
     /**
+     * Auto-refuel. If set to true, the Gas Service will automatically supplement the Gas fee for the wallet when a transaction is initiated. The default value is false
+     */
+    private Boolean autoFuel;
+
+    /**
      * Number of wallets to be created, greater than 0, less than 100
      */
     private Integer count;
