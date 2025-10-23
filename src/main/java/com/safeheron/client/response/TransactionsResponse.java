@@ -1,6 +1,7 @@
 package com.safeheron.client.response;
 
 import com.safeheron.client.request.DestinationAddress;
+import com.safeheron.client.request.GasFee;
 import com.safeheron.client.request.SourceAddress;
 import lombok.Data;
 
@@ -138,6 +139,11 @@ public class TransactionsResponse {
      * Coin key that is used to pay for the transaction fee when conducting a transfer, such as when transferring ERC-20 tokens, transaction fees are paid in ETH
      */
     private String feeCoinKey;
+
+    /**
+     * Total fee
+     */
+    private List<GasFee> gasFee;
 
     /**
      * Quoted transaction hash (only for sped-up transactions)

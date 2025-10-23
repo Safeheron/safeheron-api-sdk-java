@@ -90,12 +90,23 @@ public interface AccountApiService {
      *
      * @param batchUpdateAccountTagRequest batchUpdateAccountTagRequest
      * @return ResultResponse
-     * @see UpdateAccountShowStateRequest
+     * @see BatchUpdateAccountTagRequest
      * @see ResultResponse
      */
     @POST("/v1/account/batch/update/tag")
     Call<ResultResponse> batchUpdateAccountTag(@Body BatchUpdateAccountTagRequest batchUpdateAccountTagRequest);
 
+    /**
+     * Batch Set Auto-Fuel
+     * Set the autoFuel property for a batch of wallet accounts. Setting it to true means that the Gas Service will automatically supplement the transaction fee (Gas) for that wallet when a transaction is initiated; setting it to false means the Gas Service will no longer supplement the transaction fee for the wallet.
+     *
+     * @param batchUpdateAccountFuelRequest batchUpdateAccountFuelRequest
+     * @return ResultResponse
+     * @see BatchUpdateAccountFuelRequest
+     * @see ResultResponse
+     */
+    @POST("/v1/account/batch/update/autofuel")
+    Call<ResultResponse> batchUpdateAccountAutofuel(@Body BatchUpdateAccountFuelRequest batchUpdateAccountFuelRequest);
 
     /**
      * Add Coins to a Wallet Account V1

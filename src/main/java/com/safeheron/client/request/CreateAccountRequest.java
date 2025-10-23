@@ -31,6 +31,11 @@ public class CreateAccountRequest {
     private Boolean hiddenOnUI;
 
     /**
+     * Auto-refuel. If set to true, the Gas Service will automatically supplement the Gas fee for the wallet when a transaction is initiated. The default value is false
+     */
+    private Boolean autoFuel;
+
+    /**
      * 	Coin key list, 20 array elements max
      */
     private List<String> coinKeyList;
