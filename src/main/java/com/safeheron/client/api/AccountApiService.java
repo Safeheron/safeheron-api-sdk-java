@@ -37,6 +37,17 @@ public interface AccountApiService {
     Call<AccountResponse> oneAccounts(@Body OneAccountRequest oneAccountRequest);
 
     /**
+     * Query Wallet Account by Address
+     *
+     * @param oneAccountByAddressRequest oneAccountByAddressRequest
+     * @return AccountResponse
+     * @see OneAccountByAddressRequest
+     * @see AccountResponse
+     */
+    @POST("/v1/account/getByAddress")
+    Call<AccountResponse> getAccountByAddress(@Body OneAccountByAddressRequest oneAccountByAddressRequest);
+
+    /**
      * Create a new wallet account.
      *
      * @param createAccountRequest createAccountRequest
