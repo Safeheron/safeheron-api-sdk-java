@@ -48,6 +48,18 @@ public interface Web3ApiService {
     Call<List<Web3AccountResponse>> listWeb3Accounts(@Body ListWeb3AccountRequest listWeb3AccountRequest);
 
     /**
+     * Retrieve a Single Web3 Wallet Account
+     * Retrieve a single web3 wallet account based on accountKey or customerRefId
+     *
+     * @param oneWeb3AccountRequest oneWeb3AccountRequest
+     * @return Web3AccountResponse
+     * @see OneWeb3AccountRequest
+     * @see Web3AccountResponse
+     */
+    @POST("/v1/web3/account/one")
+    Call<Web3AccountResponse> oneWeb3Account(@Body OneWeb3AccountRequest oneWeb3AccountRequest);
+
+    /**
      * Create ethSign
      * Merchants can initiate an ethSign signature through this interface. The merchant is required to serialize the transaction data, generating a corresponding hash (supporting both 0x and non-0x formatted data). The hash is then submitted through this interface to create a signature, which can be obtained by Retrieve a Single Web3 Signature interface or webhook. From there, merchants can complete the subsequent steps according to their own needs once they have obtained the signature.
      *
