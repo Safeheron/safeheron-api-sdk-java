@@ -1,5 +1,6 @@
 package com.safeheron.client.response;
 
+import com.safeheron.client.request.Aml;
 import com.safeheron.client.request.DestinationAddress;
 import com.safeheron.client.request.GasFee;
 import com.safeheron.client.request.SourceAddress;
@@ -231,4 +232,6 @@ public class TransactionsResponse {
      * Transaction Direction
      */
     private String transactionDirection;
+
+    private List<Aml> amlList;
 }
