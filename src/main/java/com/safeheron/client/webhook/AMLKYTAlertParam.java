@@ -77,5 +77,10 @@ public class AMLKYTAlertParam {
      */
     private String transactionDirection;
 
+    /**
+     * Alert time, UNIX millisecond timestamp.When multiple service providers are enabled for transaction screening, each provider will push an AML_KYT_ALERT event immediately upon completing its assessment if an alert is triggered.Each event notification contains all screening results that match the alert rules. Please always refer to the event data with the most recent alert timestamp as the definitive status.
+     */
+    private String alertTime;
+
     private List<Aml> amlList;
 }
