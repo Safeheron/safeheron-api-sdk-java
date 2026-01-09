@@ -3,6 +3,7 @@ package com.safeheron.client.cosigner;
 import com.safeheron.client.request.DestinationAddress;
 import com.safeheron.client.request.SourceAddress;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -78,4 +79,25 @@ public class TransactionApproval {
     private ProfileTxDTO destinationProfile;
 
     private String replaceTxKey;
+
+    private List<Aml> amlList;
+
+    /**
+     * Aml
+     */
+    @Data
+    @NoArgsConstructor
+    public static class Aml {
+        private String provider;
+
+        private String timestamp;
+
+        private String status;
+
+        private String riskLevel;
+
+        private String lastUpdateTime;
+
+        private Object payload;
+    }
 }
