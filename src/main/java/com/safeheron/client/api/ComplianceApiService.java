@@ -13,7 +13,7 @@ public interface ComplianceApiService {
 
 
     /**
-     * Create AML Risk Assessment Request
+     * Retrieve Transaction KYT Report
      *
      * @param kytReportRequest kytReportRequest
      * @return KytReportResponse
