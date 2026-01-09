@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 @Data
-public class KytRepostResponse {
+public class KytReportResponse {
     /**
      * Transaction key
      */

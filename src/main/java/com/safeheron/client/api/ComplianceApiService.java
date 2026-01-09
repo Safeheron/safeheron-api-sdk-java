@@ -3,7 +3,7 @@ package com.safeheron.client.api;
 import com.safeheron.client.request.AmlCheckerRequestRequest;
 import com.safeheron.client.request.KytReportRequest;
 import com.safeheron.client.response.AmlCheckerRequestResponse;
-import com.safeheron.client.response.KytRepostResponse;
+import com.safeheron.client.response.KytReportResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -23,5 +23,5 @@ public interface ComplianceApiService {
      * @see AmlCheckerRequestResponse
      */
     @POST("/v1/compliance/kyt/report")
-    Call<KytRepostResponse> kytReport(@Body KytReportRequest kytReportRequest);
+    Call<KytReportResponse> kytReport(@Body KytReportRequest kytReportRequest);
 }
