@@ -51,12 +51,10 @@ public class SafeheronConfig {
     private Long requestTimeout = 20000L;
 
     public KeyProvider getKeyProvider() {
+        KeyProvider provider = new DefaultPrivateKeyProvider(rsaPrivateKey);
         if (keyProvider != null) {
-            return keyProvider;
+            provider = keyProvider;
         }
-        if (rsaPrivateKey != null && !rsaPrivateKey.isEmpty()) {
-            return new DefaultPrivateKeyProvider(rsaPrivateKey);
-        }
-        return null;
+        return provider;
     }
 }
