@@ -54,9 +54,6 @@ public class SafeheronConfig {
         if (keyProvider != null) {
             return keyProvider;
         }
-        if (rsaPrivateKey != null && !rsaPrivateKey.isEmpty()) {
-            return new DefaultPrivateKeyProvider(rsaPrivateKey);
-        }
-        return null;
+        return new DefaultPrivateKeyProvider(rsaPrivateKey);
     }
 }

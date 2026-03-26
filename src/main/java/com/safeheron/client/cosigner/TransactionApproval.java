@@ -80,6 +80,8 @@ public class TransactionApproval {
 
     private String replaceTxKey;
 
+    private String amlScreeningTriggeredState;
+
     private List<Aml> amlList;
 
     /**
