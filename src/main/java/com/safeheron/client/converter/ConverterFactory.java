@@ -35,7 +35,7 @@ public class ConverterFactory extends Converter.Factory {
         JavaType javaType = mapper.getTypeFactory().constructType(type);
         ObjectReader reader = mapper.readerFor(javaType);
         return new ResponseBodyConverter<>(reader,
-                config.getSafeheronRsaPublicKey(), config.getRsaPrivateKey());
+                config.getSafeheronRsaPublicKey(), config.getKeyProvider());
     }
 
     @Override

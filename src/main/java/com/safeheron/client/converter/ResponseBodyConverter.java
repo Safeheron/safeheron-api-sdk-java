@@ -2,6 +2,7 @@ package com.safeheron.client.converter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.safeheron.client.KeyProvider;
 import com.safeheron.client.config.AESTypeEnum;
 import com.safeheron.client.config.RSATypeEnum;
 import com.safeheron.client.exception.SafeheronException;
@@ -28,13 +29,13 @@ public class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final ObjectReader reader ;
 
     private final String safeheronRsaPublicKey;
-    private final String rsaPrivateKey;
+    private final KeyProvider keyProvider;
 
     ResponseBodyConverter(ObjectReader reader,
-                          String safeheronRsaPublicKey, String rsaPrivateKey) {
+                          String safeheronRsaPublicKey, KeyProvider keyProvider) {
         this.reader = reader;
         this.safeheronRsaPublicKey = safeheronRsaPublicKey;
-        this.rsaPrivateKey = rsaPrivateKey;
+        this.keyProvider = keyProvider;
     }
 
     @Override
@@ -66,9 +67,9 @@ public class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
                 throw new SafeheronException("response signature verification failed");
             }
 
-            // Use your RSA private key to decrypt response's aesKey and aesIv
+            // Use your KeyProvider to decrypt response's aesKey and aesIv
             RSATypeEnum rsaType = StringUtils.isNotEmpty(apiResult.getRsaType()) && RSATypeEnum.valueByCode(apiResult.getRsaType()) != null ? RSATypeEnum.valueByCode(apiResult.getRsaType()) : RSATypeEnum.RSA;
-            byte[] aesSaltDecrypt = RsaUtil.decrypt(apiResult.getKey(), rsaPrivateKey,rsaType);
+            byte[] aesSaltDecrypt = keyProvider.decrypt(apiResult.getKey(), rsaType);
             byte[] aesKey = Arrays.copyOfRange(aesSaltDecrypt, 0, 32);
             byte[] iv = Arrays.copyOfRange(aesSaltDecrypt, 32, aesSaltDecrypt.length);
 

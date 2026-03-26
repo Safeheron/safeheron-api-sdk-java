@@ -2,6 +2,7 @@ package com.safeheron.client.converter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.safeheron.client.KeyProvider;
 import com.safeheron.client.config.AESTypeEnum;
 import com.safeheron.client.config.RSATypeEnum;
 import com.safeheron.client.config.SafeheronConfig;
@@ -27,7 +28,7 @@ public class RequestInterceptor implements Interceptor {
     private final ObjectWriter objectWriter;
     private final String apiKey;
     private final String safeheronRsaPublicKey;
-    private final String rsaPrivateKey;
+    private final KeyProvider keyProvider;
 
 
     public static RequestInterceptor create(SafeheronConfig config) {
@@ -38,7 +39,7 @@ public class RequestInterceptor implements Interceptor {
         this.objectWriter = mapper.writerFor(Map.class);
         this.apiKey = config.getApiKey();
         this.safeheronRsaPublicKey = config.getSafeheronRsaPublicKey();
-        this.rsaPrivateKey = config.getRsaPrivateKey();
+        this.keyProvider = config.getKeyProvider();
     }
 
     @NotNull
@@ -73,11 +74,11 @@ public class RequestInterceptor implements Interceptor {
                 }
                 requestData.put("key", rsaEncryptResult);
 
-                // Sign the request data with your RSA private key
+                // Sign the request data with your KeyProvider
                 String signContent = requestData.entrySet().stream()
                         .map(entry -> entry.getKey() + "=" + entry.getValue())
                         .collect(Collectors.joining("&"));
-                String rsaSig = RsaUtil.sign(signContent, rsaPrivateKey);
+                String rsaSig = keyProvider.sign(signContent);
                 requestData.put("sig", rsaSig);
                 requestData.put("rsaType", RSATypeEnum.ECB_OAEP.getCode());
                 requestData.put("aesType", AESTypeEnum.GCM.getCode());
