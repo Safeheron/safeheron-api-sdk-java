@@ -1,4 +1,4 @@
-package com.safeheron.client;
+package com.safeheron.client.keys;
 
 import com.safeheron.client.config.RSATypeEnum;
 

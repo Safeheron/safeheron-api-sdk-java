@@ -7,6 +7,19 @@
 # API Documentation
 - [Official documentation](https://docs.safeheron.com/api/index.html)
 
+# AI-Powered Development
+
+Use the **Safeheron Skill** with [Claude Code](https://claude.ai/code) or Cursor to generate, debug, and troubleshoot Safeheron API integrations using natural language.
+
+**Example prompts:**
+- "Help me set up an API Co-Signer approval callback service"
+- "Write a Webhook handler to process incoming transaction events"
+- "What causes error 1012 and how do I fix it?"
+
+**Get started:**
+
+View the Skill source code on GitHub: [safeheron/safeheron-skill](https://github.com/safeheron/safeheron-skill)
+
 # Usage
 
 Add this dependency to your project's POM:
@@ -16,7 +29,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.safeheron</groupId>
     <artifactId>api-sdk-java</artifactId>
-    <version>1.0.10</version>
+    <version>1.0.11</version>
 </dependency>
 ```
 
