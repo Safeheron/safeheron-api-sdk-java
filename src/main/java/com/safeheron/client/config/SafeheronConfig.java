@@ -1,7 +1,7 @@
 package com.safeheron.client.config;
 
-import com.safeheron.client.key.DefaultPrivateKeyProvider;
-import com.safeheron.client.key.KeyProvider;
+import com.safeheron.client.keys.DefaultPrivateKeyProvider;
+import com.safeheron.client.keys.KeyProvider;
 import lombok.Builder;
 import lombok.Data;
 

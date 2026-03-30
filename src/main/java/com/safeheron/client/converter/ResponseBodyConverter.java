@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.safeheron.client.config.AESTypeEnum;
 import com.safeheron.client.config.RSATypeEnum;
 import com.safeheron.client.exception.SafeheronException;
-import com.safeheron.client.key.KeyProvider;
+import com.safeheron.client.keys.KeyProvider;
 import com.safeheron.client.response.ApiResult;
 import com.safeheron.client.utils.AesUtil;
 import com.safeheron.client.utils.JsonUtil;
