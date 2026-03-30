@@ -9,7 +9,7 @@
 
 # AI-Powered Development
 
-Use the **Safeheron Skill** with [Claude Code](https://claude.ai/code) or Cursor to generate, debug, and troubleshoot Safeheron API integrations using natural language.
+Use the **Safeheron Skill** with Claude Code or Cursor to generate, debug, and troubleshoot Safeheron API integrations using natural language.
 
 **Example prompts:**
 - "Help me set up an API Co-Signer approval callback service"
