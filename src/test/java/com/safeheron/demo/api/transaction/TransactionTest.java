@@ -1,12 +1,11 @@
 package com.safeheron.demo.api.transaction;
 
-import com.safeheron.client.KeyProvider;
 import com.safeheron.client.api.TransactionApiService;
 import com.safeheron.client.config.RSATypeEnum;
 import com.safeheron.client.config.SafeheronConfig;
+import com.safeheron.client.keys.KeyProvider;
 import com.safeheron.client.request.CreateTransactionRequest;
 import com.safeheron.client.response.TxKeyResult;
-import com.safeheron.client.utils.RsaUtil;
 import com.safeheron.client.utils.ServiceCreator;
 import com.safeheron.client.utils.ServiceExecutor;
 import lombok.extern.slf4j.Slf4j;
