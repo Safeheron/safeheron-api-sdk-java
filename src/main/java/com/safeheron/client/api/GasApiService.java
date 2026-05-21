@@ -1,5 +1,6 @@
 package com.safeheron.client.api;
 
+import com.safeheron.client.request.GasStatusRequest;
 import com.safeheron.client.request.GasTransactionsGetByTxKeyRequest;
 import com.safeheron.client.response.GasStatusResponse;
 import com.safeheron.client.response.GasTransactionsGetByTxKeyResponse;
@@ -21,7 +22,7 @@ public interface GasApiService {
      * @return GasStatusResponse
      */
     @POST("/v1/gas/status")
-    Call<GasStatusResponse> gasStatus();
+    Call<GasStatusResponse> gasStatus(@Body GasStatusRequest GasStatusRequest);
 
     /**
      * Retrieve Automatic Gas Records for Transactions
