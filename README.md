@@ -29,7 +29,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.safeheron</groupId>
     <artifactId>api-sdk-java</artifactId>
-    <version>1.0.12</version>
+    <version>1.0.13</version>
 </dependency>
 ```
 
