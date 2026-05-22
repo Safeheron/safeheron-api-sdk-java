@@ -61,6 +61,9 @@ public class WebhookConverter {
     public WebHookBizContent convert(WebHook webHook) throws Exception {
         // Verify sign
         Map<String, String> sigMap = new TreeMap<>();
+        if (webHook.getTimestamp() == null || webHook.getKey() == null || webHook.getBizContent() == null || webHook.getSig() == null) {
+            throw new SafeheronException("missing required signature fields: timestamp/key/bizContent/sig");
+        }
         sigMap.put("key", webHook.getKey());
         sigMap.put("timestamp", webHook.getTimestamp().toString());
         sigMap.put("bizContent", webHook.getBizContent());
