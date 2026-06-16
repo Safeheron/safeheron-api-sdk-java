@@ -18,8 +18,10 @@ public interface GasApiService {
      * Retrieve Gas Balance
      * Retrieve your Gas balance for the TRON energy rental service.
      *
-     * @see GasStatusResponse
+     * @param GasStatusRequest GasStatusRequest
      * @return GasStatusResponse
+     * @see GasStatusRequest
+     * @see GasStatusResponse
      */
     @POST("/v1/gas/status")
     Call<GasStatusResponse> gasStatus(@Body GasStatusRequest GasStatusRequest);

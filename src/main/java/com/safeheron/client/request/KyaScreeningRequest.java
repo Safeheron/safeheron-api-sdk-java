@@ -16,12 +16,12 @@ public class KyaScreeningRequest {
     private String address;
 
     /**
-     * Chain type. See Retrieve Supported Networks & Providers for valid values
+     * Chain type. See Retrieve Supported Networks,Providers for valid values
      */
     private String chainType;
 
     /**
-     * Blockchain network identifier. Required when providers contains MistTrack. See Retrieve Supported Networks & Providers for valid values
+     * Blockchain network identifier. Required when providers contains MistTrack. See Retrieve Supported Networks,Providers for valid values
      */
     private String network;
 
