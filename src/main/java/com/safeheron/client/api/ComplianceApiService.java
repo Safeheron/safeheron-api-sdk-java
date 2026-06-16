@@ -66,7 +66,7 @@ public interface ComplianceApiService {
     Call<KyaScreeningOrderOneResponse> kyaScreeningOrderOne(@Body KyaScreeningOrderOneRequest kyaScreeningOrderOneRequest);
 
     /**
-     * Retrieve Supported Networks & Providers
+     * Retrieve Supported Networks、Providers
      *
      * @return KyaSupportedNetworksResponse
      * @see KyaSupportedNetworksResponse
