@@ -49,4 +49,9 @@ public class CreateWhitelistRequest {
      * True: Invisible; the invisible whitelist can only be managed and used through the API, such as querying, modifying, and using the whitelist as the destination address when initiating transactions
      */
     private Boolean hiddenOnUI;
+
+    /**
+     * Note
+     */
+    private String note;
 }

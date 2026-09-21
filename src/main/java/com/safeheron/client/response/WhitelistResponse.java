@@ -54,6 +54,11 @@ public class WhitelistResponse {
     private String whitelistStatus;
 
     /**
+     * Note
+     */
+    private String note;
+
+    /**
      * Whitelist creation time in UNIX timestamp (ms)
      */
     private Long createTime;

@@ -34,7 +34,7 @@ public class SafeheronException extends RuntimeException {
         return code;
     }
 
-    public String getDate() {
+    public String getData() {
         return data;
     }
 

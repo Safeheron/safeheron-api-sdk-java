@@ -36,4 +36,9 @@ public class EditWhitelistRequest {
      * When the whitelist is involved in a transaction approval policy, modifications will result in the new whitelist being directly applied to the approval policy. False by default, meaning that when involved in a transaction approval policy, it will not be modified.
      */
     private Boolean force;
+
+    /**
+     * Note
+     */
+    private String note;
 }

@@ -40,5 +40,12 @@ public class CheckCoinAddressRequest {
      * False: not verify
      */
     private Boolean checkAddressValid;
+
+    /**
+     * Verify if the Solana address is the Owner address (If no value is provided, 'false' by default)
+     * True: Verify
+     * False: Not verify
+     */
+    private Boolean checkSolanaOwnerAddress;
 }
 
