@@ -38,6 +38,14 @@ public class SafeheronException extends RuntimeException {
         return data;
     }
 
+    /**
+     * @deprecated misspelled, use {@link #getData()} instead
+     */
+    @Deprecated
+    public String getDate() {
+        return getData();
+    }
+
     @Override
     public String getMessage() {
         return message;
