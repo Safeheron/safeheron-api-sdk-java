@@ -28,4 +28,11 @@ public class CheckCoinAddressResponse {
      * False: AML blacklisted address
      */
     private Boolean amlValid;
+
+    /**
+     * Solana owner address
+     * True: Solana owner address
+     * False: Non-solana owner address
+     */
+    private Boolean solanaOwnerAddress;
 }
