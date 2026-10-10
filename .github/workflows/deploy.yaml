@@ -23,6 +23,11 @@ jobs:
           gpg-private-key: ${{ secrets.MAVEN_GPG_SECRET }}
           gpg-passphrase: GPG_PASSPHRASE
 
+      - name: Set up Maven 3.9
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.11
+
       - name: Publish to Apache Maven Central
         run: mvn deploy -DskipTests
         env:
