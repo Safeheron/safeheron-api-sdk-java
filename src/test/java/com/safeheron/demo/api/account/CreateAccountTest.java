@@ -5,6 +5,7 @@ import com.safeheron.client.config.SafeheronConfig;
 import com.safeheron.client.request.CreateAccountCoinRequest;
 import com.safeheron.client.request.CreateAccountRequest;
 import com.safeheron.client.request.ListAccountRequest;
+import com.safeheron.client.request.ListAccountV2Request;
 import com.safeheron.client.response.AccountResponse;
 import com.safeheron.client.response.CreateAccountCoinResponse;
 import com.safeheron.client.response.CreateAccountResponse;
@@ -75,6 +76,15 @@ public class CreateAccountTest {
         request.setPageSize(10L);
         request.setPageNumber(1L);
         PageResult<AccountResponse> response = ServiceExecutor.execute(accountApi.listAccounts(request));
+        Assert.assertNotNull(response);
+    }
+
+    @Test
+    public void testListAccountV2(){
+        ListAccountV2Request request = new ListAccountV2Request();
+        request.setLimit(10L);
+        request.setDirect("NEXT");
+        List<AccountResponse> response = ServiceExecutor.execute(accountApi.listAccountsV2(request));
         Assert.assertNotNull(response);
     }
 }
