@@ -9,7 +9,23 @@ public class WhiteListRemovedParam {
     private String chainType;
     private String address;
     private String memo;
+    private String note;
+
+    /**
+     * Not included in the WHITELIST_REMOVED event, always null
+     */
+    @Deprecated
     private String previousWhitelistName;
+
+    /**
+     * Not included in the WHITELIST_REMOVED event, always null
+     */
+    @Deprecated
     private String previousAddress;
+
+    /**
+     * Not included in the WHITELIST_REMOVED event, always null
+     */
+    @Deprecated
     private Long approvalTime;
 }
