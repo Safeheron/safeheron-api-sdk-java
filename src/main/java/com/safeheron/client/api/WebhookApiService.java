@@ -15,7 +15,7 @@ public interface WebhookApiService {
 
     /**
      * Re-push Transaction Webhook Events
-     * Re-push the transaction webhook events generated in the last month. In certain situations, such as network jitter or your system being unavailable to receive webhook events, you may miss receiving notifications. You can use this interface to notify Safeheron to re-push the webhook events. It is important to note that for a single transaction, only the last webhook event will be re-pushed. For example, during the lifecycle of a transaction, multiple TRANSACTION_STATUS_CHANGED webhook events such as BROADCASTING, CONFIRMING, COMPLETED, etc., may be generated. The re-push will only send the last webhook event recorded by the current system. Re-pushing is supported for the following types of webhook events:
+     * Re-push the transaction webhook events generated in the last 15 days. In certain situations, such as network jitter or your system being unavailable to receive webhook events, you may miss receiving notifications. You can use this interface to notify Safeheron to re-push the webhook events. It is important to note that for a single transaction, only the last webhook event will be re-pushed. For example, during the lifecycle of a transaction, multiple TRANSACTION_STATUS_CHANGED webhook events such as BROADCASTING, CONFIRMING, COMPLETED, etc., may be generated. The re-push will only send the last webhook event recorded by the current system. Re-pushing is supported for the following types of webhook events:
      *
      * Events related to asset transactions, including TRANSACTION_CREATED and TRANSACTION_STATUS_CHANGED.
      * Events related to MPC signing, including MPC_SIGN_CREATED and MPC_SIGN_STATUS_CHANGED.
