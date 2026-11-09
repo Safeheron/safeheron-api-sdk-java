@@ -38,6 +38,8 @@ public class TransactionApproval {
 
     private String destinationTag;
 
+    private String memo;
+
     private String vaultTxDirection;
 
     private String transactionStatus;
@@ -70,10 +72,16 @@ public class TransactionApproval {
 
     private String amlLock;
 
+    private String transactionDirection;
+
     private String estimateFee;
 
     private String curveType;
 
+    /**
+     * Not included in the API Co-Signer callback, always null
+     */
+    @Deprecated
     private ProfileTxDTO sourceProfile;
 
     private ProfileTxDTO destinationProfile;
