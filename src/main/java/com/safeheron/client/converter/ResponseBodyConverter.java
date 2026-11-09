@@ -47,6 +47,7 @@ public class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
         Integer code = apiResult.getCode();
         String message = apiResult.getMessage();
         String date = apiResult.getData();
+        // Error responses are not signature-verified, the code/message are informational only
         if (!Integer.valueOf(200).equals(code)) {
             throw new SafeheronException(code, message,date);
         }
