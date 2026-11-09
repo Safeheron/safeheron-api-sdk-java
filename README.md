@@ -29,7 +29,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.safeheron</groupId>
     <artifactId>api-sdk-java</artifactId>
-    <version>1.0.15</version>
+    <version>1.0.16</version>
 </dependency>
 ```
 
@@ -39,6 +39,15 @@ $ git clone https://github.com/Safeheron/safeheron-api-sdk-java.git
 $ cd safeheron-api-sdk-java
 $ mvn install -Dmaven.test.skip=true
 ```
+
+## Security Notes
+* **Replay protection for Webhook / Co-Signer callbacks**: `WebhookConverter` and `CoSignerConverter` can reject callbacks whose `timestamp` deviates from the local clock by more than a given tolerance. The check is disabled by default for backward compatibility; enable it with the constructor that accepts `timestampToleranceMillis`:
+    ```java
+    WebhookConverter webhookConverter = new WebhookConverter(safeheronWebHookRsaPublicKey, webHookRsaPrivateKey, 5 * 60 * 1000L);
+    CoSignerConverter coSignerConverter = new CoSignerConverter(coSignerPubKey, approvalCallbackServicePrivateKey, 5 * 60 * 1000L);
+    ```
+  Keep your server clock synchronized (NTP). Regardless of this setting, always process callbacks idempotently (e.g. by `txKey`), since a callback may be delivered more than once.
+* **Error responses are not signature-verified**: when the API returns a non-200 `code`, the SDK throws `SafeheronException` with the returned `code` / `message` without verifying the response signature; only successful responses go through signature verification and decryption. Treat the error message as informational and do not use it as the basis for security decisions.
 
 # Test
 

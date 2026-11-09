@@ -12,6 +12,8 @@ import java.io.IOException;
  */
 @Slf4j
 public class ServiceExecutor {
+    private static final int MAX_ERROR_BODY_LENGTH = 1024;
+
     /**
      * Execute a REST call and block until the response is received.
      * @param <T> return param type
@@ -24,19 +26,21 @@ public class ServiceExecutor {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                StringBuilder errorMsgBuilder = new StringBuilder();
-                errorMsgBuilder.append("http request failed: ");
-                errorMsgBuilder.append(null != response.body() ? response.body().toString() : "");
-                errorMsgBuilder.append(null != response.errorBody() ? response.errorBody().string() : "");
-                throw new SafeheronException(500, errorMsgBuilder.toString());
+                String errorBody = (null != response.body() ? response.body().toString() : "")
+                        + (null != response.errorBody() ? response.errorBody().string() : "");
+                log.debug("http request failed, httpCode: {}, body: {}", response.code(), errorBody);
+                if (errorBody.length() > MAX_ERROR_BODY_LENGTH) {
+                    errorBody = errorBody.substring(0, MAX_ERROR_BODY_LENGTH) + "...";
+                }
+                throw new SafeheronException(500, "http request failed: " + errorBody);
             }
         } catch (SafeheronException se){
             throw se;
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            log.error("http request io error", ioException);
             throw new SafeheronException(500, ioException.getMessage());
         } catch (Exception e){
-            e.printStackTrace();
+            log.error("http request error", e);
             throw new SafeheronException(500, e.getMessage());
         }
     }

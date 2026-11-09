@@ -25,6 +25,18 @@ public interface AccountApiService {
     Call<PageResult<AccountResponse>> listAccounts(@Body ListAccountRequest listAccountRequest);
 
     /**
+     * List Wallet Accounts V2
+     * Filter wallet account lists in team according to different combinations of conditions, using cursor-based pagination.
+     *
+     * @param listAccountV2Request listAccountV2Request
+     * @return AccountResponse
+     * @see ListAccountV2Request
+     * @see AccountResponse
+     */
+    @POST("/v2/account/list")
+    Call<List<AccountResponse>> listAccountsV2(@Body ListAccountV2Request listAccountV2Request);
+
+    /**
      * Retrieve a Single Wallet Account
      * Retrieve a single wallet account in the team by providing accountKey.
      *

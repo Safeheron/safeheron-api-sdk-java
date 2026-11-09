@@ -7,6 +7,7 @@ import com.safeheron.client.exception.SafeheronException;
 import com.safeheron.client.utils.AesUtil;
 import com.safeheron.client.utils.JsonUtil;
 import com.safeheron.client.utils.RsaUtil;
+import com.safeheron.client.utils.TimestampUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
@@ -33,12 +34,30 @@ public class WebhookConverter {
     private final String webHookRsaPrivateKey;
 
     /**
+     * timestampToleranceMillis
+     * Maximum allowed deviation in milliseconds between the webhook timestamp and the local clock, used to reject replayed webhooks.
+     * A non-positive value disables the check.
+     */
+    private final long timestampToleranceMillis;
+
+    /**
      * WebhookConverter
      *
      * @param safeheronWebHookRsaPublicKey safeheronWebHookRsaPublicKey
      * @param webHookRsaPrivateKey webHookRsaPrivateKey
      */
     public WebhookConverter(String safeheronWebHookRsaPublicKey, String webHookRsaPrivateKey) {
+        this(safeheronWebHookRsaPublicKey, webHookRsaPrivateKey, 0L);
+    }
+
+    /**
+     * WebhookConverter
+     *
+     * @param safeheronWebHookRsaPublicKey safeheronWebHookRsaPublicKey
+     * @param webHookRsaPrivateKey webHookRsaPrivateKey
+     * @param timestampToleranceMillis maximum allowed deviation between the webhook timestamp and the local clock, non-positive disables the check
+     */
+    public WebhookConverter(String safeheronWebHookRsaPublicKey, String webHookRsaPrivateKey, long timestampToleranceMillis) {
         if (safeheronWebHookRsaPublicKey.contains("-----BEGIN PUBLIC KEY-----")) {
             safeheronWebHookRsaPublicKey = safeheronWebHookRsaPublicKey.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").replaceAll("\n", "");
         }
@@ -47,6 +66,7 @@ public class WebhookConverter {
         }
         this.safeheronWebHookRsaPublicKey = safeheronWebHookRsaPublicKey;
         this.webHookRsaPrivateKey = webHookRsaPrivateKey;
+        this.timestampToleranceMillis = timestampToleranceMillis;
     }
 
     /**
@@ -75,6 +95,7 @@ public class WebhookConverter {
         if (!checkResult) {
             throw new SafeheronException("signature verification failed");
         }
+        TimestampUtil.checkFreshness(webHook.getTimestamp(), timestampToleranceMillis);
 
         // Use your RSA private key to decrypt response's aesKey and aesIv
         RSATypeEnum rsaType = StringUtils.isNotEmpty(webHook.getRsaType()) && RSATypeEnum.valueByCode(webHook.getRsaType()) != null ? RSATypeEnum.valueByCode(webHook.getRsaType()) : RSATypeEnum.RSA;

@@ -7,6 +7,7 @@ import com.safeheron.client.exception.SafeheronException;
 import com.safeheron.client.utils.AesUtil;
 import com.safeheron.client.utils.JsonUtil;
 import com.safeheron.client.utils.RsaUtil;
+import com.safeheron.client.utils.TimestampUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -39,12 +40,30 @@ public class CoSignerConverter {
     private final String approvalCallbackServicePrivateKey;
 
     /**
+     * timestampToleranceMillis
+     * Maximum allowed deviation in milliseconds between the callback timestamp and the local clock, used to reject replayed callbacks.
+     * A non-positive value disables the check.
+     */
+    private final long timestampToleranceMillis;
+
+    /**
      * CoSignerConverter
      *
      * @param coSignerPubKey coSignerPubKey
      * @param approvalCallbackServicePrivateKey approvalCallbackServicePrivateKey
      */
     public CoSignerConverter(String coSignerPubKey, String approvalCallbackServicePrivateKey) {
+        this(coSignerPubKey, approvalCallbackServicePrivateKey, 0L);
+    }
+
+    /**
+     * CoSignerConverter
+     *
+     * @param coSignerPubKey coSignerPubKey
+     * @param approvalCallbackServicePrivateKey approvalCallbackServicePrivateKey
+     * @param timestampToleranceMillis maximum allowed deviation between the callback timestamp and the local clock, non-positive disables the check
+     */
+    public CoSignerConverter(String coSignerPubKey, String approvalCallbackServicePrivateKey, long timestampToleranceMillis) {
         if (coSignerPubKey.contains("-----BEGIN PUBLIC KEY-----")) {
             coSignerPubKey = coSignerPubKey.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").replaceAll("\n", "");
         }
@@ -53,6 +72,7 @@ public class CoSignerConverter {
         }
         this.coSignerPubKey = coSignerPubKey;
         this.approvalCallbackServicePrivateKey = approvalCallbackServicePrivateKey;
+        this.timestampToleranceMillis = timestampToleranceMillis;
     }
 
     /**
@@ -78,6 +98,7 @@ public class CoSignerConverter {
         if (!checkResult) {
             throw new SafeheronException("signature verification failed");
         }
+        TimestampUtil.checkFreshness(coSignerCallBack.getTimestamp(), timestampToleranceMillis);
 
         // Use your RSA private key to decrypt request's aesKey and aesIv
         RSATypeEnum rsaType = StringUtils.isNotEmpty(coSignerCallBack.getRsaType()) && RSATypeEnum.valueByCode(coSignerCallBack.getRsaType()) != null ? RSATypeEnum.valueByCode(coSignerCallBack.getRsaType()) : RSATypeEnum.RSA;
@@ -127,6 +148,7 @@ public class CoSignerConverter {
         if (!checkResult) {
             throw new SafeheronException("signature verification failed");
         }
+        TimestampUtil.checkFreshness(coSignerCallBackV3.getTimestamp(), timestampToleranceMillis);
         ObjectMapper mapper = JsonUtil.getObjectMapper();
         String bizContent = coSignerCallBackV3.getBizContent();
         String decrypt = new String(Base64.getDecoder().decode(bizContent), StandardCharsets.UTF_8);
