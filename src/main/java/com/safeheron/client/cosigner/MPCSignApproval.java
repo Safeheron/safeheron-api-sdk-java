@@ -17,8 +17,6 @@ public class MPCSignApproval {
 
     private String sourceAccountKey;
 
-    private String note;
-
     private String auditUserKey;
 
     private String createdByUserKey;
@@ -34,8 +32,6 @@ public class MPCSignApproval {
     private List<SignSourceAccount> hashs;
 
     private List<DataSourceAccount> dataList;
-
-    private List<String> hashList;
 
     @Data
     public static class SignSourceAccount {
